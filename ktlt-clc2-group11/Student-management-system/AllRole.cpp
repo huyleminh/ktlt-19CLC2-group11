@@ -39,11 +39,10 @@ void login(User user, unsigned int& loginMode) {
 	cout << " > Enter your password : ";
 	getline(cin, user.password, '\n');
 
+
 }
 
 bool isStaffLogin(User loginUser) {
-	Staff staffUser;
-
 	ifstream fin;
 	fin.open("Staff.txt");
 	if (!fin.is_open()) {
@@ -51,9 +50,12 @@ bool isStaffLogin(User loginUser) {
 		return false;
 	}
 
+	Staff staffUser;
 	int nStaff = 0;
 	string ignoreLine;
+	
 	fin >> nStaff;
+	
 	while(!fin.eof()) {
 		getline(fin, ignoreLine);
 		getline(fin, staffUser.user.username, '\n');
@@ -68,6 +70,40 @@ bool isStaffLogin(User loginUser) {
 		}
 	}
 	fin.close();
+	return false;
+}
+
+bool isLecturerLogin(User loginUser) {
+	ifstream fin; 
+	fin.open("Lecturers.txt");
+	if (!fin.is_open()) {
+		cout << "Can not open Lecturer.txt file." << endl;
+		return false;
+	}
+
+	Lecturer lecUser;
+	int nLec;
+	string ignoreLine;
+	
+	fin >> nLec;
+	
+	while (!fin.eof()) {
+		getline(fin, ignoreLine);
+		getline(fin, lecUser.user.username, '\n');
+		getline(fin, lecUser.user.password, '\n');
+		getline(fin, lecUser.name, '\n');
+
+		if (loginUser.username == lecUser.user.username && loginUser.password == lecUser.user.password) {
+			cout << "**********WELCOME " << lecUser.name << "**********" << endl;
+			fin.close();
+			return true;
+		}
+	}
+	fin.close();
+	return false;
+}
+
+bool isStudentLogin(User loginUser) {
 	return false;
 }
 //void showStaffMenu() {

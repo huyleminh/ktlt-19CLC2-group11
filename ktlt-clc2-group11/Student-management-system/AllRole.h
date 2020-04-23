@@ -13,8 +13,15 @@ struct Staff {
 	string name;
 	//string gender;
 };
+
+struct Lecturer {
+	User user;
+	string name;
+};
+
 void menu();
 void login(User user, unsigned int& loginMode);
 bool isStaffLogin(User loginUser);
+bool isLecturerLogin(User loginUser);
 
 #endif
