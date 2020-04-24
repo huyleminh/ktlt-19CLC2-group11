@@ -7,6 +7,7 @@
 */
 
 #include "AllRole.h"
+#include "Staff.h"
 
 void menu() {
 	User user;
@@ -19,13 +20,13 @@ void menu() {
 
 	switch (loginMode) {
 	case 1: 
-		//showStaffMenu();
+		showStaffMenu();
 		break;
 	case 2:
 		//showLecturerMenu();
 		break;
 	case 3:
-		//showLectureMenu();
+		//showStudentMenu();
 		break;
 	default: 
 		cout << "Error login mode." << endl;
@@ -38,6 +39,7 @@ void login(User user, unsigned int& loginMode) {
 	getline(cin, user.username, '\n');
 	cout << " > Enter your password : ";
 	getline(cin, user.password, '\n');
+
 }
 
 bool isStaffLogin(User loginUser) {
@@ -97,9 +99,29 @@ bool isLecturerLogin(User loginUser) {
 
 bool isStudentLogin(User loginUser) {
 	ifstream fin;
-	if (isFileOpen(fin, "Lecturers.txt") == false)
+	if (isFileOpen(fin, "StudentUsers.txt") == false)
 		return false;
-	return true;
+
+	Student_User stuUser;
+	int nStu = 0;
+	string ignoreLine;
+
+	fin >> nStu;
+
+	while (!fin.is_open()) {
+		getline(fin, ignoreLine);
+		getline(fin, stuUser.user.username, '\n');
+		getline(fin, stuUser.user.password, '\n');
+		getline(fin, stuUser.name, '\n');
+
+		if (loginUser.username == stuUser.user.username && loginUser.password == stuUser.user.password) {
+			cout << "**********WELCOME " << stuUser.name << "**********" << endl;
+			fin.close();
+			return true;
+		}
+	}
+	fin.close();
+	return false;
 }
 //void showStaffMenu() {
 //
