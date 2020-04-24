@@ -11,10 +11,14 @@ struct User {
 struct Staff {
 	User user;
 	string name;
-	//string gender;
 };
 
 struct Lecturer {
+	User user;
+	string name;
+};
+
+struct Student {
 	User user;
 	string name;
 };

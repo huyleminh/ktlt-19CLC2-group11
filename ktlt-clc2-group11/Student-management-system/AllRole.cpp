@@ -38,17 +38,12 @@ void login(User user, unsigned int& loginMode) {
 	getline(cin, user.username, '\n');
 	cout << " > Enter your password : ";
 	getline(cin, user.password, '\n');
-
-
 }
 
 bool isStaffLogin(User loginUser) {
 	ifstream fin;
-	fin.open("Staff.txt");
-	if (!fin.is_open()) {
-		cout << "Can not open Staff.txt file." << endl;
+	if (isFileOpen(fin, "Staff.txt") == false)
 		return false;
-	}
 
 	Staff staffUser;
 	int nStaff = 0;
@@ -75,11 +70,8 @@ bool isStaffLogin(User loginUser) {
 
 bool isLecturerLogin(User loginUser) {
 	ifstream fin; 
-	fin.open("Lecturers.txt");
-	if (!fin.is_open()) {
-		cout << "Can not open Lecturer.txt file." << endl;
+	if (isFileOpen(fin, "Lecturers.txt") == false)
 		return false;
-	}
 
 	Lecturer lecUser;
 	int nLec;
@@ -104,7 +96,10 @@ bool isLecturerLogin(User loginUser) {
 }
 
 bool isStudentLogin(User loginUser) {
-	return false;
+	ifstream fin;
+	if (isFileOpen(fin, "Lecturers.txt") == false)
+		return false;
+	return true;
 }
 //void showStaffMenu() {
 //
