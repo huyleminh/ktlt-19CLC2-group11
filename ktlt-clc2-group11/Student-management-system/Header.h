@@ -6,7 +6,12 @@
 #include <string>
 using namespace std;
 
-//void run() {
-//	cout << "RUN" << endl;	// Run the program.
-//}
+inline bool isFileOpen(ifstream &fin, const char* filename) {
+	fin.open(filename);
+	if (!fin.is_open()) {
+		cout << "Can not open " << filename << endl;
+		return false;
+	}
+	return true;
+}
 #endif
