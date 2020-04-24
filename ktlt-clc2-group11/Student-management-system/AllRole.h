@@ -3,26 +3,6 @@
 
 #include "Header.h"
 
-struct User {
-	string username;
-	string password;
-};
-
-struct Staff {
-	User user;
-	string name;
-};
-
-struct Lecturer {
-	User user;
-	string name;
-};
-
-struct Student {
-	User user;
-	string name;
-};
-
 void menu();
 void login(User user, unsigned int& loginMode);
 bool isStaffLogin(User loginUser);
