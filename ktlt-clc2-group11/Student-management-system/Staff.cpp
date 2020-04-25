@@ -156,3 +156,21 @@ void viewListClass(int& n)
 	}
 	data.close();
 }
+
+void viewListStudents(string classID)
+{
+	ifstream data;
+
+	string inputPath = "";
+	string extension = ".txt";
+	inputPath = classID + extension;
+}
+
+void convertToUpper(string& s)
+{
+	int len = s.length();
+	for (int i = 0; i < len; i++)
+	{
+		s[i] = (char)toupper(s[i]);
+	}
+}
