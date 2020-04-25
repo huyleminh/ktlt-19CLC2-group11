@@ -7,5 +7,6 @@ void showStaffMenu();
 void classAndStudentMode();
 void importStudentsFromCSV(Student*& students, int& nStudent);
 void createUserPassword(Student* students, const int nStudent);
+void viewListClasses(ifstream& data, int& nClasses);
 
 #endif

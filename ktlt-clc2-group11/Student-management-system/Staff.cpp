@@ -135,3 +135,18 @@ void createUserPassword(Student* students, const int nStudent) {
 
 	fout.close();
 }
+
+void viewListClasses(ifstream& data, int& nClasses)
+{
+	data.open("Classes.txt");
+
+	string buff;
+	data >> nClasses;
+	cout << "List of Classes:\n\n";
+	while (!data.eof())
+	{
+		data >> buff;
+		cout << buff << endl;
+	}
+	data.close();
+}
