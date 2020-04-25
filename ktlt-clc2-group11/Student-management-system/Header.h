@@ -15,6 +15,7 @@ struct Date {
 struct User {
 	string username;
 	string password;
+	string name;
 };
 
 struct Staff {
@@ -48,4 +49,25 @@ inline bool isFileOpen(ifstream &fin, const char* filename) {
 	}
 	return true;
 }
+
+inline void changePassword(User& user) {
+	string newPass = "";
+	string curPass = "";
+	
+	do {
+		cout << "> Enter your current password : ";
+		getline(cin, curPass, '\n');
+	} while (curPass != user.password);
+
+	cout << "> Enter your new password : ";
+	getline(cin, newPass, '\n');
+	
+	user.password = newPass;
+}
+
+inline void viewProfile(const User user) {
+	cout << "Name : " << user.name << endl;
+	cout << "User name : " << user.username << endl;
+}
+
 #endif
