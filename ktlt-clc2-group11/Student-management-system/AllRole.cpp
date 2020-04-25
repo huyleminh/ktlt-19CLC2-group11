@@ -1,5 +1,5 @@
 /*There are 5 main roles in this section:
-1. Login            : enabale user login to system.
+1. Login            : enable user login to system.
 2. Show menu		: print main menu to console.
 3. View profile info: view current user profile.
 4. Change password	: enable user change his/her password to login to system.
@@ -36,7 +36,7 @@ void menu() {
 }
 
 void login(User user, unsigned int& loginMode) {
-	cout << " > Enter your Username : "; 
+	cout << " > Enter your User name : "; 
 	getline(cin, user.username, '\n');
 	cout << " > Enter your password : ";
 	getline(cin, user.password, '\n');
