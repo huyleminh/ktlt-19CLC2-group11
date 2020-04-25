@@ -1,19 +1,21 @@
 #include "Staff.h"
 #include "AllRole.h"
 
-void showStaffMenu() {
+void showStaffMenu(User& user) {
 	cout << "**********STAFF MENU**********" << endl;
 	cout << "> 1. Class and student.\n";
 	cout << "> 2. Course.\n";
 	cout << "> 3. Scoreboard.\n";
 	cout << "> 4. Attendance list.\n";
-	cout << "> 5. Logout, back to login menu.\n";
+	cout << "> 5. Change password.\n";
+	cout << "> 6. View profile infomation.\n";
+	cout << "> 7. Logout, back to login menu.\n";
 
 OPTION: 
 	cout << "> Which mode do you want to access ? \n";
 	int option;
 	cin >> option;
-	if (option < 1 || option > 5)
+	if (option < 1 || option > 7)
 		goto OPTION;
 
 	switch (option)
@@ -30,7 +32,13 @@ OPTION:
 	case 4: 
 		//call attendance list
 		break;
-	case 5: 
+	case 5:
+		changeStaffPassword(user);
+		showStaffMenu(user);
+	case 6:
+		viewProfile(user);
+		showStaffMenu(user);
+	case 7: 
 		menu();
 	}
 }
@@ -41,7 +49,7 @@ void classAndStudentMode() {
 	cout << "> 3. Edit existing student.\n";
 	cout << "> 4. View list of classes.\n";
 	cout << "> 5. View list of student in class.\n";
-	cout << "> 6. Log out, back to staff menu.\n";
+	cout << "> 6. Back to staff menu.\n";
 
 OPTION:
 	cout << "> Which mode do you want to access ? \n";
@@ -61,18 +69,14 @@ OPTION:
 		classAndStudentMode();
 		break;
 	case 2:
-		//call course
 		break;
 	case 3:
-		//call scoreboard
 		break;
 	case 4:
-		//call attendance list
 		break;
 	case 5: 
 		break;
 	case 6:
-		showStaffMenu();
 		break;
 	}
 }
@@ -146,8 +150,32 @@ void viewListClasses(ifstream& data, int& nClasses)
 	cout << "List of Classes:\n\n";
 	while (!data.eof())
 	{
-		data >> buff;
+		getline(data, buff, '\n');
 		cout << buff << endl;
 	}
 	data.close();
+}
+
+//Change password
+void changeStaffPassword(User& user) {
+	Staff* staffs;
+	int n = 0;
+
+	changePassword(user);
+	loadStaffUser(staffs, n);
+	for (int i = 0; i < n; i++) {
+		if (user.username == staffs[i].user.username ) {
+			staffs[i].user.password = user.password;
+			break;
+		}
+	}
+
+	ofstream fout("Staff.txt");
+	fout << n << endl;
+	for (int i = 0; i < n; i++) {
+		fout << staffs[i].user.username << endl << staffs[i].user.password << endl << staffs[i].name << endl;
+	}
+
+	fout.close();
+	delete[]staffs;
 }
