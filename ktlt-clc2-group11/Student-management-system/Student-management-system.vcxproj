@@ -139,12 +139,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AllRole.cpp" />
+    <ClCompile Include="Lecturers.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Staff.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllRole.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="Lecturers.h" />
     <ClInclude Include="Staff.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
