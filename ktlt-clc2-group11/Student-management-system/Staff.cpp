@@ -2,13 +2,13 @@
 #include "AllRole.h"
 
 void showStaffMenu() {
-	cout << "**********STAFF MENU**********" << endl;
-	cout << "> 1. Class and student.\n";
-	cout << "> 2. Course.\n";
-	cout << "> 3. Scoreboard.\n";
-	cout << "> 4. Attendance list.\n";
-	cout << "> 5. Logout, back to login menu.\n";
-
+	cout << "**********STAFF MENU***********************" << endl;
+	cout << "*> 1. Class and student.                  *\n";
+	cout << "*> 2. Course.							   *\n";
+	cout << "*> 3. Scoreboard.                         *\n";
+	cout << "*> 4. Attendance list.                    *\n";
+	cout << "*> 5. Logout, back to login menu.         *\n";
+	cout << "*******************************************" << endl;
 OPTION: 
 	cout << "> Which mode do you want to access ? \n";
 	int option;
@@ -19,7 +19,7 @@ OPTION:
 	switch (option)
 	{
 	case 1: 
-		//call classe and student
+		//call class and student
 		break;
 	case 2:
 		//call course
