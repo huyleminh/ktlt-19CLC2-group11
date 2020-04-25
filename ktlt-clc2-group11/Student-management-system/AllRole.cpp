@@ -29,7 +29,8 @@ void menu() {
 		//showStudentMenu();
 		break;
 	default: 
-		cout << "Error login mode." << endl;
+		cout << "Wrong user name or password." << endl;
+		menu();
 		break;
 	}
 }
@@ -40,9 +41,21 @@ void login(User user, unsigned int& loginMode) {
 	cout << " > Enter your password : ";
 	getline(cin, user.password, '\n');
 
+	if (isStaffLogin(user) == true) {
+		loginMode = 1;
+		return;
+	}
+	if (isLecturerLogin(user) == true) {
+		loginMode = 2;
+		return;
+	}
+	if (isStudentLogin(user) == true) {
+		loginMode = 3;
+		return;
+	}
 }
 
-bool isStaffLogin(User loginUser) {
+bool isStaffLogin(const User loginUser) {
 	ifstream fin;
 	if (isFileOpen(fin, "Staff.txt") == false)
 		return false;
@@ -58,7 +71,6 @@ bool isStaffLogin(User loginUser) {
 		getline(fin, staffUser.user.username, '\n');
 		getline(fin, staffUser.user.password, '\n');
 		getline(fin, staffUser.name, '\n');
-		//getline(fin, staffUser.gender, '\n');
 
 		if (loginUser.username == staffUser.user.username && loginUser.password == staffUser.user.password) {
 			cout << "**********WELCOME " << staffUser.name << "**********" << endl;
@@ -70,7 +82,7 @@ bool isStaffLogin(User loginUser) {
 	return false;
 }
 
-bool isLecturerLogin(User loginUser) {
+bool isLecturerLogin(const User loginUser) {
 	ifstream fin; 
 	if (isFileOpen(fin, "Lecturers.txt") == false)
 		return false;
@@ -97,7 +109,7 @@ bool isLecturerLogin(User loginUser) {
 	return false;
 }
 
-bool isStudentLogin(User loginUser) {
+bool isStudentLogin(const User loginUser) {
 	ifstream fin;
 	if (isFileOpen(fin, "StudentUsers.txt") == false)
 		return false;
@@ -123,10 +135,6 @@ bool isStudentLogin(User loginUser) {
 	fin.close();
 	return false;
 }
-//void showStaffMenu() {
-//
-//}
-//
 //void showLecturerMenu() {
 //
 //}
