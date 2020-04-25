@@ -35,8 +35,20 @@ OPTION:
 	}
 }
 
+void getclass(string *,string fn) {
+	ifstream f;
+	f.open(fn);
+	if (!f.is_open()) {
+		cout << "Cant read class file:";
+	}
+	else
+	{
+		
+	}
+
+}
 void classAndStudentMode() {
-	cout << "> 1. Import students from csv.\n";
+	cout << "> 1. Import students from csv file.\n";
 	cout << "> 2. Add a student to a class.\n";
 	cout << "> 3. Edit existing student.\n";
 	cout << "> 4. View list of classes.\n";
@@ -98,7 +110,6 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 	students = new Student[nStudent];
 	
 	fin.seekg(0, fin.beg);
-	
 	ignore = "";
 	int i = 0;
 	
