@@ -135,22 +135,3 @@ bool isStudentLogin(const User loginUser) {
 	fin.close();
 	return false;
 }
-//void showLecturerMenu() {
-//
-//}
-//
-//void showStudentMenu() {
-//
-//}
-//
-//void viewProfileInfo(){
-//
-//}
-//
-//void changePassword() {
-//
-//}
-//
-//void logout() {
-//
-//}

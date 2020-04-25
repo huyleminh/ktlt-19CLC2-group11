@@ -13,7 +13,7 @@ OPTION:
 	cout << "> Which mode do you want to access ? \n";
 	int option;
 	cin >> option;
-	if (option < 1 || option > 4)
+	if (option < 1 || option > 5)
 		goto OPTION;
 
 	switch (option)
@@ -76,6 +76,7 @@ OPTION:
 		break;
 	}
 }
+
 void importStudentsFromCSV(Student*& students, int& nStudent) {
 	ifstream fin;
 	if (isFileOpen(fin, "Students.csv") == false)
