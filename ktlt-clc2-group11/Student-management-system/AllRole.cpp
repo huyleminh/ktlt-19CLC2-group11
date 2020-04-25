@@ -1,9 +1,10 @@
 #include "AllRole.h"
 #include "Staff.h"
 
-void login(User &userLogin, int& loginMode) {
-	cout << " > Enter your Username : "; 
+void login(User& userLogin, int& loginMode) {
+	cout << " > Enter your User name : "; 
 	getline(cin, userLogin.username, '\n');
+
 	cout << " > Enter your password : ";
 	getline(cin, userLogin.password, '\n');
 

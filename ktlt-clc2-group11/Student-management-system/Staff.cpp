@@ -21,7 +21,7 @@ OPTION:
 	switch (option)
 	{
 	case 1: 
-		//call classe and student
+		//call class and student
 		break;
 	case 2:
 		//call course
@@ -44,7 +44,7 @@ OPTION:
 }
 
 void classAndStudentMode() {
-	cout << "> 1. Import students from csv.\n";
+	cout << "> 1. Import students from csv file.\n";
 	cout << "> 2. Add a student to a class.\n";
 	cout << "> 3. Edit existing student.\n";
 	cout << "> 4. View list of classes.\n";
@@ -102,7 +102,6 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 	students = new Student[nStudent];
 	
 	fin.seekg(0, fin.beg);
-	
 	ignore = "";
 	int i = 0;
 	
@@ -141,19 +140,63 @@ void createUserPassword(Student* students, const int nStudent) {
 	fout.close();
 }
 
-void viewListClasses(ifstream& data, int& nClasses)
+void viewListClass(int& n)
 {
+	ifstream data;
 	data.open("Classes.txt");
 
 	string buff;
-	data >> nClasses;
+	data >> n;
+
+	getline(data, buff, '\n');
+
 	cout << "List of Classes:\n\n";
+
 	while (!data.eof())
 	{
 		getline(data, buff, '\n');
 		cout << buff << endl;
 	}
 	data.close();
+}
+
+void viewListStudents(string classID)
+{
+	ifstream data;
+
+	string inputPath = "";
+	string extension = "-Students.txt";
+	convertToUpper(classID);
+	inputPath = classID + extension;
+
+	data.open(inputPath);
+
+	string buff;
+	int nStudents;
+	data >> nStudents;
+
+	getline(data, buff, '\n');
+
+	cout << "Total students in class " << classID << " is " << nStudents << endl << endl;
+	cout << "List of students in class " << classID << ":\n\n";
+
+	while (!data.eof())
+	{
+		getline(data, buff, '\n');
+		cout << "Name: " << buff << endl;
+		getline(data, buff, '\n');
+		cout << "ID  : " << buff << endl;
+	}
+	data.close();
+}
+
+void convertToUpper(string& s)
+{
+	int len = s.length();
+	for (int i = 0; i < len; i++)
+	{
+		s[i] = (char)toupper(s[i]);
+	}
 }
 
 //Change password
@@ -164,7 +207,7 @@ void changeStaffPassword(User& user) {
 	changePassword(user);
 	loadStaffUser(staffs, n);
 	for (int i = 0; i < n; i++) {
-		if (user.username == staffs[i].user.username ) {
+		if (user.username == staffs[i].user.username) {
 			staffs[i].user.password = user.password;
 			break;
 		}

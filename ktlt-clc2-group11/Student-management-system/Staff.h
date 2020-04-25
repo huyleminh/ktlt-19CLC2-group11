@@ -9,10 +9,17 @@ void showStaffMenu(User& user);
 void classAndStudentMode();
 void importStudentsFromCSV(Student*& students, int& nStudent);
 void createUserPassword(Student* students, const int nStudent);
-void viewListClasses(ifstream& data, int& nClasses);
+
+void viewListClass(int& n);
+void viewListStudents(string classID);
+void convertToUpper(string& s);
+
 //5. Change password.
 void changeStaffPassword(User& user); 
 //6. View profile infomation.
 //This function is located in Header.h
+
+
+
 
 #endif
