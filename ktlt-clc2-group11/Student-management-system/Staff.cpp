@@ -136,16 +136,21 @@ void createUserPassword(Student* students, const int nStudent) {
 	fout.close();
 }
 
-void viewListClasses(ifstream& data, int& nClasses)
+void viewListClass(int& n)
 {
+	ifstream data;
 	data.open("Classes.txt");
 
 	string buff;
-	data >> nClasses;
+	data >> n;
+
+	getline(data, buff, '\n');
+
 	cout << "List of Classes:\n\n";
+
 	while (!data.eof())
 	{
-		data >> buff;
+		getline(data, buff, '\n');
 		cout << buff << endl;
 	}
 	data.close();
