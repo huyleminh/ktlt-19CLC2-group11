@@ -3,12 +3,13 @@
 
 #include "Header.h"
 
+
+void login(User& userLogin, int& loginMode);
+
+void loadStaffUser(Staff*& staffs, int& nStaff);
+void loadLecturerUser(Lecturer*& lecturers, int& nLec);
+void loadStudentUser(Student_User*& students, int& nStu);
+
 void menu();
-
-void login(User user, unsigned int& loginMode);
-
-bool isStaffLogin(const User loginUser);
-bool isLecturerLogin(const User loginUser);
-bool isStudentLogin(const User loginUser);
 
 #endif
