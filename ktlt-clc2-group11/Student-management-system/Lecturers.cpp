@@ -1,7 +1,7 @@
 #include "Lecturers.h"
 #include "AllRole.h"
 
-void showLecturerMenu() {
+void showLecturerMenu(User& user) {
 	cout << "**********LECTURER MENU**********" << endl;
 	cout << "> 1. View list of courses in the current semester.\n";
 	cout << "> 2. View list of students of a course.\n";
@@ -10,7 +10,9 @@ void showLecturerMenu() {
 	cout << "> 5. Import scoreboard of a course(midterm, final, lab, bonus) from a csv file.\n";
 	cout << "> 6. Edit grade of a student.\n";
 	cout << "> 7. View a scoreboard.\n";
-	cout << "> 8. Logout and back to login menu.\n";
+	cout << "> 8. Change password.\n";
+	cout << "> 9. View profile infomation.\n";
+	cout << "> 10. Logout and back to login menu.\n";
 OPTION:
 	cout << "> Which mode do you want to access ? \n";
 	int option;
@@ -35,7 +37,39 @@ OPTION:
 	case 7: 
 		break;
 	case 8:
+		changeLecPassword(user);
+		showLecturerMenu(user);
+		break;
+	case 9:
+		viewProfile(user);
+		showLecturerMenu(user);
+		break;
+	case 10: 
 		menu();
+		break;
 	}
 }
 
+//8. Change password.
+void changeLecPassword(User& user) {
+	Lecturer* lecturers;
+	int n = 0;
+
+	changePassword(user);
+	loadLecturerUser(lecturers, n);
+	for (int i = 0; i < n; i++) {
+		if (user.username == lecturers[i].user.username) {
+			lecturers[i].user.password = user.password;
+			break;
+		}
+	}
+
+	ofstream fout("Lecturers.txt");
+	fout << n << endl;
+	for (int i = 0; i < n; i++) {
+		fout << lecturers[i].user.username << endl << lecturers[i].user.password << endl << lecturers[i].name << endl;
+	}
+
+	fout.close();
+	delete[]lecturers;
+}
