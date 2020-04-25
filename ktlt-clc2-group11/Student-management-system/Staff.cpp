@@ -162,8 +162,29 @@ void viewListStudents(string classID)
 	ifstream data;
 
 	string inputPath = "";
-	string extension = ".txt";
+	string extension = "-Students.txt";
+	convertToUpper(classID);
 	inputPath = classID + extension;
+
+	data.open(inputPath);
+
+	string buff;
+	int nStudents;
+	data >> nStudents;
+
+	getline(data, buff, '\n');
+
+	cout << "Total students in class " << classID << " is " << nStudents << endl << endl;
+	cout << "List of students in class " << classID << ":\n\n";
+
+	while (!data.eof())
+	{
+		getline(data, buff, '\n');
+		cout << "Name: " << buff << endl;
+		getline(data, buff, '\n');
+		cout << "ID  : " << buff << endl;
+	}
+	data.close();
 }
 
 void convertToUpper(string& s)
