@@ -139,7 +139,7 @@ void createUserPassword(Student* students, const int nStudent) {
 
 	fout.close();
 }
-
+// viewFunction
 void viewListClass(int& n)
 {
 	ifstream data;
