@@ -225,10 +225,6 @@ void changeStaffPassword(User& user) {
 	fout.close();
 	delete[]staffs;
 }
-//1. 
-
+//1.
 //2.
-
 //3.
-
-//4.
