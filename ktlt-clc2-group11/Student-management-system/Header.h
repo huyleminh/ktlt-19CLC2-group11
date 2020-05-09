@@ -41,6 +41,27 @@ struct Student{
 	string classID;
 };
 
+struct Time
+{
+	string dayOfWeek;
+	string startHour;
+	string startMin;
+	string endHour;
+	string endMin;
+};
+
+struct Course
+{
+	string ID;
+	string name;
+	string classID;
+	string lecAccount;
+	Date startDate;
+	Date endDate;
+	Time courseTime;
+	string room;
+};
+
 inline bool isFileOpen(ifstream &fin, const char* filename) {
 	fin.open(filename);
 	if (!fin.is_open()) {

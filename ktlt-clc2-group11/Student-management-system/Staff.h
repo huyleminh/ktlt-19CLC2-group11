@@ -19,7 +19,8 @@ void changeStaffPassword(User& user);
 //6. View profile infomation.
 //This function is located in Header.h
 
-
+//Course
+void addNewCourse(Course& c);
 
 
 #endif

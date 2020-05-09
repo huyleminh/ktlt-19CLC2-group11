@@ -235,3 +235,65 @@ void changeStaffPassword(User& user) {
 //1.
 //2.
 //3.
+
+//15. Manually add a new course
+void addNewCourse(Course& c)
+{
+	cout << "Enter course ID: ";
+	getline(cin, c.ID);
+	cout << endl;
+	
+	cout << "Enter course name: ";
+	getline(cin, c.name);
+	cout << endl;
+
+	cout << "Enter class: ";
+	getline(cin, c.classID);
+	convertToUpper(c.classID);
+	cout << endl;
+
+	cout << "Enter lecturer account: ";
+	getline(cin, c.lecAccount);
+	cout << endl;
+
+	cout << "Enter start date:\n";
+	cout << "Day: ";
+	cin >> c.startDate.day;
+	cout << "Month: ";
+	cin >> c.startDate.month;
+	cout << "Year: ";
+	cin >> c.startDate.year;
+	cout << endl;
+
+	cout << "Enter end date:\n";
+	cout << "Day: ";
+	cin >> c.endDate.day;
+	cout << "Month: ";
+	cin >> c.endDate.month;
+	cout << "Year: ";
+	cin >> c.endDate.year;
+	cout << endl;
+
+	cin.ignore(1);
+
+	cout << "Enter day of week: ";
+	getline(cin, c.courseTime.dayOfWeek);
+	cout << endl;
+
+	cout << "Enter start hour: ";
+	getline(cin, c.courseTime.startHour);
+	cout << "Enter start min: ";
+	getline(cin, c.courseTime.startMin);
+	cout << endl;
+
+	cout << "Enter end hour: ";
+	getline(cin, c.courseTime.endHour);
+	cout << "Enter end min: ";
+	getline(cin, c.courseTime.endMin);
+	cout << endl;
+
+	cout << "Enter room: ";
+	getline(cin, c.room);
+	convertToUpper(c.room);
+	cout << endl;
+}
