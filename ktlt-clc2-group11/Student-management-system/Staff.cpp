@@ -142,11 +142,16 @@ void createUserPassword(Student* students, const int nStudent) {
 
 	fout.close();
 }
-
+// viewFunction
 void viewListClass(int& n)
 {
 	ifstream data;
 	data.open("Classes.txt");
+
+	if (!data.is_open()) {
+		cout << "Can not open Classes.txt" << endl;
+		return;
+	}
 
 	string buff;
 	data >> n;
@@ -173,6 +178,11 @@ void viewListStudents(string classID)
 	inputPath = classID + extension;
 
 	data.open(inputPath);
+
+	if (!data.is_open()) {
+		cout << "Can not open file" << endl;
+		return;
+	}
 
 	string buff;
 	int nStudents;
