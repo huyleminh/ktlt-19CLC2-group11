@@ -16,7 +16,7 @@ void convertToUpper(string& s);
 
 //5. Change password.
 void changeStaffPassword(User& user); 
-//6. View profile infomation.
+//6. View profile information.
 //This function is located in Header.h
 
 

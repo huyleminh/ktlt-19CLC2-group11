@@ -8,7 +8,7 @@ void showStaffMenu(User& user) {
 	cout << "> 3. Scoreboard.\n";
 	cout << "> 4. Attendance list.\n";
 	cout << "> 5. Change password.\n";
-	cout << "> 6. View profile infomation.\n";
+	cout << "> 6. View profile information.\n";
 	cout << "> 7. Logout, back to login menu.\n";
 
 OPTION: 
@@ -143,7 +143,8 @@ void createUserPassword(Student* students, const int nStudent) {
 	fout.close();
 }
 // viewFunction
-void viewListClass(int& n)
+///remember delete dynamic array when call this  function
+void getListClass(int& n,string*&Class)
 {
 	ifstream data;
 	data.open("Classes.txt");
@@ -152,20 +153,159 @@ void viewListClass(int& n)
 		cout << "Can not open Classes.txt" << endl;
 		return;
 	}
-
-	string buff;
 	data >> n;
-
-	getline(data, buff, '\n');
-
+	Class = new string[n];
+	data.ignore(1);
 	cout << "List of Classes:\n\n";
-
+	int i = -1;
 	while (!data.eof())
 	{
-		getline(data, buff, '\n');
-		cout << buff << endl;
+		++i;
+		getline(data,Class[i], '\n');
+		cout <<i<<". "<<Class[i]<< endl;
 	}
 	data.close();
+}
+
+///remember delete dynamic array when call this  function
+void getListStudents(string classID,Student*&Students,int &nStudents)
+{
+	ifstream data;
+	string inputPath = "";
+	string extension = "-Students.txt";
+	convertToUpper(classID);
+	inputPath = classID + extension;
+	
+	data.open(inputPath);
+
+	if (!data.is_open()) {
+		cout << "Can not open file" << endl;
+		return;
+	}
+	string buff;
+	data >> nStudents;
+	Students = new Student[nStudents];
+	getline(data, buff, '\n');
+
+	cout << "Total students in class " << classID << " is " << nStudents << endl << endl;
+	cout << "List of students in class " << classID << ":\n\n";
+	int i = -1;
+	while (!data.eof())
+	{
+		++i;
+		getline(data, buff, '\n');
+		cout << "Name: " << buff << endl;
+
+		getline(data, buff, '\n');
+		cout << "ID  : " << buff << endl;
+
+		getline(data, buff, '\n');
+		cout << "active  : " << buff << endl;
+	}
+	data.close();
+}
+
+void saveStudent(Student* Students,int nStudent,string fclass) {
+	ofstream data;
+	data.open(fclass);
+	if (!data.is_open()) {
+		cout << "can't open file " << fclass;
+	}
+	else {
+		data << nStudent<<endl;
+		for (int i = 0; i < nStudent; i++) {
+			data << Students[i].ID;
+			data << Students[i].fullName;
+			data << Students[i].gender;
+			data << Students[i].DoB;
+			data << Students[i].active;
+		}
+	}
+	delete[] Students;
+	data.close();
+}
+
+void deleteStudent(string Aclass) {
+	Student* Students;
+	int nStudents;
+	getListStudents(Aclass, Students, nStudents);
+	string ID;
+	cout << "Input ID want to delete :"; cin >> ID;
+	bool flag = true;
+	for (int i = 0; i < nStudents; i++) {
+		if (Students[i].ID == ID) {
+			Students[i].active = false;
+			flag = true;
+		}
+		break;
+	}
+	if (flag == true) {
+		cout << "Don't have ID <" << ID << "> in this class.\n";
+	}
+	else
+	{
+		string inputPath = "";
+		string extension = "-Students.txt";
+		inputPath = Aclass + extension;
+		saveStudent(Students, nStudents, inputPath);
+	}
+}
+
+void Changeclass(string origin, string des) {
+	Student* Students,*Students2;
+	int nStudents,nStudents2;
+	getListStudents(origin, Students, nStudents);
+	getListStudents(des, Students2, nStudents2);
+	string ID;
+	cout << "Input ID want to delete :"; cin >> ID;
+	bool flag = true;
+	for (int i = 0; i < nStudents; i++) {
+		if (Students[i].ID == ID) {
+			nStudents2 += 1;
+			Students2[nStudents2] = Students[i];
+			Students[i].active = false;
+			flag = false;
+		}
+		break;
+	}
+	if (flag == true) {
+		cout << "Don't have ID <" << ID << "> in this class.\n";
+	}
+	else
+	{
+		string inputPath = "";
+		string extension = "-Students.txt";
+		inputPath = origin + extension;
+		saveStudent(Students, nStudents, inputPath);
+		inputPath = des + extension;
+		saveStudent(Students2, nStudents2, inputPath);
+	}
+}
+
+void Edit() {
+	string* Class;
+	int n;
+	getListClass(n, Class);
+	int buffer,buffer2;
+	cout << "choose your class you want to edit:\n";
+	cin >> buffer;
+	cout << "Choose mode:\n";
+	cin >> buffer2;
+	cout << "1.delete a student.\n";
+	cout << "2. change class a student.\n";
+	switch (buffer2) {
+		case 1: deleteStudent(Class[buffer]);
+		break;
+		case 2:
+			int buffer3;
+			cout << "choose class destination :";
+			cin >> buffer3;
+			Changeclass(Class[buffer], Class[buffer3]);
+			break;
+		default:
+			cout << "Error";
+	}
+	delete[] Class;
 }
 
 void viewListStudents(string classID)
