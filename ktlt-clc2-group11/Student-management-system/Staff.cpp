@@ -69,6 +69,8 @@ OPTION:
 		classAndStudentMode();
 		break;
 	case 2:
+		addStudentToClass();
+		classAndStudentMode();
 		break;
 	case 3:
 		break;
@@ -122,6 +124,56 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 	fout.close();
 }
 
+void addStudentToClass() {
+	Student newStudent;
+
+	cout << "> Enter student infomation: \n";
+	cout << " Full name: "; getline(cin, newStudent.fullName, '\n');
+	cout << " ID: "; getline(cin, newStudent.ID, '\n');
+	cout << " Gender: "; getline(cin, newStudent.gender, '\n');
+	cout << " Date of birth: "; getline(cin, newStudent.DoB, '\n');
+	cout << " Class ID: "; getline(cin, newStudent.classID, '\n');
+
+	User newUser;
+
+	newUser.name = newStudent.fullName;
+	newUser.username = newStudent.ID;
+	newUser.password = newStudent.DoB;
+
+	ofstream fout;
+	
+	fout.open("Students.txt", ios::app);
+	if (!fout.is_open()) {
+		cout << "Can not open Students.txt\n";
+		return;
+	}
+
+	fout << endl << newStudent.ID << endl << newStudent.fullName << endl << newStudent.gender << endl <<
+		newStudent.DoB << endl << newStudent.classID << endl;
+	fout.close();
+
+	fout.open("StudentUsers.txt", ios::app);
+	if (!fout.is_open()) {
+		cout << "Can not open StudentUsers.txt\n";
+		return;
+	}
+
+	fout << newUser.username << endl << newUser.password << endl << newUser.name << endl;
+	fout.close();
+
+	string file = newStudent.classID + "-Students.txt";
+
+	fout.open(file, ios::app);
+	if (!fout.is_open()) {
+		cout << "Can not open Students.txt\n";
+		return;
+	}
+
+	fout << endl << newStudent.ID << endl << newStudent.fullName << endl << newStudent.gender << endl <<
+		newStudent.DoB << endl << newStudent.classID << endl;
+
+	fout.close();
+}
 void createUserPassword(Student* students, const int nStudent) {
 	ofstream fout;
 	fout.open("StudentUsers.txt");

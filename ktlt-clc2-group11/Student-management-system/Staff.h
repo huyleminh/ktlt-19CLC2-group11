@@ -10,6 +10,7 @@ void classAndStudentMode();
 void importStudentsFromCSV(Student*& students, int& nStudent);
 void createUserPassword(Student* students, const int nStudent);
 
+void addStudentToClass();
 void viewListClass(int& n);
 void viewListStudents(string classID);
 void convertToUpper(string& s);
