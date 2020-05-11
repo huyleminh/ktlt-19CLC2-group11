@@ -39,7 +39,7 @@ struct Student{
 	string gender;
 	string DoB;
 	string classID;
-	bool active
+	bool active;
 };
 
 inline bool isFileOpen(ifstream &fin, const char* filename) {
