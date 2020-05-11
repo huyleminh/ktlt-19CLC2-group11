@@ -39,6 +39,7 @@ struct Student{
 	string gender;
 	string DoB;
 	string classID;
+	bool active;
 };
 
 struct Time
