@@ -161,11 +161,18 @@ void addStudentToClass() {
 	fout << newUser.username << endl << newUser.password << endl << newUser.name << endl;
 	fout.close();
 
-	/*fout.open("Students.txt", ios::app);
+	string file = newStudent.classID + "-Students.txt";
+
+	fout.open(file, ios::app);
 	if (!fout.is_open()) {
 		cout << "Can not open Students.txt\n";
 		return;
-	}*/
+	}
+
+	fout << endl << newStudent.ID << endl << newStudent.fullName << endl << newStudent.gender << endl <<
+		newStudent.DoB << endl << newStudent.classID << endl;
+
+	fout.close();
 }
 void createUserPassword(Student* students, const int nStudent) {
 	ofstream fout;
