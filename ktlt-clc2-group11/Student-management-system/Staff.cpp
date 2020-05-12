@@ -493,16 +493,25 @@ OPTION:
 
 void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 	ifstream fin;
-	if(isFileOpen(fin, "Courses.csv") == false)
+	if (isFileOpen(fin, "Courses.csv") == false)
 		return;
 
+	ofstream fout;
+	fout.open("Courses.txt", ios::out);
+	if (!fout.is_open()) {
+		cout << "Can not open Courses.txt.\n";
+		return;
+	}
+
 	string ignore = "";
-	while(!fin.eof()) {
+	while (!fin.eof()) {
 		getline(fin, ignore, '\n');
 		++nCourse;
 	}
 
 	courses = new Course[nCourse];
+	fout << nCourse << endl;
+
 	ignore = "";
 
 	fin.seekg(0, fin.beg);
@@ -510,22 +519,22 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 	while (!fin.eof())
 	{
 		getline(fin, ignore, ',');
-		
+
 		getline(fin, courses[i].ID, ',');
-		
+
 		getline(fin, courses[i].name, ',');
-		
+
 		getline(fin, courses[i].classID, ',');
-		
+
 		getline(fin, courses[i].lecAccount, ',');
-		
+
 		fin >> courses[i].startDate.year;
 		getline(fin, ignore, '-');
 		fin >> courses[i].startDate.month;
 		getline(fin, ignore, '-');
 		fin >> courses[i].startDate.day;
 		getline(fin, ignore, ',');
-		
+
 		fin >> courses[i].endDate.year;
 		getline(fin, ignore, '-');
 		fin >> courses[i].endDate.month;
@@ -536,7 +545,7 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 		fin.ignore(1);
 
 		getline(fin, courses[i].courseTime.dayOfWeek, ',');
-		
+
 		getline(fin, courses[i].courseTime.startHour, ':');
 		getline(fin, courses[i].courseTime.startMin, ',');
 
@@ -545,11 +554,25 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 
 		getline(fin, courses[i].room, '\n');
 
+		fout << endl << courses[i].ID << endl;
+		fout << courses[i].name << endl;
+		fout << courses[i].classID << endl;
+		fout << courses[i].lecAccount << endl;
+		fout << courses[i].startDate.year << '-' << courses[i].startDate.month << '-' << courses[i].startDate.day << endl;
+		fout << courses[i].endDate.year << '-' << courses[i].endDate.month << '-' << courses[i].endDate.day << endl;
+		fout << courses[i].courseTime.dayOfWeek << endl;
+		fout << courses[i].courseTime.startHour << ':' << courses[i].courseTime.startMin << endl;
+		fout << courses[i].courseTime.endHour << ':' << courses[i].courseTime.endMin << endl;
+		fout << courses[i].room << endl;
+
 		i++;
 	}
-	
+
 	fin.close();
+	fout.close();
 }
+
+//
 
 //15. Manually add a new course
 void addNewCourse(Course& c)
