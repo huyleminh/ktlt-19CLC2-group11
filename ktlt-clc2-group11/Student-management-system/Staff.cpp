@@ -55,7 +55,7 @@ OPTION:
 	cout << "> Which mode do you want to access ? \n";
 	int option;
 	cin >> option;
-	if (option < 1 || option > 4)
+	if (option < 1 || option > 6)
 		goto OPTION;
 
 	Student* students;
@@ -196,7 +196,7 @@ void createUserPassword(Student* students, const int nStudent) {
 }
 // viewFunction
 ///remember delete dynamic array when call this  function
-void getListClass(int& n,string*&Class)
+void getListClass(int& n, string*& Class)
 {
 	ifstream data;
 	data.open("Classes.txt");
@@ -339,15 +339,20 @@ void Edit() {
 	int n;
 	getListClass(n, Class);
 	int buffer,buffer2;
+	
 	cout << "choose your class you want to edit:\n";
 	cin >> buffer;
+	
 	cout << "Choose mode:\n";
 	cin >> buffer2;
+	
 	cout << "1.delete a student.\n";
 	cout << "2. change class a student.\n";
+	
 	switch (buffer2) {
-		case 1: deleteStudent(Class[buffer]);
-		break;
+		case 1: 
+			deleteStudent(Class[buffer]);
+			break;
 		case 2:
 			int buffer3;
 			cout << "choose class destination :";
@@ -363,9 +368,9 @@ void Edit() {
 void viewListStudents(string classID)
 {
 	ifstream data;
-
 	string inputPath = "";
 	string extension = "-Students.txt";
+	
 	convertToUpper(classID);
 	inputPath = classID + extension;
 
@@ -427,9 +432,124 @@ void changeStaffPassword(User& user) {
 	fout.close();
 	delete[]staffs;
 }
-//1.
-//2.
-//3.
+
+
+//Course mode:
+void courseMode() {
+	cout << "> 1. Edit academic years and semesters.\n";
+	cout << "> 2. Import courses from csv file to txt file.\n";
+	cout << "> 3. Manually add a new course.\n";
+	cout << "> 4. Edit an existing course.\n";
+	cout << "> 5. Remove a course.\n";
+	cout << "> 6. Remove a specific student from a course.\n";
+	cout << "> 7. Add a specific student to a course.\n";
+	cout << "> 8. View list of courses in the current semester.\n";
+ 	cout << "> 9. View list of students of a course.\n";
+	cout << "> 10. View attendance list of a course.\n";
+	cout << "> 11. Create / update / delete / view all lecturers.\n";
+	cout << "> 12. Back to staff menu.\n";
+
+OPTION:
+	int option = 0;
+
+	cout << "> Which mode do you want to access ? \n";
+	cin >> option;
+	if (option < 1 || option > 12)
+		goto OPTION;
+
+	Course *courses;
+	int nCourse = 0;
+
+	switch (option)
+	{
+	case 1:
+		break;
+	case 2:
+		//importCoursesFromCsvFile(courses, nCourse);
+		courseMode();
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	case 5: 
+		break;
+	case 6:
+		break;
+	case 7:
+		break;
+	case 8: 
+		break;
+	case 9:
+		break;
+	case 10:
+		break;
+	case 11:
+		break;
+	case 12:
+		break;
+	}
+}
+
+void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
+	ifstream fin;
+	if(isFileOpen(fin, "Courses.csv") == false)
+		return;
+
+	string ignore = "";
+	while(!fin.eof()) {
+		getline(fin, ignore, '\n');
+		++nCourse;
+	}
+
+	courses = new Course[nCourse];
+	ignore = "";
+
+	fin.seekg(0, fin.beg);
+	int i = 0;
+	while (!fin.eof())
+	{
+		getline(fin, ignore, ',');
+		
+		getline(fin, courses[i].ID, ',');
+		
+		getline(fin, courses[i].name, ',');
+		
+		getline(fin, courses[i].classID, ',');
+		
+		getline(fin, courses[i].lecAccount, ',');
+		
+		fin >> courses[i].startDate.year;
+		getline(fin, ignore, '-');
+		fin >> courses[i].startDate.month;
+		getline(fin, ignore, '-');
+		fin >> courses[i].startDate.day;
+		getline(fin, ignore, ',');
+		
+		fin >> courses[i].endDate.year;
+		getline(fin, ignore, '-');
+		fin >> courses[i].endDate.month;
+		getline(fin, ignore, '-');
+		fin >> courses[i].endDate.day;
+		getline(fin, ignore, ',');
+
+		fin.ignore(1);
+
+		getline(fin, courses[i].courseTime.dayOfWeek, ',');
+		
+		getline(fin, courses[i].courseTime.startHour, ':');
+		getline(fin, courses[i].courseTime.startMin, ',');
+
+		getline(fin, courses[i].courseTime.endHour, ':');
+		getline(fin, courses[i].courseTime.endMin, ',');
+
+		getline(fin, courses[i].room, '\n');
+
+		i++;
+	}
+	
+	fin.close();
+}
 
 //15. Manually add a new course
 void addNewCourse(Course& c)
