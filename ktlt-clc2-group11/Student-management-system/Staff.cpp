@@ -552,8 +552,9 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 }
 
 //15. Manually add a new course
-void addNewCourse(Course& c)
+void addNewCourse(int& nCourses)
 {
+	Course c;
 	cout << "Enter course ID: ";
 	getline(cin, c.ID);
 	cout << endl;
@@ -611,4 +612,31 @@ void addNewCourse(Course& c)
 	getline(cin, c.room);
 	convertToUpper(c.room);
 	cout << endl;
+
+	ofstream out;
+	
+	out.open("Courses.csv", ios::app);
+
+	if (!out.is_open())
+	{
+		cout << "Cannot open file Courses.csv\n";
+		return;
+	}
+
+	nCourses++;
+
+	out << endl;
+	out << nCourses << ",";
+	out << c.ID << ",";
+	out << c.name << ",";
+	out << c.classID << ",";
+	out << c.lecAccount << ",";
+	out << c.startDate.year << "-" << c.startDate.month << "-" << c.startDate.day << ",";
+	out << c.endDate.year << "-" << c.endDate.month << "-" << c.endDate.day << ",";
+	out << c.courseTime.dayOfWeek << ",";
+	out << c.courseTime.startHour << ":" << c.courseTime.startMin << ",";
+	out << c.courseTime.endHour << ":" << c.courseTime.endMin << ",";
+	out << c.room;
+
+	out.close();
 }

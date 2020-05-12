@@ -27,7 +27,7 @@ void changeStaffPassword(User& user);
 //This function is located in Header.h
 
 //Course
-void addNewCourse(Course& c);
+void addNewCourse(int& nCourses);
 
 
 #endif
