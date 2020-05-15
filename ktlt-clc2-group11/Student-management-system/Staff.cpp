@@ -122,6 +122,36 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 	fout.close();
 }
 
+void filterStudentToClass(string filename)
+{
+	ifstream in(filename);
+	int nStudents;
+	if (!in.is_open())
+	{
+		cout << "Cant open file" << endl;
+		return;
+	}
+
+	in >> nStudents;
+
+	Student* a = new Student[nStudents];
+
+	importStudentsFromCSV(a, nStudents);
+
+	for (int i = 0; i < nStudents; i++)
+	{
+		string classFile = a[i].classID + "-Students.txt";
+		ofstream fout(classFile, ofstream::app);
+		if (!fout.is_open())
+		{
+			cout << "Cant create file" << endl;
+			return;
+		}
+		fout << a[i].ID << endl << a[i].fullName << endl << a[i].DoB << endl << a[i].gender << endl;
+		fout.close();
+	}
+}
+
 void createUserPassword(Student* students, const int nStudent) {
 	ofstream fout;
 	fout.open("StudentUsers.txt");
