@@ -64,3 +64,4 @@ void changeStudentPassword(User& user) {
 	fout.close();
 	delete[]students;
 }
+
