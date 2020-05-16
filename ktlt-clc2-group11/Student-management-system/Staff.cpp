@@ -821,4 +821,5 @@ void createNewLecturer()
 	data << name << endl;
 
 	data.close();
+	delete[] lec;
 }
