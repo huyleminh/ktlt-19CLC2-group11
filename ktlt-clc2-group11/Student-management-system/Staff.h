@@ -28,6 +28,10 @@ void changeStaffPassword(User& user);
 
 //Course
 void addNewCourse(int& nCourses);
+void editLecturers();
+void convertToLower(string& s);
+void createUsername(string& username, string name);
+void createNewLecturer();
 
 
 #endif

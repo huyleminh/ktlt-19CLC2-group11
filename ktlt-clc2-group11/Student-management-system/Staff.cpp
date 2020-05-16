@@ -694,3 +694,131 @@ void addNewCourse(int& nCourses)
 
 	out.close();
 }
+
+//23. Create/Update/Delete/View all lectures
+void editLecturers()
+{
+	int mode;
+	cout << "==========Features==========\n";
+	cout << "1. Create new lecturer.\n";
+	cout << "2. Update a lecturer.\n";
+	cout << "3. Delete a lecturer.\n";
+	cout << "4. View all lecturers.\n";
+	cout << "Enter mode: ";
+	cin >> mode;
+
+	switch (mode)
+	{
+		case 1:
+			createNewLecturer();
+			break;
+		case 2:
+			//updateLecturer();
+			break;
+		case 3:
+			//deleteLecturer();
+			break;
+		case 4:
+			//viewAllLecturer();
+			break;
+		default:
+			cout << "Invalid Mode.\n";
+	}
+}
+
+void convertToLower(string& s)
+{
+	int len = s.length();
+	for (int i = 0; i < len; i++)
+	{
+		s[i] = (char)tolower(s[i]);
+	}
+}
+
+void createUsername(string& username, string name)
+{
+	convertToLower(name);
+	username = "";
+
+	username += name[0];
+
+	int len = name.length();
+
+	char ignore = ' ';
+	int temp = 0;
+
+	for (int i = 1; i < len; i++)
+	{
+		if (name[i] == ignore)
+			temp++;
+	}
+
+	for (int i = 1; i < len; i++)
+	{
+		if (temp != 1)
+		{
+			if (name[i] == ignore)
+			{
+				username += name[i + 1];
+				temp--;
+			}
+		}
+		else
+		{
+			if (name[i] == ignore)
+			{
+				for (int j = i + 1; j < len; j++)
+					username += name[j];
+			}
+		}
+	}
+}
+
+void createNewLecturer()
+{
+	string name;
+
+	cout << "Lecturer Infomation:\n";
+	cout << "Enter name: ";
+	getline(cin, name);
+
+	string username;
+
+	createUsername(username, name);
+
+	string password;
+
+	cout << "Enter password: ";
+	getline(cin, password);
+
+	Lecturer* lec;
+	int nLec;
+	loadLecturerUser(lec, nLec);
+
+	nLec;
+
+	ofstream data;
+
+	data.open("Lecturers.txt");
+
+	if (!data.is_open())
+	{
+		cout << "Read file error.\n";
+		return;
+	}
+
+	data << nLec + 1 << endl << endl;
+	for (int i = 0; i < nLec; i++)
+	{
+		data << lec[i].user.username << endl;
+		data << lec[i].user.password << endl;
+		data << lec[i].name << endl;
+		data << endl;
+	}
+
+	data << username << endl;
+	data << password << endl;
+	data << name << endl;
+
+	data.close();
+}
