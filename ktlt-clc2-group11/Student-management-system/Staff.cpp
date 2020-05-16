@@ -572,8 +572,6 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 	fout.close();
 }
 
-//
-
 //15. Manually add a new course
 void addNewCourse(Course& c)
 {
