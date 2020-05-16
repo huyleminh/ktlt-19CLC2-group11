@@ -15,7 +15,6 @@ struct Date {
 struct User {
 	string username;
 	string password;
-	string name;
 };
 
 struct Staff {
