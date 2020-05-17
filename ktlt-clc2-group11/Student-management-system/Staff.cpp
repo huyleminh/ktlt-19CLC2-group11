@@ -600,6 +600,9 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 
 	fin.close();
 	fout.close();
+
+	createClassCourse(courses, nCourse);
+	addStudentIntoCourse();
 }
 
 //Create course-class file 
@@ -649,10 +652,30 @@ void createClassCourse(Course*& courses, const int nCourse) {
 }
 
 //add student into file course
-void addStudentIntoCourse() {
-	Student* students;
-	int nstu;
+void splitClassID(string& str) {
+	string classId = "";
+	for(int i = 0; str[i] != '-'; i++) {
+		classId += str[i];
+	}
+	str = classId;
+}
 
+void addStudentIntoCourse() {
+	string fileCourse = "";
+	string source = "";
+
+	ifstream finCourse;
+	if(isFileOpen(finCourse, "ListCourses.txt") == false) 
+		return;
+
+	while(!finCourse.eof()){
+		getline(finCourse, fileCourse, '\n');
+		source = fileCourse;
+		splitClassID(source);
+		source += "-Students.txt";
+
+		copyFile(source, fileCourse);
+	}
 }
 
 //15. Manually add a new course
