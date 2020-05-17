@@ -676,6 +676,7 @@ void addStudentIntoCourse() {
 
 		copyFile(source, fileCourse);
 	}
+	finCourse.close();
 }
 
 //15. Manually add a new course
