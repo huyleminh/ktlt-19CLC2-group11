@@ -26,8 +26,11 @@ void changeStaffPassword(User& user);
 //6. View profile information.
 //This function is located in Header.h
 
-//Course
-void addNewCourse(Course& c);
+//2 Courses.
+void courseMode();
+void importCoursesFromCsvFile(Course*& courses, int& nCourse);
+void createClassCourse(Course*& courses, const int nCourse);
 
+void addNewCourse(Course& c);
 
 #endif
