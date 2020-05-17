@@ -145,7 +145,7 @@ void addStudentToClass() {
 
 	ofstream fout;
 	
-	fout.open("Students.txt", ios::app);
+	fout.open("Students.txt", ios::app); 
 	if (!fout.is_open()) {
 		cout << "Can not open Students.txt\n";
 		return;
@@ -177,6 +177,7 @@ void addStudentToClass() {
 
 	fout.close();
 }
+
 void createUserPassword(Student* students, const int nStudent) {
 	ofstream fout;
 	fout.open("StudentUsers.txt");
@@ -213,8 +214,8 @@ void getListClass(int& n, string*& Class)
 	while (!data.eof())
 	{
 		++i;
-		getline(data,Class[i], '\n');
-		cout <<i<<". "<<Class[i]<< endl;
+		getline(data, Class[i], '\n');
+		cout << i << ". " << Class[i] << endl;
 	}
 	data.close();
 }
@@ -491,6 +492,7 @@ OPTION:
 	}
 }
 
+//14
 void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 	ifstream fin;
 	if (isFileOpen(fin, "Courses.csv") == false)
@@ -506,7 +508,7 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 	string ignore = "";
 	while (!fin.eof()) {
 		getline(fin, ignore, '\n');
-		++nCourse;
+		nCourse++;
 	}
 
 	courses = new Course[nCourse];
@@ -542,8 +544,6 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 		fin >> courses[i].endDate.day;
 		getline(fin, ignore, ',');
 
-		fin.ignore(1);
-
 		getline(fin, courses[i].courseTime.dayOfWeek, ',');
 
 		getline(fin, courses[i].courseTime.startHour, ':');
@@ -570,6 +570,59 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 
 	fin.close();
 	fout.close();
+}
+
+//Create course-class file 
+void createClassCourse(Course*& courses, const int nCourse) {
+	ofstream f;
+	f.open("ListCourses.txt");
+	if(!f.is_open()){
+		cout << "Can not open ListCourses.txt.\n";
+		return;
+	}
+	
+	string filename = "";
+	convertToUpper(courses[0].classID);
+	convertToUpper(courses[0].ID);
+	filename += courses[0].classID + "-" + courses[0].ID + ".txt";
+	
+	f << filename << endl;
+
+	ofstream fout;
+	fout.open(filename);
+	if (!fout.is_open()) {
+		cout << "Can not open " << filename << endl;
+		return;
+	}
+	fout.close();
+
+	for (int i = 1; i < nCourse; i++) {
+		if (courses[i].classID == courses[i - 1].classID && courses[i].ID == courses[i - 1].ID)
+			continue;
+		filename = "";
+		convertToUpper(courses[i].classID);
+		convertToUpper(courses[i].ID);
+		filename += courses[i].classID + "-" + courses[i].ID + ".txt";
+
+		f << filename << endl;
+
+		ofstream fout;
+		fout.open(filename);
+		if (!fout.is_open()) {
+			cout << "Can not open " << filename << endl;
+			return;
+		}
+		fout.close();
+	}
+
+	f.close();
+}
+
+//add student into file course
+void addStudentIntoCourse() {
+	Student* students;
+	int nstu;
+
 }
 
 //15. Manually add a new course
