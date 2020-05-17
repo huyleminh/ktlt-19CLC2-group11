@@ -30,6 +30,10 @@ void changeStaffPassword(User& user);
 void courseMode();
 void importCoursesFromCsvFile(Course*& courses, int& nCourse);
 void createClassCourse(Course*& courses, const int nCourse);
+//add student into file course
+void splitClassID(string& str);
+void addStudentIntoCourse();
+
 
 void addNewCourse(Course& c);
 
