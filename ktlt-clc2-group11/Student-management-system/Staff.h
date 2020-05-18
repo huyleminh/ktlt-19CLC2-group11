@@ -32,6 +32,15 @@ void editLecturers();
 void convertToLower(string& s);
 void createUsername(string& username, string name);
 void createNewLecturer();
+//2 Courses.
+void courseMode();
+void importCoursesFromCsvFile(Course*& courses, int& nCourse);
+void createClassCourse(Course*& courses, const int nCourse);
+//add student into file course
+void splitClassID(string& str);
+void addStudentIntoCourse();
 
+
+void addNewCourse(Course& c);
 
 #endif

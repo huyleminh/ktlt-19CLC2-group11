@@ -55,10 +55,12 @@ void loadStaffUser(Staff*& staffs, int& nStaff) {
 
 	fin >> nStaff;
 	staffs = new Staff[nStaff];
-	
+
 	string ignore = "";
+	fin.ignore(1);
+
 	for (int i = 0; i < nStaff; i++) {
-		getline(cin, ignore, '\n');
+		getline(fin, ignore, '\n');
 		getline(fin, staffs[i].user.username, '\n');
 		getline(fin, staffs[i].user.password, '\n');
 		getline(fin, staffs[i].name, '\n');
@@ -74,10 +76,12 @@ void loadLecturerUser(Lecturer*& lecturers, int& nLec) {
 
 	fin >> nLec;
 	lecturers = new Lecturer[nLec];
+
 	string ignore = "";
+	fin.ignore(1);
 
 	for (int i = 0; i < nLec; i++) {
-		getline(cin, ignore, '\n');
+		getline(fin, ignore, '\n');
 		getline(fin, lecturers[i].user.username, '\n');
 		getline(fin, lecturers[i].user.password, '\n');
 		getline(fin, lecturers[i].name, '\n');
@@ -93,10 +97,12 @@ void loadStudentUser(Student_User*& students, int& nStu) {
 
 	fin >> nStu;
 	students = new Student_User[nStu];
+
 	string ignore = "";
-	
+	fin.ignore(1);
+
 	for (int i = 0; i < nStu; i++) {
-		getline(cin, ignore, '\n');
+		getline(fin, ignore, '\n');
 		getline(fin, students[i].user.username, '\n');
 		getline(fin, students[i].user.password, '\n');
 		getline(fin, students[i].name, '\n');

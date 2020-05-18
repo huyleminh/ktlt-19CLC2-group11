@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#define MAX_BUF 1000
 using namespace std;
 
 struct Date {
@@ -54,27 +55,6 @@ struct Student {
 	string DoB;
 	string classID;
 	bool active;
-};
-
-struct Time
-{
-	string dayOfWeek;
-	string startHour;
-	string startMin;
-	string endHour;
-	string endMin;
-};
-
-struct Course
-{
-	string ID;
-	string name;
-	string classID;
-	string lecAccount;
-	Date startDate;
-	Date endDate;
-	Time courseTime;
-	string room;
 };
 
 struct Time
@@ -166,6 +146,35 @@ inline void changePassword(User& user) {
 inline void viewProfile(const User user) {
 	cout << "Name : " << user.name << endl;
 	cout << "User name : " << user.username << endl;
+}
+
+inline void copyFile(string source, string destination) {
+	ifstream fin;
+	ofstream fout;
+
+	fin.open(source, ios::in | ios::binary);
+	if(!fin.is_open()){
+		cout << "Can not open " << source << endl;
+		return;
+	}
+
+	fout.open(destination, ios::out | ios::binary);
+	if(!fout.is_open()){
+		cout << "Can not open " << destination << endl;
+		return;
+	}
+
+	int x = 0;
+	char buff[MAX_BUF];
+
+	do {
+		fin.read((char*)buff, MAX_BUF);
+		x = fin.gcount();
+		fout.write((char*)buff, x);
+	} while(x == MAX_BUF);
+	
+	fin.close();
+	fout.close();
 }
 
 #endif
