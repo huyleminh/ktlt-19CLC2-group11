@@ -651,6 +651,10 @@ void createClassCourse(Course*& courses, const int nCourse) {
 	f.close();
 }
 
+//19CLC2-CS162.txt
+//19CLC2-CS160.txt
+//19CLC1-CS162.txt
+
 //add student into file course
 void splitClassID(string& str) {
 	string classId = "";
