@@ -784,6 +784,7 @@ void editLecturers()
 	cout << "4. View all lecturers.\n";
 	cout << "Enter mode: ";
 	cin >> mode;
+	cout << endl;
 
 	switch (mode)
 	{
@@ -791,7 +792,7 @@ void editLecturers()
 			createNewLecturer();
 			break;
 		case 2:
-			//updateLecturer();
+			updateLecturer();
 			break;
 		case 3:
 			//deleteLecturer();
@@ -837,7 +838,8 @@ void createUsername(string& username, string name)
 		{
 			if (name[i] == ignore)
 			{
-				username += name[i + 1];
+				int index = i + 1;
+				username += name[index];
 				temp--;
 			}
 		}
@@ -898,6 +900,135 @@ void createNewLecturer()
 	data << password << endl;
 	data << name << endl;
 
+	data.close();
+	delete[] lec;
+}
+
+void createDupUsername(string& username, string name)
+{
+	convertToLower(name);
+	username = "";
+
+	username += name[0];
+
+	int len = name.length();
+
+	char ignore = ' ';
+	int temp = 0;
+
+	for (int i = 1; i < len; i++)
+	{
+		if (name[i] == ignore)
+			temp++;
+	}
+
+	for (int i = 1; i < len; i++)
+	{
+		if (temp != 1)
+		{
+			if (name[i] == ignore)
+			{
+				int index = i + 1;
+				while (name[index] != ignore)
+				{
+					username += name[index];
+					index++;
+				}
+				temp--;
+			}
+		}
+		else
+		{
+			if (name[i] == ignore)
+			{
+				for (int j = i + 1; j < len; j++)
+					username += name[j];
+			}
+		}
+	}
+}
+
+void updateLecturer()
+{
+	Lecturer* lec;
+	int nLec;
+	loadLecturerUser(lec, nLec);
+
+	int mode = 0;
+	cout << "==========Features==========\n";
+	cout << "1. Update password.\n";
+	cout << "2. Fix duplicate username.\n";
+	cout << "Enter mode: ";
+	cin >> mode;
+
+	if (mode == 1)
+	{
+		string username = "";
+
+		cout << "Enter username: ";
+		getline(cin, username);
+
+		for (int i = 0; i < nLec; i++)
+		{
+			if (lec[i].user.username == username)
+			{
+				changePassword(lec[i].user);
+				break;
+			}
+		}
+		cout << "\nChange password successfully.\n";
+	}
+
+	if (mode == 2)
+	{
+		for (int i = 0; i < nLec; i++)
+		{
+			string username = lec[i].user.username;
+
+			int count = 0;
+
+			for (int j = 0; j < nLec; j++)
+			{
+				if (lec[j].user.username == username)
+					count++;
+			}
+
+			if (count > 1)
+			{
+
+				for (int j = 0; j < nLec; j++)
+				{
+					if (lec[j].user.username == username)
+					{
+						createDupUsername(lec[j].user.username, lec[j].name);
+						count--;
+					}
+					if (count == 1)
+						break;
+				}
+			}
+		}
+		cout << "\nFix duplicate username successfully.\n";
+	}
+
+	ofstream data;
+
+	data.open("Lecturers.txt");
+
+	if (!data.is_open())
+	{
+		cout << "Read file error.\n";
+		return;
+	}
+
+	data << nLec << endl << endl;
+	for (int i = 0; i < nLec; i++)
+	{
+		data << lec[i].user.username << endl;
+		data << lec[i].user.password << endl;
+		data << lec[i].name << endl;
+		data << endl;
+	}
 	data.close();
 	delete[] lec;
 }
