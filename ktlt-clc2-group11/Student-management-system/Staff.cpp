@@ -1071,6 +1071,24 @@ void deleteLecturer()
 	}
 }
 
+void viewAllLecturers()
+{
+	Lecturer* lec;
+	int nLec;
+	loadLecturerUser(lec, nLec);
+
+	cout << "List of lecturers:";
+
+	for (int i = 0; i < nLec; i++)
+	{
+		cout << "\nLecturer #" << i + 1 << ":" << endl;
+		cout << "Username: " << lec[i].user.username << endl;
+		cout << "Name: " << lec[i].name << endl;
+		cout << endl;
+	}
+	delete[] lec;
+}
+
 void editLecturers()
 {
 	int mode;
@@ -1095,7 +1113,7 @@ void editLecturers()
 		deleteLecturer();
 		break;
 	case 4:
-		//viewAllLecturer();
+		viewAllLecturers();
 		break;
 	default:
 		cout << "Invalid Mode.\n";

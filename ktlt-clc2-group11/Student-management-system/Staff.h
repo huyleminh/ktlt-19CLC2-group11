@@ -34,6 +34,7 @@ void createNewLecturer();
 void createDupUsername(string& username, string name);
 void updateLecturer();
 void deleteLecturer();
+void viewAllLecturers();
 void editLecturers();
 //2 Courses.
 void courseMode();
