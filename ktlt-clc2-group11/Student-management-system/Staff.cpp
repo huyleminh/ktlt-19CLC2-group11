@@ -774,36 +774,6 @@ void addNewCourse(int& nCourses)
 }
 
 //23. Create/Update/Delete/View all lectures
-void editLecturers()
-{
-	int mode;
-	cout << "==========Features==========\n";
-	cout << "1. Create new lecturer.\n";
-	cout << "2. Update a lecturer.\n";
-	cout << "3. Delete a lecturer.\n";
-	cout << "4. View all lecturers.\n";
-	cout << "Enter mode: ";
-	cin >> mode;
-	cout << endl;
-
-	switch (mode)
-	{
-		case 1:
-			createNewLecturer();
-			break;
-		case 2:
-			updateLecturer();
-			break;
-		case 3:
-			//deleteLecturer();
-			break;
-		case 4:
-			//viewAllLecturer();
-			break;
-		default:
-			cout << "Invalid Mode.\n";
-	}
-}
 
 void convertToLower(string& s)
 {
@@ -1031,4 +1001,103 @@ void updateLecturer()
 	}
 	data.close();
 	delete[] lec;
+}
+
+void deleteLecturer()
+{
+	Lecturer* lec;
+	int nLec;
+	loadLecturerUser(lec, nLec);
+
+	string username = "";
+
+	cout << "Enter username to delete: ";
+	getline(cin, username);
+
+	for (int i = 0; i < nLec; i++)
+	{
+		if (lec[i].user.username == username)
+		{
+			string Pass = "";
+			int numInput = 0;
+
+			do {
+				cout << "> Enter your password to delete: ";
+				getline(cin, Pass, '\n');
+				numInput++;
+				if (numInput == 10)
+				{
+					cout << "> You have entered the password more than 10 times. Please try again.\n";
+					return;
+				}
+			} while (Pass != lec[i].user.password);
+
+			int nLecNew = nLec - 1;
+			Lecturer* newLec = new Lecturer[nLecNew];
+			int k = 0;
+			for (int j = 0; j < nLec; j++)
+			{
+				if (lec[j].user.username != username)
+				{
+					newLec[k] = lec[j];
+					k++;
+				}
+			}
+
+			ofstream data;
+
+			data.open("Lecturers.txt");
+
+			if (!data.is_open())
+			{
+				cout << "Read file error.\n";
+				return;
+			}
+
+			data << nLecNew << endl << endl;
+			for (int i = 0; i < nLecNew; i++)
+			{
+				data << newLec[i].user.username << endl;
+				data << newLec[i].user.password << endl;
+				data << newLec[i].name << endl;
+				data << endl;
+			}
+			data.close();
+			delete[] lec;
+			delete[] newLec;
+			cout << "\nDelete lecturer " << username << " successfully.\n";
+			return;
+		}
+	}
+}
+
+void editLecturers()
+{
+	int mode;
+	cout << "==========Features==========\n";
+	cout << "1. Create new lecturer.\n";
+	cout << "2. Update a lecturer.\n";
+	cout << "3. Delete a lecturer.\n";
+	cout << "4. View all lecturers.\n";
+	cout << "Enter mode: ";
+	cin >> mode;
+	cout << endl;
+
+	switch (mode)
+	{
+	case 1:
+		createNewLecturer();
+		break;
+	case 2:
+		updateLecturer();
+		break;
+	case 3:
+		deleteLecturer();
+		break;
+	case 4:
+		//viewAllLecturer();
+		break;
+	default:
+		cout << "Invalid Mode.\n";
+	}
 }
