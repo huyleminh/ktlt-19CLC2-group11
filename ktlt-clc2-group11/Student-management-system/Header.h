@@ -54,7 +54,7 @@ struct Student {
 	string gender;
 	string DoB;
 	string classID;
-	bool active;
+	bool active = true;
 };
 
 struct Time
@@ -107,6 +107,7 @@ struct Course
 	Date endDate;
 	Time courseTime;
 	string room;
+	bool active = true;
 };
 
 struct Semester {
@@ -119,8 +120,17 @@ struct academicYear {
 	Semester semesterArray[3];
 };
 
-inline bool isFileOpen(ifstream &fin, const char* filename) {
-	fin.open(filename);
+struct ScoreBoard {
+	string studentID;
+	string name;
+	float _midTerm;
+	float _final;
+	float _bonus;
+	float _total;
+};
+
+inline bool isFileOpen(ifstream &fin, string filename) {
+	fin.open(filename, ios::in);
 	if (!fin.is_open()) {
 		cout << "Can not open " << filename << endl;
 		return false;
