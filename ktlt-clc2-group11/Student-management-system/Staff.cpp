@@ -594,6 +594,7 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 		fout << courses[i].courseTime.startHour << ':' << courses[i].courseTime.startMin << endl;
 		fout << courses[i].courseTime.endHour << ':' << courses[i].courseTime.endMin << endl;
 		fout << courses[i].room << endl;
+		fout << courses[i].active << endl;
 
 		i++;
 	}
@@ -619,7 +620,7 @@ void createClassCourse(Course*& courses, const int nCourse) {
 	convertToUpper(courses[0].ID);
 	filename += courses[0].classID + "-" + courses[0].ID + ".txt";
 	
-	f << filename << endl;
+	f << filename << endl;  
 
 	ofstream fout;
 	fout.open(filename);
@@ -651,9 +652,9 @@ void createClassCourse(Course*& courses, const int nCourse) {
 	f.close();
 }
 
-//19CLC2-CS162.txt
+//19CLC2-CS162.txt  
 //19CLC2-CS160.txt
-//19CLC1-CS162.txt
+//19CLC1-CS162.txt  
 
 //add student into file course
 void splitClassID(string& str) {
@@ -676,7 +677,7 @@ void addStudentIntoCourse() {
 		getline(finCourse, fileCourse, '\n');
 		source = fileCourse;
 		splitClassID(source);
-		source += "-Students.txt";
+		source += "-Students.txt";  
 
 		copyFile(source, fileCourse);
 	}
@@ -771,6 +772,104 @@ void addNewCourse(int& nCourses)
 	out << c.room;
 
 	out.close();
+}
+
+void loadCoursesFromTXT(string filename, Course* courses, int n) {
+	ifstream fin;
+	if(isFileOpen(fin, filename) == false)
+		return;
+
+	fin >> n;
+	courses = new Course[n];
+	string ignore = "";
+
+	fin.ignore(1);
+
+	for (int i = 0; i < n; i++) {
+		getline(fin, ignore, '\n');
+		getline(fin, courses[i].ID, '\n');
+		getline(fin, courses[i].classID, '\n');
+		getline(fin, courses[i].name, '\n');
+		getline(fin, courses[i].lecAccount, '\n');
+
+		fin >> courses[i].startDate.day;
+		getline(fin, ignore, '-');
+		fin >> courses[i].startDate.month;
+		getline(fin, ignore, '-');
+		fin >> courses[i].startDate.year;
+		
+		fin >> courses[i].endDate.day;
+		getline(fin, ignore, '-');
+		fin >> courses[i].endDate.month;
+		getline(fin, ignore, '-');
+		fin >> courses[i].endDate.year;
+
+		getline(fin, courses[i].courseTime.dayOfWeek);
+		
+		fin >> courses[i].courseTime.startHour;
+		getline(fin, ignore, ':');
+		fin >> courses[i].courseTime.startMin;
+
+		fin >> courses[i].courseTime.endHour;
+		getline(fin, ignore, ':');
+		fin >> courses[i].courseTime.endMin;
+
+		getline(fin, courses[i].room);
+	}
+}
+
+void removeCourse () {
+	Course course;
+
+	cout << "> Enter course ID: "; 
+	cin >> course.ID;
+	cout << "> Enter course class ID: ";
+	cin >> course.classID;
+
+	Course* courses;
+	int n;
+
+	// ifstream fin;
+	// if(isFileOpen(fin, "Courses.txt") == false) 
+	// 	return;
+
+	// fin >> n;
+	// courses = new Course[n];
+	// string ignore = "";
+
+	// fin.ignore(1);
+
+	// for (int i = 0; i < n; i++) {
+	// 	getline(fin, ignore, '\n');
+	// 	getline(fin, courses[i].ID, '\n');
+	// 	getline(fin, courses[i].classID, '\n');
+	// 	getline(fin, courses[i].name, '\n');
+	// 	getline(fin, courses[i].lecAccount, '\n');
+
+	// 	fin >> courses[i].startDate.day;
+	// 	getline(fin, ignore, '-');
+	// 	fin >> courses[i].startDate.month;
+	// 	getline(fin, ignore, '-');
+	// 	fin >> courses[i].startDate.year;
+		
+	// 	fin >> courses[i].endDate.day;
+	// 	getline(fin, ignore, '-');
+	// 	fin >> courses[i].endDate.month;
+	// 	getline(fin, ignore, '-');
+	// 	fin >> courses[i].endDate.year;
+
+	// 	getline(fin, courses[i].courseTime.dayOfWeek);
+		
+	// 	fin >> courses[i].courseTime.startHour;
+	// 	getline(fin, ignore, ':');
+	// 	fin >> courses[i].courseTime.startMin;
+
+	// 	fin >> courses[i].courseTime.endHour;
+	// 	getline(fin, ignore, ':');
+	// 	fin >> courses[i].courseTime.endMin;
+
+	// 	getline(fin, courses[i].room);
+	// }	
 }
 
 //23. Create/Update/Delete/View all lectures
@@ -900,4 +999,68 @@ void createNewLecturer()
 
 	data.close();
 	delete[] lec;
+}
+
+//25. Export a scoreboard to a csv file.
+
+void getDestinationTXT(const string sourceTXT, string& destinationCSV) {
+	destinationCSV = "";
+
+	for (int i = 0; i != '.'; i++)
+		destinationCSV += sourceTXT[i];
+	
+	destinationCSV += ".csv";
+}
+
+void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV) {
+	ifstream fin;
+	if(isFileOpen(fin, sourceTXT) == false)
+		return;
+
+	ofstream fout;
+	fout.open(destinationCSV, ios::out);
+	if(!fout.is_open()) {
+		cout << "Can not open " << destinationCSV << endl;
+		return;
+	}
+
+	ScoreBoard* scores;
+	int nScor = 0;
+
+	//read score from .txt
+	fin.close();
+
+	// for (int i = 0; i < nScor; i++) {
+	// 	fout << nScor + 1 << ',';
+	// 	fout << scores[i].studentID << ',';
+	// 	fout << scores[i].name << ',';
+	// 	fout << scores[i]._midTerm << ',';
+	// 	fout << scores[i]._final<< ',';
+	// 	fout << scores[i]._bonus << ',';
+	// 	fout << scores[i]._total << endl;
+	// }
+	fout.close();
+
+	//delete scores[];
+}
+
+void exportScoreBoardToCSV () {
+	ifstream fin; 
+	if(isFileOpen(fin, "ListScoreBoard.txt") == false) {
+		cout << "Can not open ListScoreBoard.txt.\n";
+		return;
+	}
+
+	string filename = "";
+
+	while(!fin.eof()) {
+		getline(fin, filename, '\n');
+
+		string temp = filename;
+		getDestinationTXT(filename, temp);
+
+		export_A_ScoreboardToCsv(filename, temp);
+	}
+
+	fin.close();
 }
