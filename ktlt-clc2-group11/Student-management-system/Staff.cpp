@@ -774,7 +774,7 @@ void addNewCourse(int& nCourses)
 	out.close();
 }
 
-void loadCoursesFromTXT(string filename, Course* courses, int n) {
+void loadCoursesFromTXT(string filename, Course*& courses, int n) {
 	ifstream fin;
 	if(isFileOpen(fin, filename) == false)
 		return;
@@ -816,6 +816,8 @@ void loadCoursesFromTXT(string filename, Course* courses, int n) {
 
 		getline(fin, courses[i].room);
 	}
+
+	fin.close();
 }
 
 void removeCourse () {
