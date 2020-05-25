@@ -121,7 +121,7 @@ void menu() {
 
 	switch (loginMode) {
 	case 1:
-		
+		showStaffMenu(user);
 		break;
 	case 2:
 		
@@ -135,4 +135,3 @@ void menu() {
 		break;
 	}
 }
-//demo
