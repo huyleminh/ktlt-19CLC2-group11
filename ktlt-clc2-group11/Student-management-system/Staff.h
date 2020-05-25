@@ -45,6 +45,6 @@ void splitClassID(string& str);
 void addStudentIntoCourse();
 
 
-void addNewCourse(Course& c);
+void addNewCourse(int& nCourses);
 
 #endif
