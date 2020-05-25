@@ -28,10 +28,14 @@ void changeStaffPassword(User& user);
 
 //Course
 void addNewCourse(int& nCourses);
-void editLecturers();
 void convertToLower(string& s);
 void createUsername(string& username, string name);
 void createNewLecturer();
+void createDupUsername(string& username, string name);
+void updateLecturer();
+void deleteLecturer();
+void viewAllLecturers();
+void editLecturers();
 //2 Courses.
 void courseMode();
 void importCoursesFromCsvFile(Course*& courses, int& nCourse);

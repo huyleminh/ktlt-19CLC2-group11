@@ -863,35 +863,6 @@ void removeCourse () {
 }
 
 //23. Create/Update/Delete/View all lectures
-void editLecturers()
-{
-	int mode;
-	cout << "==========Features==========\n";
-	cout << "1. Create new lecturer.\n";
-	cout << "2. Update a lecturer.\n";
-	cout << "3. Delete a lecturer.\n";
-	cout << "4. View all lecturers.\n";
-	cout << "Enter mode: ";
-	cin >> mode;
-
-	switch (mode)
-	{
-		case 1:
-			createNewLecturer();
-			break;
-		case 2:
-			//updateLecturer();
-			break;
-		case 3:
-			//deleteLecturer();
-			break;
-		case 4:
-			//viewAllLecturer();
-			break;
-		default:
-			cout << "Invalid Mode.\n";
-	}
-}
 
 void convertToLower(string& s)
 {
@@ -926,7 +897,8 @@ void createUsername(string& username, string name)
 		{
 			if (name[i] == ignore)
 			{
-				username += name[i + 1];
+				int index = i + 1;
+				username += name[index];
 				temp--;
 			}
 		}
@@ -1053,4 +1025,248 @@ void exportScoreBoardToCSV () {
 	}
 
 	fin.close();
+void createDupUsername(string& username, string name)
+{
+	convertToLower(name);
+	username = "";
+
+	username += name[0];
+
+	int len = name.length();
+
+	char ignore = ' ';
+	int temp = 0;
+
+	for (int i = 1; i < len; i++)
+	{
+		if (name[i] == ignore)
+			temp++;
+	}
+
+	for (int i = 1; i < len; i++)
+	{
+		if (temp != 1)
+		{
+			if (name[i] == ignore)
+			{
+				int index = i + 1;
+				while (name[index] != ignore)
+				{
+					username += name[index];
+					index++;
+				}
+				temp--;
+			}
+		}
+		else
+		{
+			if (name[i] == ignore)
+			{
+				for (int j = i + 1; j < len; j++)
+					username += name[j];
+			}
+		}
+	}
+}
+
+void updateLecturer()
+{
+	Lecturer* lec;
+	int nLec;
+	loadLecturerUser(lec, nLec);
+
+	int mode = 0;
+	cout << "==========Features==========\n";
+	cout << "1. Update password.\n";
+	cout << "2. Fix duplicate username.\n";
+	cout << "Enter mode: ";
+	cin >> mode;
+
+	if (mode == 1)
+	{
+		string username = "";
+
+		cout << "Enter username: ";
+		getline(cin, username);
+
+		for (int i = 0; i < nLec; i++)
+		{
+			if (lec[i].user.username == username)
+			{
+				changePassword(lec[i].user);
+				break;
+			}
+		}
+		cout << "\nChange password successfully.\n";
+	}
+
+	if (mode == 2)
+	{
+		for (int i = 0; i < nLec; i++)
+		{
+			string username = lec[i].user.username;
+
+			int count = 0;
+
+			for (int j = 0; j < nLec; j++)
+			{
+				if (lec[j].user.username == username)
+					count++;
+			}
+
+			if (count > 1)
+			{
+
+				for (int j = 0; j < nLec; j++)
+				{
+					if (lec[j].user.username == username)
+					{
+						createDupUsername(lec[j].user.username, lec[j].name);
+						count--;
+					}
+					if (count == 1)
+						break;
+				}
+			}
+		}
+		cout << "\nFix duplicate username successfully.\n";
+	}
+
+	ofstream data;
+
+	data.open("Lecturers.txt");
+
+	if (!data.is_open())
+	{
+		cout << "Read file error.\n";
+		return;
+	}
+
+	data << nLec << endl << endl;
+	for (int i = 0; i < nLec; i++)
+	{
+		data << lec[i].user.username << endl;
+		data << lec[i].user.password << endl;
+		data << lec[i].name << endl;
+		data << endl;
+	}
+	data.close();
+	delete[] lec;
+}
+
+void deleteLecturer()
+{
+	Lecturer* lec;
+	int nLec;
+	loadLecturerUser(lec, nLec);
+
+	string username = "";
+
+	cout << "Enter username to delete: ";
+	getline(cin, username);
+
+	for (int i = 0; i < nLec; i++)
+	{
+		if (lec[i].user.username == username)
+		{
+			string Pass = "";
+			int numInput = 0;
+
+			do {
+				cout << "> Enter your password to delete: ";
+				getline(cin, Pass, '\n');
+				numInput++;
+				if (numInput == 10)
+				{
+					cout << "> You have entered the password more than 10 times. Please try again.\n";
+					return;
+				}
+			} while (Pass != lec[i].user.password);
+
+			int nLecNew = nLec - 1;
+			Lecturer* newLec = new Lecturer[nLecNew];
+			int k = 0;
+			for (int j = 0; j < nLec; j++)
+			{
+				if (lec[j].user.username != username)
+				{
+					newLec[k] = lec[j];
+					k++;
+				}
+			}
+
+			ofstream data;
+
+			data.open("Lecturers.txt");
+
+			if (!data.is_open())
+			{
+				cout << "Read file error.\n";
+				return;
+			}
+
+			data << nLecNew << endl << endl;
+			for (int i = 0; i < nLecNew; i++)
+			{
+				data << newLec[i].user.username << endl;
+				data << newLec[i].user.password << endl;
+				data << newLec[i].name << endl;
+				data << endl;
+			}
+			data.close();
+			delete[] lec;
+			delete[] newLec;
+			cout << "\nDelete lecturer " << username << " successfully.\n";
+			return;
+		}
+	}
+}
+
+void viewAllLecturers()
+{
+	Lecturer* lec;
+	int nLec;
+	loadLecturerUser(lec, nLec);
+
+	cout << "List of lecturers:";
+
+	for (int i = 0; i < nLec; i++)
+	{
+		cout << "\nLecturer #" << i + 1 << ":" << endl;
+		cout << "Username: " << lec[i].user.username << endl;
+		cout << "Name: " << lec[i].name << endl;
+		cout << endl;
+	}
+	delete[] lec;
+}
+
+void editLecturers()
+{
+	int mode;
+	cout << "==========Features==========\n";
+	cout << "1. Create new lecturer.\n";
+	cout << "2. Update a lecturer.\n";
+	cout << "3. Delete a lecturer.\n";
+	cout << "4. View all lecturers.\n";
+	cout << "Enter mode: ";
+	cin >> mode;
+	cout << endl;
+
+	switch (mode)
+	{
+	case 1:
+		createNewLecturer();
+		break;
+	case 2:
+		updateLecturer();
+		break;
+	case 3:
+		deleteLecturer();
+		break;
+	case 4:
+		viewAllLecturers();
+		break;
+	default:
+		cout << "Invalid Mode.\n";
+	}
 }
