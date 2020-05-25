@@ -21,7 +21,7 @@ OPTION:
 	switch (option)
 	{
 	case 1: 
-		//call class and student
+		classAndStudentMode();
 		break;
 	case 2:
 		//call course
@@ -82,9 +82,6 @@ OPTION:
 		break;
 	}
 }
-
-//void edit
-
 
 void importStudentsFromCSV(Student*& students, int& nStudent) {
 	ifstream fin;
@@ -829,49 +826,40 @@ void removeCourse () {
 	cin >> course.classID;
 
 	Course* courses;
-	int n;
+	int n = 0;
 
-	// ifstream fin;
-	// if(isFileOpen(fin, "Courses.txt") == false) 
-	// 	return;
+	loadCoursesFromTXT("Courses.txt", courses, n);
 
-	// fin >> n;
-	// courses = new Course[n];
-	// string ignore = "";
+	for(int i = 0; i < n; i++) {
+		if(courses[i].ID == course.ID && courses[i].classID == course.classID) {
+			courses[i].active == false;
+			break;
+		}
+	}
 
-	// fin.ignore(1);
+	ofstream fout;
+	fout.open("Courses.txt", ios::out);
+	if(!fout.is_open()) {
+		cout << "Can not open Courses.txt.\n";
+		return;
+	}
 
-	// for (int i = 0; i < n; i++) {
-	// 	getline(fin, ignore, '\n');
-	// 	getline(fin, courses[i].ID, '\n');
-	// 	getline(fin, courses[i].classID, '\n');
-	// 	getline(fin, courses[i].name, '\n');
-	// 	getline(fin, courses[i].lecAccount, '\n');
+	fout << n << endl;
 
-	// 	fin >> courses[i].startDate.day;
-	// 	getline(fin, ignore, '-');
-	// 	fin >> courses[i].startDate.month;
-	// 	getline(fin, ignore, '-');
-	// 	fin >> courses[i].startDate.year;
-		
-	// 	fin >> courses[i].endDate.day;
-	// 	getline(fin, ignore, '-');
-	// 	fin >> courses[i].endDate.month;
-	// 	getline(fin, ignore, '-');
-	// 	fin >> courses[i].endDate.year;
-
-	// 	getline(fin, courses[i].courseTime.dayOfWeek);
-		
-	// 	fin >> courses[i].courseTime.startHour;
-	// 	getline(fin, ignore, ':');
-	// 	fin >> courses[i].courseTime.startMin;
-
-	// 	fin >> courses[i].courseTime.endHour;
-	// 	getline(fin, ignore, ':');
-	// 	fin >> courses[i].courseTime.endMin;
-
-	// 	getline(fin, courses[i].room);
-	// }	
+	for(int i = 0; i < n; i++) {
+		fout << endl << courses[i].ID << endl;
+		fout << courses[i].name << endl;
+		fout << courses[i].classID << endl;
+		fout << courses[i].lecAccount << endl;
+		fout << courses[i].startDate.year << '-' << courses[i].startDate.month << '-' << courses[i].startDate.day << endl;
+		fout << courses[i].endDate.year << '-' << courses[i].endDate.month << '-' << courses[i].endDate.day << endl;
+		fout << courses[i].courseTime.dayOfWeek << endl;
+		fout << courses[i].courseTime.startHour << ':' << courses[i].courseTime.startMin << endl;
+		fout << courses[i].courseTime.endHour << ':' << courses[i].courseTime.endMin << endl;
+		fout << courses[i].room << endl;
+		fout << courses[i].active << endl;
+	}
+	fout.close();
 }
 
 //23. Create/Update/Delete/View all lectures
