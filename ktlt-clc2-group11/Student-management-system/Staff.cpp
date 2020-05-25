@@ -437,6 +437,46 @@ void convertToUpper(string& s)
 	}
 }
 
+void viewListStudentsOfCourse()
+{
+	//19CLC2 - CS162.txt
+	ifstream data;
+	string classID, course;
+	cout << "Input course:"; cin >> classID;
+	cout << "Input class:"; cin >> course;
+	string inputPath = "";
+	string extension = ".txt";
+
+	convertToUpper(classID);
+	convertToUpper(course);
+	inputPath = classID + "-" + course + extension;
+
+	data.open(inputPath);
+
+	if (!data.is_open()) {
+		cout << "Can not open file/wrong input" << endl;
+		return;
+	}
+
+	string buff;
+	int nStudents;
+	data >> nStudents;
+
+	getline(data, buff, '\n');
+
+	cout << "Total students in course " << classID << " is " << nStudents << endl << endl;
+	cout << "List of students in course " << classID << ":\n\n";
+
+	while (!data.eof())
+	{
+		getline(data, buff, '\n');
+		cout << "Name: " << buff << endl;
+		getline(data, buff, '\n');
+		cout << "ID  : " << buff << endl;
+	}
+	data.close();
+}
+
 //Change password
 void changeStaffPassword(User& user) {
 	Staff* staffs;

@@ -20,6 +20,7 @@ void Edit();
 void getListClass(int& n, string*& Class);
 void viewListStudents(string classID);
 void convertToUpper(string& s);
+void viewListStudentsOfCourse();
 
 //5. Change password.
 void changeStaffPassword(User& user); 
