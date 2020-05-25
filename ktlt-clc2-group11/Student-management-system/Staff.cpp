@@ -1046,16 +1046,17 @@ void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV) {
 	//delete scores[];
 }
 
-void exportScoreBoardToCSV () {
-	ifstream fin; 
-	if(isFileOpen(fin, "ListScoreBoard.txt") == false) {
+void exportScoreBoardToCSV() {
+	ifstream fin;
+	if (isFileOpen(fin, "ListScoreBoard.txt") == false) {
 		cout << "Can not open ListScoreBoard.txt.\n";
 		return;
 	}
 
+
 	string filename = "";
 
-	while(!fin.eof()) {
+	while (!fin.eof()) {
 		getline(fin, filename, '\n');
 
 		string temp = filename;
@@ -1065,6 +1066,7 @@ void exportScoreBoardToCSV () {
 	}
 
 	fin.close();
+}
 void createDupUsername(string& username, string name)
 {
 	convertToLower(name);
