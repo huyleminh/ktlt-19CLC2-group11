@@ -832,7 +832,7 @@ void removeCourse () {
 
 	for(int i = 0; i < n; i++) {
 		if(courses[i].ID == course.ID && courses[i].classID == course.classID) {
-			courses[i].active == false;
+			courses[i].active = false;
 			break;
 		}
 	}
