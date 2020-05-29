@@ -1,6 +1,8 @@
 #include "Student.h"
 #include "AllRole.h"
 
+/*Main student menu*/
+
 void showStudentMenu(User& user) {
 	cout << "**********STUDENT MENU**********" << endl;
 	cout << "> 1. Check-in.\n";
@@ -8,14 +10,15 @@ void showStudentMenu(User& user) {
 	cout << "> 3. View schedules.\n";
 	cout << "> 4. View your scores of a course.\n";
 	cout << "> 5. Change password.\n";
-	cout << "> 6. View profile infomation.\n";
-	cout << "> 7. Logout and back to login menu.\n";
+	cout << "> 6. View student profile infomation.\n";
+	cout << "> 7. Logout.\n";
+	cout << "> 8. Exit app.\n";
 
 OPTION:
 	cout << "> Which mode do you want to access ? \n";
 	int option;
 	cin >> option;
-	if (option < 1 || option > 5)
+	if (option < 1 || option > 8)
 		goto OPTION;
 
 	switch (option)
@@ -29,17 +32,23 @@ OPTION:
 	case 4:
 		break;
 	case 5:
-		showStudentMenu(user);
+		changeStudentPassword(user);
 		break;
 	case 6: 
 		viewProfile(user);
-		showStudentMenu(user);
 		break;
 	case 7: 
-		menu();
-		break;
+		return;
+	case 8:
+		exit(0);
 	}
+	showStudentMenu(user);
 }
+
+//1. Check-in.
+//2. View check-in result.
+//3. View schedules.
+//4. View your scores of a course.
 
 //5. Change password.
 void changeStudentPassword(User& user) {
@@ -64,3 +73,8 @@ void changeStudentPassword(User& user) {
 	fout.close();
 	delete[]students;
 }
+
+//6. View student profile infomation.
+//this function is located in Header.h
+
+//7. Logout.
