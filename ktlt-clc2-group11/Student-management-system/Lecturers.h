@@ -3,6 +3,8 @@
 
 #include "Header.h"
 
+/*Main lecturer menu*/
+
 void showLecturerMenu(User& user);
 
 //1. View list of courses in the current semester.
@@ -12,9 +14,13 @@ void showLecturerMenu(User& user);
 //5. Import scoreboard of a course(midterm, final, lab, bonus) from a csv file.
 //6. Edit grade of a student.
 //7. View a scoreboard.
-//8. Change password.
+
+//8. Change lecturer password.
 void changeLecPassword(User& user);
-//9. View profile infomation.
-//this function is located in Header.h
+
+//9. View lecturer profile infomation.
+//This function is located in Header.h
+
+//10. Logout
 
 #endif

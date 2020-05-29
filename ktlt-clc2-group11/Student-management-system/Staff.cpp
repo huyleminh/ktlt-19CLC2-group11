@@ -1,47 +1,56 @@
 #include "Staff.h"
 #include "AllRole.h"
 
+/*Main staff menu*/  
+
 void showStaffMenu(User& user) {
 	cout << "**********STAFF MENU**********" << endl;
 	cout << "> 1. Class and student.\n";
 	cout << "> 2. Course.\n";
 	cout << "> 3. Scoreboard.\n";
 	cout << "> 4. Attendance list.\n";
-	cout << "> 5. Change password.\n";
-	cout << "> 6. View profile information.\n";
-	cout << "> 7. Logout, back to login menu.\n";
+	cout << "> 5. Change your password.\n";
+	cout << "> 6. View your profile information.\n";
+	cout << "> 7. Logout.\n";
+	cout << "> 8. Exit app.\n";
 
 OPTION: 
-	cout << "> Which mode do you want to access ? \n";
-	int option;
+	cout << "> Which mode do you want to access ?\n";
+	
+	int option = 0;
 	cin >> option;
-	if (option < 1 || option > 7)
+	if (option < 1 || option > 8)
 		goto OPTION;
 
 	switch (option)
 	{
-	case 1: 
-		classAndStudentMode();
-		break;
-	case 2:
-		//call course
-		break;
-	case 3:
-		//call scoreboard
-		break;
-	case 4: 
-		//call attendance list
-		break;
-	case 5:
-		changeStaffPassword(user);
-		showStaffMenu(user);
-	case 6:
-		viewProfile(user);
-		showStaffMenu(user);
-	case 7: 
-		menu();
+		case 1: 
+			classAndStudentMode();
+			break;
+		case 2:
+			courseMode();
+			break;
+		case 3:
+			//call scoreboard
+			break;
+		case 4: 
+			//call attendance list
+			break;
+		case 5:
+			changeStaffPassword(user);
+			break;
+		case 6:
+			viewProfile(user);
+			break;
+		case 7: 
+			return;
+		case 8: 
+			exit(0);
 	}
+	showStaffMenu(user);
 }
+
+//**1. Class and student.
 
 void classAndStudentMode() {
 	cout << "> 1. Import students from csv file.\n";
@@ -53,36 +62,43 @@ void classAndStudentMode() {
 
 OPTION:
 	cout << "> Which mode do you want to access ? \n";
+	
 	int option;
 	cin >> option;
 	if (option < 1 || option > 6)
 		goto OPTION;
-
-	Student* students;
-	int nStudent = 0;
+	
+	int nClass = 0;
+	string* Class;
+	string classID = ""; //case 5
 
 	switch (option)
 	{
 	case 1:
-		importStudentsFromCSV(students, nStudent);
-		createUserPassword(students, nStudent);
-		classAndStudentMode();
+		filterStudentToClass("Students.txt");
 		break;
 	case 2:
 		addStudentToClass();
-		classAndStudentMode();
 		break;
 	case 3:
+		Edit();
 		break;
 	case 4:
+		getListClass(nClass, Class);
+		delete[] Class;
 		break;
 	case 5: 
+		cout << "Enter class ID you want to view its students: ";
+		getline(cin, classID, '\n');
+		viewListStudents(classID);
 		break;
 	case 6:
-		break;
+		return;
 	}
+	classAndStudentMode();
 }
 
+//1. Import students from csv file.
 void importStudentsFromCSV(Student*& students, int& nStudent) {
 	ifstream fin;
 	if (isFileOpen(fin, "Students.csv") == false)
@@ -122,8 +138,59 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 	}
 	fin.close();
 	fout.close();
+
+	createUserPassword(students, nStudent);
 }
 
+void filterStudentToClass(string filename)
+{
+	ifstream in(filename);
+	int nStudents;
+	if (!in.is_open())
+	{
+		cout << "Cant open " << filename << endl;
+		return;
+	}
+
+	in >> nStudents;
+
+	Student* a = new Student[nStudents];
+
+	importStudentsFromCSV(a, nStudents);
+
+	for (int i = 0; i < nStudents; i++)
+	{
+		string classFile = a[i].classID + "-Students.txt";
+		ofstream fout(classFile, ofstream::app);
+		if (!fout.is_open())
+		{
+			cout << "Cant create file" << endl;
+			return;
+		}
+		fout << a[i].ID << endl << a[i].fullName << endl << a[i].DoB << endl << a[i].gender << endl;
+		fout.close();
+	}
+}
+
+void createUserPassword(Student* students, const int nStudent) {
+	ofstream fout;
+	fout.open("StudentUsers.txt");
+	if (!fout.is_open()) {
+		cout << "Can not open StudentUsers.txt" << endl;
+		return;
+	}
+
+	fout << nStudent << endl;
+	for (int i = 0; i < nStudent; i++) {
+		fout << endl << students[i].ID << endl;
+		fout << students[i].DoB << endl;
+		fout << students[i].fullName << endl;
+	}
+
+	fout.close();
+}
+
+//2. Add a student to a class.
 void addStudentToClass() {
 	Student newStudent;
 
@@ -175,55 +242,8 @@ void addStudentToClass() {
 	fout.close();
 }
 
-void filterStudentToClass(string filename)
-{
-	ifstream in(filename);
-	int nStudents;
-	if (!in.is_open())
-	{
-		cout << "Cant open file" << endl;
-		return;
-	}
-
-	in >> nStudents;
-
-	Student* a = new Student[nStudents];
-
-	importStudentsFromCSV(a, nStudents);
-
-	for (int i = 0; i < nStudents; i++)
-	{
-		string classFile = a[i].classID + "-Students.txt";
-		ofstream fout(classFile, ofstream::app);
-		if (!fout.is_open())
-		{
-			cout << "Cant create file" << endl;
-			return;
-		}
-		fout << a[i].ID << endl << a[i].fullName << endl << a[i].DoB << endl << a[i].gender << endl;
-		fout.close();
-	}
-}
-
-void createUserPassword(Student* students, const int nStudent) {
-	ofstream fout;
-	fout.open("StudentUsers.txt");
-	if (!fout.is_open()) {
-		cout << "Can not open StudentUsers.txt" << endl;
-		return;
-	}
-
-	fout << nStudent << endl;
-	for (int i = 0; i < nStudent; i++) {
-		fout << endl << students[i].ID << endl;
-		fout << students[i].DoB << endl;
-		fout << students[i].fullName << endl;
-	}
-
-	fout.close();
-}
-// viewFunction
-///remember delete dynamic array when call this  function
+//3. Edit existing student.
+///remember delete dynamic array when call these function
 void getListClass(int& n, string*& Class)
 {
 	ifstream data;
@@ -247,8 +267,7 @@ void getListClass(int& n, string*& Class)
 	data.close();
 }
 
-///remember delete dynamic array when call this  function
-void getListStudents(string classID,Student*&Students,int &nStudents)
+void getListStudents(string classID, Student*&Students, int &nStudents)
 {
 	ifstream data;
 	string inputPath = "";
@@ -259,7 +278,7 @@ void getListStudents(string classID,Student*&Students,int &nStudents)
 	data.open(inputPath);
 
 	if (!data.is_open()) {
-		cout << "Can not open file" << endl;
+		cout << "Can not open " << inputPath << endl;
 		return;
 	}
 	string buff;
@@ -284,7 +303,6 @@ void getListStudents(string classID,Student*&Students,int &nStudents)
 	}
 	data.close();
 }
-
 void saveStudent(Student* Students,int nStudent,string fclass) {
 	ofstream data;
 	data.open(fclass);
@@ -393,6 +411,8 @@ void Edit() {
 	delete[] Class;
 }
 
+//4. View list of classes.
+//5. View list of student in class.
 void viewListStudents(string classID)
 {
 	ifstream data;
@@ -405,7 +425,7 @@ void viewListStudents(string classID)
 	data.open(inputPath);
 
 	if (!data.is_open()) {
-		cout << "Can not open file" << endl;
+		cout << "Can not open " << inputPath << endl;
 		return;
 	}
 
@@ -437,6 +457,9 @@ void convertToUpper(string& s)
 	}
 }
 
+//6. Back to staff menu.
+//Call classAndStudentMode();
+
 void viewListStudentsOfCourse()
 {
 	//19CLC2 - CS162.txt
@@ -454,7 +477,7 @@ void viewListStudentsOfCourse()
 	data.open(inputPath);
 
 	if (!data.is_open()) {
-		cout << "Can not open file/wrong input" << endl;
+		cout << "Can not open " << inputPath << endl;
 		return;
 	}
 
@@ -477,32 +500,7 @@ void viewListStudentsOfCourse()
 	data.close();
 }
 
-//Change password
-void changeStaffPassword(User& user) {
-	Staff* staffs;
-	int n = 0;
-
-	changePassword(user);
-	loadStaffUser(staffs, n);
-	for (int i = 0; i < n; i++) {
-		if (user.username == staffs[i].user.username) {
-			staffs[i].user.password = user.password;
-			break;
-		}
-	}
-
-	ofstream fout("Staff.txt");
-	fout << n << endl;
-	for (int i = 0; i < n; i++) {
-		fout << staffs[i].user.username << endl << staffs[i].user.password << endl << staffs[i].name << endl;
-	}
-
-	fout.close();
-	delete[]staffs;
-}
-
-
-//Course mode:
+//**2. Courses.
 void courseMode() {
 	cout << "> 1. Edit academic years and semesters.\n";
 	cout << "> 2. Import courses from csv file to txt file.\n";
@@ -533,14 +531,15 @@ OPTION:
 	case 1:
 		break;
 	case 2:
-		//importCoursesFromCsvFile(courses, nCourse);
-		courseMode();
+		importCoursesFromCsvFile(courses, nCourse);
 		break;
 	case 3:
+		//addNewCourse(nCourse);
 		break;
 	case 4:
 		break;
 	case 5: 
+		removeCourse();
 		break;
 	case 6:
 		break;
@@ -549,17 +548,22 @@ OPTION:
 	case 8: 
 		break;
 	case 9:
+		viewListStudentsOfCourse();
 		break;
 	case 10:
 		break;
 	case 11:
+		editLecturers();
 		break;
 	case 12:
-		break;
+		return;
 	}
+	courseMode();
 }
 
-//14
+//1. Edit academic years and semesters.
+
+//2. Import courses from csv file to txt file.(14)
 void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 	ifstream fin;
 	if (isFileOpen(fin, "Courses.csv") == false)
@@ -688,11 +692,6 @@ void createClassCourse(Course*& courses, const int nCourse) {
 
 	f.close();
 }
-
-//19CLC2-CS162.txt  
-//19CLC2-CS160.txt
-//19CLC1-CS162.txt  
-
 //add student into file course
 void splitClassID(string& str) {
 	string classId = "";
@@ -721,7 +720,7 @@ void addStudentIntoCourse() {
 	finCourse.close();
 }
 
-//15. Manually add a new course
+//3. Manually add a new course.(15)
 void addNewCourse(int& nCourses)
 {
 	Course c;
@@ -811,6 +810,8 @@ void addNewCourse(int& nCourses)
 	out.close();
 }
 
+//4. Edit an existing course.
+//5. Remove a course.
 void loadCoursesFromTXT(string filename, Course*& courses, int n) {
 	ifstream fin;
 	if(isFileOpen(fin, filename) == false)
@@ -902,7 +903,7 @@ void removeCourse () {
 	fout.close();
 }
 
-//23. Create/Update/Delete/View all lectures
+//11. Create / update / delete / view all lecturers. (11)
 
 void convertToLower(string& s)
 {
@@ -1003,70 +1004,6 @@ void createNewLecturer()
 	delete[] lec;
 }
 
-//25. Export a scoreboard to a csv file.
-
-void getDestinationTXT(const string sourceTXT, string& destinationCSV) {
-	destinationCSV = "";
-
-	for (int i = 0; i != '.'; i++)
-		destinationCSV += sourceTXT[i];
-	
-	destinationCSV += ".csv";
-}
-
-void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV) {
-	ifstream fin;
-	if(isFileOpen(fin, sourceTXT) == false)
-		return;
-
-	ofstream fout;
-	fout.open(destinationCSV, ios::out);
-	if(!fout.is_open()) {
-		cout << "Can not open " << destinationCSV << endl;
-		return;
-	}
-
-	ScoreBoard* scores;
-	int nScor = 0;
-
-	//read score from .txt
-	fin.close();
-
-	// for (int i = 0; i < nScor; i++) {
-	// 	fout << nScor + 1 << ',';
-	// 	fout << scores[i].studentID << ',';
-	// 	fout << scores[i].name << ',';
-	// 	fout << scores[i]._midTerm << ',';
-	// 	fout << scores[i]._final<< ',';
-	// 	fout << scores[i]._bonus << ',';
-	// 	fout << scores[i]._total << endl;
-	// }
-	fout.close();
-
-	//delete scores[];
-}
-
-void exportScoreBoardToCSV() {
-	ifstream fin;
-	if (isFileOpen(fin, "ListScoreBoard.txt") == false) {
-		cout << "Can not open ListScoreBoard.txt.\n";
-		return;
-	}
-
-
-	string filename = "";
-
-	while (!fin.eof()) {
-		getline(fin, filename, '\n');
-
-		string temp = filename;
-		getDestinationTXT(filename, temp);
-
-		export_A_ScoreboardToCsv(filename, temp);
-	}
-
-	fin.close();
-}
 void createDupUsername(string& username, string name)
 {
 	convertToLower(name);
@@ -1311,4 +1248,96 @@ void editLecturers()
 	default:
 		cout << "Invalid Mode.\n";
 	}
+}
+
+
+//**3. Scoreboard.
+//25. Export a scoreboard to a csv file.
+
+void getDestinationTXT(const string sourceTXT, string& destinationCSV) {
+	destinationCSV = "";
+
+	for (int i = 0; i != '.'; i++)
+		destinationCSV += sourceTXT[i];
+	
+	destinationCSV += ".csv";
+}
+
+void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV) {
+	ifstream fin;
+	if(isFileOpen(fin, sourceTXT) == false)
+		return;
+
+	ofstream fout;
+	fout.open(destinationCSV, ios::out);
+	if(!fout.is_open()) {
+		cout << "Can not open " << destinationCSV << endl;
+		return;
+	}
+
+	ScoreBoard* scores;
+	int nScor = 0;
+
+	//read score from .txt
+	fin.close();
+
+	// for (int i = 0; i < nScor; i++) {
+	// 	fout << nScor + 1 << ',';
+	// 	fout << scores[i].studentID << ',';
+	// 	fout << scores[i].name << ',';
+	// 	fout << scores[i]._midTerm << ',';
+	// 	fout << scores[i]._final<< ',';
+	// 	fout << scores[i]._bonus << ',';
+	// 	fout << scores[i]._total << endl;
+	// }
+	fout.close();
+
+	//delete scores[];
+}
+
+void exportScoreBoardToCSV() {
+	ifstream fin;
+	if (isFileOpen(fin, "ListScoreBoard.txt") == false) {
+		cout << "Can not open ListScoreBoard.txt.\n";
+		return;
+	}
+
+
+	string filename = "";
+
+	while (!fin.eof()) {
+		getline(fin, filename, '\n');
+
+		string temp = filename;
+		getDestinationTXT(filename, temp);
+
+		export_A_ScoreboardToCsv(filename, temp);
+	}
+
+	fin.close();
+}
+
+//**4. Attendance list.
+//**5. Change staff password.
+void changeStaffPassword(User& user) {
+	Staff* staffs;
+	int n = 0;
+
+	changePassword(user);
+	loadStaffUser(staffs, n);
+	for (int i = 0; i < n; i++) {
+		if (user.username == staffs[i].user.username) {
+			staffs[i].user.password = user.password;
+			break;
+		}
+	}
+
+	ofstream fout("Staff.txt");
+	fout << n << endl;
+	for (int i = 0; i < n; i++) {
+		fout << staffs[i].user.username << endl << staffs[i].user.password << endl << staffs[i].name << endl;
+	}
+
+	fout.close();
+	delete[]staffs;
 }

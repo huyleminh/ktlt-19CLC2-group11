@@ -1,6 +1,8 @@
 #include "Lecturers.h"
 #include "AllRole.h"
 
+/*Main lecturer menu*/
+
 void showLecturerMenu(User& user) {
 	cout << "**********LECTURER MENU**********" << endl;
 	cout << "> 1. View list of courses in the current semester.\n";
@@ -11,13 +13,15 @@ void showLecturerMenu(User& user) {
 	cout << "> 6. Edit grade of a student.\n";
 	cout << "> 7. View a scoreboard.\n";
 	cout << "> 8. Change password.\n";
-	cout << "> 9. View profile infomation.\n";
-	cout << "> 10. Logout and back to login menu.\n";
+	cout << "> 9. View lecturer profile infomation.\n";
+	cout << "> 10. Logout.\n";
+	cout << "> 11. Exit app.\n";
+
 OPTION:
 	cout << "> Which mode do you want to access ? \n";
 	int option;
 	cin >> option;
-	if (option < 1 || option > 7)
+	if (option < 1 || option > 11)
 		goto OPTION;
 
 	switch (option)
@@ -38,19 +42,27 @@ OPTION:
 		break;
 	case 8:
 		changeLecPassword(user);
-		showLecturerMenu(user);
 		break;
 	case 9:
 		viewProfile(user);
-		showLecturerMenu(user);
 		break;
 	case 10: 
-		menu();
-		break;
+		return;
+	case 11:
+		exit(0);
 	}
+	showLecturerMenu(user);
 }
 
-//8. Change password.
+//1. View list of courses in the current semester.
+//2. View list of students of a course.
+//3. View attendance list of a course.
+//4. Edit an attendance.
+//5. Import scoreboard of a course(midterm, final, lab, bonus) from a csv file.
+//6. Edit grade of a student.
+//7. View a scoreboard.
+
+//8. Change lecturer password.
 void changeLecPassword(User& user) {
 	Lecturer* lecturers;
 	int n = 0;
@@ -73,3 +85,8 @@ void changeLecPassword(User& user) {
 	fout.close();
 	delete[]lecturers;
 }
+
+//9. View lecturer profile infomation.
+//This function is located in Header.h
+
+//10. Logout.
