@@ -1,17 +1,65 @@
 #include "AllRole.h"
 #include "Staff.h"
+#include "Lecturers.h"
+#include "Student.h"
+
+void menu() {
+	/*
+		*We start with mode 0: none
+		*Login successfully: 
+			*Mode 1: Staff
+			*Mode 2: Lecturer	
+			*Mode 3: Student
+		*Login failed: Login mode return 0 and back to main menu 	
+	*/
+
+	User user;
+	user.username = "";
+	user.password = "";
+	int loginMode = 0;
+	
+
+	login(user, loginMode);
+	string welcomeName = user.name;
+	convertToUpper(welcomeName);
+
+	switch (loginMode) {
+		case 1:
+			cout << "\t\t\t\tWELLCOME " << welcomeName << endl;
+			showStaffMenu(user);
+			break;
+		case 2:
+			cout << "\t\t\t\tWELLCOME " << welcomeName << endl;
+			showLecturerMenu(user);
+			break;
+		case 3:
+			cout << "\t\t\t\tWELLCOME " << welcomeName << endl;
+			showStudentMenu(user);
+			break;
+		default:
+			cout << "!!! Wrong user name or password !!!" << endl;
+			break;
+	}
+	menu();
+}
 
 void login(User& userLogin, int& loginMode) {
+	cout << "\t\t\t\t\t\t\t##############################\n";
+	cout << "\t\t\t\t\t\t\t#                            #\n";
+	cout << "\t\t\t\t\t\t\t#         LOGIN MENU         #\n";
+	cout << "\t\t\t\t\t\t\t#                            #\n";
+	cout << "\t\t\t\t\t\t\t##############################\n";
+
+	cin.ignore(1);
 	cout << " > Enter your User name : "; 
 	getline(cin, userLogin.username, '\n');
 
 	cout << " > Enter your password : ";
 	getline(cin, userLogin.password, '\n');
 
+	//Check is Staff
 	Staff* staffs; 
-	Lecturer* lecturers;
-	Student_User* students;
-	int nStaff = 0, nLec = 0, nStu = 0;
+	int nStaff = 0;
 
 	loadStaffUser(staffs, nStaff);
 	for (int i = 0; i < nStaff; i++) {
@@ -23,6 +71,10 @@ void login(User& userLogin, int& loginMode) {
 		}
 	}
 
+	//Check is lecturer
+	Lecturer* lecturers;
+	int nLec = 0;
+
 	loadLecturerUser(lecturers, nLec);
 	for (int i = 0; i < nLec; i++) {
 		if (userLogin.username == lecturers[i].user.username && userLogin.password == lecturers[i].user.password) {
@@ -32,6 +84,10 @@ void login(User& userLogin, int& loginMode) {
 			return;
 		}
 	}
+
+	//Check is Student
+	Student_User* students;
+	int  nStu = 0;
 
 	loadStudentUser(students, nStu);
 	for (int i = 0; i < nStu; i++) {
@@ -109,29 +165,4 @@ void loadStudentUser(Student_User*& students, int& nStu) {
 	}
 
 	fin.close();
-}
-
-void menu() {
-	User user;
-	user.username = "";
-	user.password = "";
-	int loginMode = 0; // 1: Staff, 2: Lecturer, 3: Student
-
-	login(user, loginMode);
-
-	switch (loginMode) {
-	case 1:
-		showStaffMenu(user);
-		break;
-	case 2:
-		
-		break;
-	case 3:
-		
-		break;
-	default:
-		cout << "Wrong user name or password." << endl;
-		menu();
-		break;
-	}
 }
