@@ -307,7 +307,7 @@ void saveStudent(Student* Students,int nStudent,string fclass) {
 	ofstream data;
 	data.open(fclass);
 	if (!data.is_open()) {
-		cout << "can't open file " << fclass;
+		cout << "Can't open file " << fclass;
 	}
 	else {
 		data << nStudent<<endl;
@@ -901,6 +901,12 @@ void removeCourse () {
 		fout << courses[i].active << endl;
 	}
 	fout.close();
+}
+
+//18. Remove Specific Student From A Course.
+void removeSpecificStudent()
+{
+	
 }
 
 //11. Create / update / delete / view all lecturers. (11)

@@ -51,6 +51,7 @@ void addNewCourse(int& nCourses);
 void loadCoursesFromTXT(string filename, Course*& courses, int n);
 void removeCourse();
 //6. Remove a specific student from a course.
+void removeSpecificStudent();
 //7. Add a specific student to a course.
 //8. View list of courses in the current semester.
 //9. View list of students of a course.
