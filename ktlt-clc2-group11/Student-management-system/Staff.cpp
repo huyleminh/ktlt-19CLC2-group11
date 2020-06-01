@@ -906,7 +906,117 @@ void removeCourse () {
 //18. Remove Specific Student From A Course.
 void removeSpecificStudent()
 {
-	
+	bool flag = false;
+	string filename = "";
+	string classID = "";
+	string course = "";
+	string ID = "";
+
+	cout << "Enter class: ";
+	getline(cin, classID);
+
+	cout << "Enter course: ";
+	getline(cin, course);
+
+	convertToUpper(classID);
+	convertToUpper(course);
+
+	cout << "Enter student ID to remove from course " << course << ": ";
+	getline(cin, ID);
+
+	filename = classID + "-" + course + ".txt";
+
+	fstream fin;
+
+	fin.open(filename, ios::in);
+
+	if (!fin.is_open())
+	{
+		cout << "Can't find course. Please check your input information.\n";
+		return;
+	}
+
+	string ignore = "";
+	int nStudents = 0;
+
+	while (!fin.eof())
+	{
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		nStudents++;
+	}
+
+	fin.close();
+
+	fin.open(filename, ios::in);
+
+	if (!fin.is_open())
+	{
+		cout << "Can't open file.\n";
+		return;
+	}
+
+	Student* s = new Student[nStudents];
+
+	for (int i = 0; i < nStudents; i++)
+	{
+		getline(fin, s[i].ID, '\n');
+		getline(fin, s[i].fullName, '\n');
+		getline(fin, s[i].DoB, '\n');
+		getline(fin, s[i].gender, '\n');
+		string active = "";
+		getline(fin, active, '\n');
+		if (active == "0")
+			s[i].active = false;
+		s[i].classID = classID;
+		getline(fin, ignore, '\n');
+	}
+
+	fin.close();
+
+	for (int i = 0; i < nStudents; i++)
+	{
+		if (s[i].ID == ID)
+		{
+			s[i].active = false;
+			flag = true;
+		}
+	}
+
+	fin.open(filename, ios::out);
+
+	if (!fin.is_open())
+	{
+		cout << "Can't open file.\n";
+		return;
+	}
+
+	for (int i = 0; i < nStudents; i++)
+	{
+		fin << s[i].ID << endl;
+		fin << s[i].fullName << endl;
+		fin << s[i].DoB << endl;
+		fin << s[i].gender << endl;
+		if (s[i].active == true)
+			fin << "1";
+		else fin << "0";
+		if (i != nStudents - 1)
+			fin << endl << endl;
+	}
+
+	fin.close();
+
+	delete[] s;
+
+	if (flag == true)
+		cout << "Remove student with ID [" << ID << "][" << classID << "] successfully.\n";
+	else cout << "Cannot find student with [" << ID << "][" << classID << "] in course.\n";
+
+	return;
 }
 
 //11. Create / update / delete / view all lecturers. (11)
