@@ -242,53 +242,6 @@ void addStudentToClass() {
 	fout.close();
 }
 
-void filterStudentToClass(string filename)
-{
-	ifstream in(filename);
-	int nStudents;
-	if (!in.is_open())
-	{
-		cout << "Cant open file" << endl;
-		return;
-	}
-
-	in >> nStudents;
-
-	Student* a = new Student[nStudents];
-
-	importStudentsFromCSV(a, nStudents);
-
-	for (int i = 0; i < nStudents; i++)
-	{
-		string classFile = a[i].classID + "-Students.txt";
-		ofstream fout(classFile, ofstream::app);
-		if (!fout.is_open())
-		{
-			cout << "Cant create file" << endl;
-			return;
-		}
-		fout << a[i].ID << endl << a[i].fullName << endl << a[i].DoB << endl << a[i].gender << endl<<endl;
-		fout.close();
-	}
-}
-
-void createUserPassword(Student* students, const int nStudent) {
-	ofstream fout;
-	fout.open("StudentUsers.txt");
-	if (!fout.is_open()) {
-		cout << "Can not open StudentUsers.txt" << endl;
-		return;
-	}
-
-	fout << nStudent << endl;
-	for (int i = 0; i < nStudent; i++) {
-		fout << endl << students[i].ID << endl;
-		fout << students[i].DoB << endl;
-		fout << students[i].fullName << endl;
-	}
-
-	fout.close();
-}
 // viewFunction
 ///remember delete dynamic array when call this  function
 //3. Edit existing student.
@@ -859,6 +812,11 @@ void addNewCourse(int& nCourses)
 	out.close();
 }
 
+
+
+
+
+//23. Create/Update/Delete/View all lectures
 void loadCoursesFromTXT(string filename1, Course*& courses, int& n) {
 	ifstream fin;
 	const char* filename = &filename1[0];
@@ -892,67 +850,6 @@ void loadCoursesFromTXT(string filename1, Course*& courses, int& n) {
 
 		getline(fin, courses[i].courseTime.dayOfWeek);
 
-		fin >> courses[i].courseTime.startHour;
-		getline(fin, ignore, ':');
-		fin >> courses[i].courseTime.startMin;
-
-		fin >> courses[i].courseTime.endHour;
-		getline(fin, ignore, ':');
-		fin >> courses[i].courseTime.endMin;
-
-		getline(fin, courses[i].room);
-	}
-
-	fin.close();
-}
-
-
-
-//23. Create/Update/Delete/View all lectures
-void editLecturers()
-{
-	int mode;
-	cout << "==========Features==========\n";
-	cout << "1. Create new lecturer.\n";
-	cout << "2. Update a lecturer.\n";
-	cout << "3. Delete a lecturer.\n";
-	cout << "4. View all lecturers.\n";
-	cout << "Enter mode: ";
-	cin >> mode;
-//4. Edit an existing course.
-//5. Remove a course.
-void loadCoursesFromTXT(string filename, Course*& courses, int n) {
-	ifstream fin;
-	if(isFileOpen(fin, filename) == false)
-		return;
-
-	fin >> n;
-	courses = new Course[n];
-	string ignore = "";
-
-	fin.ignore(1);
-
-	for (int i = 0; i < n; i++) {
-		getline(fin, ignore, '\n');
-		getline(fin, courses[i].ID, '\n');
-		getline(fin, courses[i].classID, '\n');
-		getline(fin, courses[i].name, '\n');
-		getline(fin, courses[i].lecAccount, '\n');
-
-		fin >> courses[i].startDate.day;
-		getline(fin, ignore, '-');
-		fin >> courses[i].startDate.month;
-		getline(fin, ignore, '-');
-		fin >> courses[i].startDate.year;
-		
-		fin >> courses[i].endDate.day;
-		getline(fin, ignore, '-');
-		fin >> courses[i].endDate.month;
-		getline(fin, ignore, '-');
-		fin >> courses[i].endDate.year;
-
-		getline(fin, courses[i].courseTime.dayOfWeek);
-		
 		fin >> courses[i].courseTime.startHour;
 		getline(fin, ignore, ':');
 		fin >> courses[i].courseTime.startMin;
@@ -1372,10 +1269,10 @@ void addStudentToCourse()
 		cout << "Cant open course file";
 		return;
 	}
-	out << nStudents<<endl<<endl;
+	out << nStudents << endl << endl;
 	for (int i = 0; i < nStudents; i++)
 	{
-		out << aStudents[i].ID<<endl;
+		out << aStudents[i].ID << endl;
 		out << aStudents[i].fullName << endl;
 		out << aStudents[i].gender << endl;
 		out << aStudents[i].DoB << endl;
@@ -1385,6 +1282,7 @@ void addStudentToCourse()
 	}
 
 	return;
+}
 void createDupUsername(string& username, string name)
 {
 	convertToLower(name);
