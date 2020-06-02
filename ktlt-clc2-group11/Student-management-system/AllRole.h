@@ -3,13 +3,19 @@
 
 #include "Header.h"
 
+//This is main menu, the program will be started here 
+void menu();
 
+//Login menu
 void login(User& userLogin, int& loginMode);
 
-void loadStaffUser(Staff*& staffs, int& nStaff);
+//Load user information
+void loadStaffUser(Staff*& staffs, int& nStaff); 
+
 void loadLecturerUser(Lecturer*& lecturers, int& nLec);
+
 void loadStudentUser(Student_User*& students, int& nStu);
 
-void menu();
+
 
 #endif
