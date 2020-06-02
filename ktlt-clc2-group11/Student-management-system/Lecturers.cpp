@@ -141,17 +141,18 @@ void importScoreboard()
 	int nStudents = 0;
 	string ignore = "";
 	while (!fin.eof()) {
-		getline(fin, ignore);
+		getline(fin, ignore,'\r');
 		++nStudents;
 	}
 
+	nStudents--;
 	//int nStudents = 4;
 	Student* aStudents = new Student[nStudents];
 
 	fin.seekg(0, fin.beg);
 	//string ignore = "";
 	int i = 0;
-	getline(fin, ignore, '\n');
+	getline(fin, ignore, '\r');
 	fout << nStudents << endl;
 	while (!fin.eof()) {
 		//Read each line in csv 

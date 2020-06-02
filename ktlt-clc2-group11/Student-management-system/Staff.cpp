@@ -817,10 +817,9 @@ void addNewCourse(int& nCourses)
 
 
 //23. Create/Update/Delete/View all lectures
-void loadCoursesFromTXT(string filename1, Course*& courses, int& n) {
+void loadCoursesFromTXT(string filename, Course*& courses, int& n) {
 	ifstream fin;
-	const char* filename = &filename1[0];
-	if (isFileOpen(fin, filename) == false)
+	if(isFileOpen(fin, filename) == false)
 		return;
 
 	fin >> n;
@@ -841,7 +840,7 @@ void loadCoursesFromTXT(string filename1, Course*& courses, int& n) {
 		fin >> courses[i].startDate.month;
 		getline(fin, ignore, '-');
 		fin >> courses[i].startDate.year;
-
+		
 		fin >> courses[i].endDate.day;
 		getline(fin, ignore, '-');
 		fin >> courses[i].endDate.month;
@@ -849,7 +848,7 @@ void loadCoursesFromTXT(string filename1, Course*& courses, int& n) {
 		fin >> courses[i].endDate.year;
 
 		getline(fin, courses[i].courseTime.dayOfWeek);
-
+		
 		fin >> courses[i].courseTime.startHour;
 		getline(fin, ignore, ':');
 		fin >> courses[i].courseTime.startMin;
@@ -863,6 +862,52 @@ void loadCoursesFromTXT(string filename1, Course*& courses, int& n) {
 
 	fin.close();
 }
+// void loadCoursesFromTXT(string filename1, Course*& courses, int& n) {
+// 	ifstream fin;
+// 	const char* filename = &filename1[0];
+// 	if (isFileOpen(fin, filename) == false)
+// 		return;
+
+// 	fin >> n;
+// 	courses = new Course[n];
+// 	string ignore = "";
+
+// 	fin.ignore(1);
+
+// 	for (int i = 0; i < n; i++) {
+// 		getline(fin, ignore, '\n');
+// 		getline(fin, courses[i].ID, '\n');
+// 		getline(fin, courses[i].classID, '\n');
+// 		getline(fin, courses[i].name, '\n');
+// 		getline(fin, courses[i].lecAccount, '\n');
+
+// 		fin >> courses[i].startDate.day;
+// 		getline(fin, ignore, '-');
+// 		fin >> courses[i].startDate.month;
+// 		getline(fin, ignore, '-');
+// 		fin >> courses[i].startDate.year;
+
+// 		fin >> courses[i].endDate.day;
+// 		getline(fin, ignore, '-');
+// 		fin >> courses[i].endDate.month;
+// 		getline(fin, ignore, '-');
+// 		fin >> courses[i].endDate.year;
+
+// 		getline(fin, courses[i].courseTime.dayOfWeek);
+
+// 		fin >> courses[i].courseTime.startHour;
+// 		getline(fin, ignore, ':');
+// 		fin >> courses[i].courseTime.startMin;
+
+// 		fin >> courses[i].courseTime.endHour;
+// 		getline(fin, ignore, ':');
+// 		fin >> courses[i].courseTime.endMin;
+
+// 		getline(fin, courses[i].room);
+// 	}
+
+// 	fin.close();
+// }
 
 void removeCourse () {
 	Course course;
