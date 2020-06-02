@@ -723,6 +723,30 @@ void addStudentIntoCourse() {
 	finCourse.close();
 }
 
+void createlistofscoreboard()
+{
+	//string file = "ListCourses.txt";
+	ifstream in;
+	in.open("ListCourses.txt");
+	ofstream out;
+	out.open("ListScoreBoard.txt");
+	if (!in.is_open())
+		cout << "can't open file ListCourses.txt" << endl;
+	else
+		if (!out.is_open())
+			cout << "can't open file ListScoreBoard.txt" << endl;
+		else {
+			string buffer;
+			while (!in.eof()) {
+				getline(in,buffer);
+				//string temp = buffer;
+				buffer += "-Scoreboard.txt";
+				out << buffer;
+			}
+			in.close();
+		}
+}
+
 //15. Manually add a new course
 void addNewCourse(int& nCourses)
 {

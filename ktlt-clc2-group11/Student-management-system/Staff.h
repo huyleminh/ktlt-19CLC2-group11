@@ -43,5 +43,6 @@ void addStudentIntoCourse();
 
 
 void addNewCourse(Course& c);
+void createlistofscoreboard();
 
 #endif
