@@ -48,6 +48,13 @@ struct Student_User {
 	string name;
 };
 
+struct Score {
+	float midterm;
+	float final;
+	float bonus;
+	float total;
+};
+
 struct Student {
 	string ID;
 	string fullName;
@@ -55,6 +62,7 @@ struct Student {
 	string DoB;
 	string classID;
 	bool active;
+	Score score;
 };
 
 struct Time
@@ -107,6 +115,7 @@ struct Course
 	Date endDate;
 	Time courseTime;
 	string room;
+	bool active = true;
 };
 
 struct Semester {

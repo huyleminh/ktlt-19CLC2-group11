@@ -43,4 +43,11 @@ void addStudentIntoCourse();
 
 void addNewCourse(Course& c);
 
+//22
+void viewAttendanceList();
+void loadCoursesFromTXT(string filename1, Course*& courses, int & n);
+void loadDataCourse(string filename, Student*& aStudents, int& n);
+
+//19
+void addStudentToCourse();
 #endif

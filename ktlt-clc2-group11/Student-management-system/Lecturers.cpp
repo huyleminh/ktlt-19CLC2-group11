@@ -1,5 +1,6 @@
 #include "Lecturers.h"
 #include "AllRole.h"
+#include "Staff.h"
 
 void showLecturerMenu(User& user) {
 	cout << "**********LECTURER MENU**********" << endl;
@@ -72,4 +73,96 @@ void changeLecPassword(User& user) {
 
 	fout.close();
 	delete[]lecturers;
+}
+
+//32 import scoreboard of a course
+
+void importScoreboard()
+{
+	string courseID;
+	string classID;
+
+	cout << "Input Class ID: ";
+	cin >> classID;
+	cout << "Input Course ID: ";
+	cin >> courseID;
+
+	//Course* aCourses;
+	//int nCourses;
+
+	//loadCoursesFromTXT("Courses.txt", aCourses, nCourses);
+
+	//Course course;
+	//course.ID = "";
+	//for (int i = 0; i < nCourses; i++)
+	//{
+	//	if (aCourses[i].ID.compare(courseID) == 0 || aCourses[i].classID.compare(classID) == 0)
+	//	{
+	//		course = aCourses[i];
+	//		break;
+	//	}
+	//}
+	//if (course.ID.compare("") == 0)
+	//{
+	//	cout << "Cant find the inputted course" << endl;
+	//	return;
+	//}
+
+	string filenameCSV = classID + "-" + courseID + "-Scoreboard.csv";
+	string filenameTXT = classID + "-" + courseID + "-Scoreboard.txt";
+	////
+
+	ifstream fin(filenameCSV);
+	ofstream fout(filenameTXT);
+
+
+	if (!fin.is_open())
+	{
+		cout << "Can not open " << filenameCSV <<endl;
+		return;
+	}
+	if (!fout.is_open()) {
+		cout << "Can not open " << filenameTXT<< endl;
+		return;
+	}
+
+	int nStudents = 0;
+	string ignore = "";
+	while (!fin.eof()) {
+		getline(fin, ignore);
+		++nStudents;
+	}
+
+	//int nStudents = 4;
+	Student* aStudents = new Student[nStudents];
+
+	fin.seekg(0, fin.beg);
+	//string ignore = "";
+	int i = 0;
+	getline(fin, ignore, '\n');
+	fout << nStudents << endl;
+	while (!fin.eof()) {
+		//Read each line in csv 
+		getline(fin, ignore, ',');
+		getline(fin, aStudents[i].ID, ',');
+		getline(fin, aStudents[i].fullName, ',');
+		fin>>aStudents[i].score.midterm;
+		//getline(fin, ignore, ',');
+		fin.ignore(1);
+		fin >> aStudents[i].score.final;
+		fin.ignore(1);
+		//getline(fin, ignore, ',');
+		fin >> aStudents[i].score.bonus;
+		fin.ignore(1);
+		//getline(fin, ignore, ',');
+		fin >> aStudents[i].score.total;
+		fin.ignore(1);
+		//getline(fin, ignore, ',');
+		//Export 
+		fout << endl << aStudents[i].ID << endl << aStudents[i].fullName << endl << aStudents[i].score.midterm << endl << aStudents[i].score.final << endl << aStudents[i].score.bonus << endl << aStudents[i].score.total << endl;
+		cout << endl << aStudents[i].ID << endl << aStudents[i].fullName << endl << aStudents[i].score.midterm << endl << aStudents[i].score.final << endl << aStudents[i].score.bonus << endl << aStudents[i].score.total << endl;
+		i++;
+	}
+	fin.close();
+	fout.close();
 }

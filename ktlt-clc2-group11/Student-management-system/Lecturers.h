@@ -17,4 +17,6 @@ void changeLecPassword(User& user);
 //9. View profile infomation.
 //this function is located in Header.h
 
+//32 Import scoreboard of a course
+void importScoreboard();
 #endif
