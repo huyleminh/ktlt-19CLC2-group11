@@ -89,7 +89,7 @@ void changeLecPassword(User& user) {
 
 //32 import scoreboard of a course
 
-void importScoreboard()
+void importScoreboardToTXT()
 {
 	string courseID;
 	string classID;
@@ -160,19 +160,16 @@ void importScoreboard()
 		getline(fin, aStudents[i].ID, ',');
 		getline(fin, aStudents[i].fullName, ',');
 		fin>>aStudents[i].score.midterm;
-		//getline(fin, ignore, ',');
 		fin.ignore(1);
 		fin >> aStudents[i].score.final;
 		fin.ignore(1);
-		//getline(fin, ignore, ',');
 		fin >> aStudents[i].score.bonus;
 		fin.ignore(1);
-		//getline(fin, ignore, ',');
 		fin >> aStudents[i].score.total;
 		fin.ignore(1);
-		//getline(fin, ignore, ',');
 		//Export 
 		fout << endl << aStudents[i].ID << endl << aStudents[i].fullName << endl << aStudents[i].score.midterm << endl << aStudents[i].score.final << endl << aStudents[i].score.bonus << endl << aStudents[i].score.total << endl;
+		//Test
 		cout << endl << aStudents[i].ID << endl << aStudents[i].fullName << endl << aStudents[i].score.midterm << endl << aStudents[i].score.final << endl << aStudents[i].score.bonus << endl << aStudents[i].score.total << endl;
 		i++;
 	}

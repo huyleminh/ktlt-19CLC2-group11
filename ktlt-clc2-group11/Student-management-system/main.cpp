@@ -25,6 +25,7 @@ int main() {
 
 	//viewAttendanceList();
 
-	importScoreboard();
+	//importScoreboardToTXT();
+	filterStudentToClass("Students.txt");
 	return 0;
 }

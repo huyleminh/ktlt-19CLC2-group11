@@ -24,5 +24,5 @@ void changeLecPassword(User& user);
 //10. Logout
 
 //32 Import scoreboard of a course
-void importScoreboard();
+void importScoreboardToTXT();
 #endif

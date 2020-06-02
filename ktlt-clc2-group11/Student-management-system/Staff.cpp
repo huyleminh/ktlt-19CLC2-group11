@@ -126,14 +126,19 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 	fout << nStudent << endl;
 	while (!fin.eof()) {
 		//Read each line in csv 
+		
 		getline(fin, ignore, ',');
 		getline(fin, students[i].ID, ',');
 		getline(fin, students[i].fullName, ',');
 		getline(fin, students[i].gender, ',');
 		getline(fin, students[i].DoB, ',');
-		getline(fin, students[i].classID, '\n');
+		getline(fin, students[i].classID, ',');
+		fin>>students[i].active;
+		getline(fin, ignore, '\n');
+		
+		//getline(fin, ignore, '\n');
 		//Export to Students.txt
-		fout << endl << students[i].ID << endl << students[i].fullName << endl << students[i].gender << endl << students[i].DoB << endl << students[i].classID << endl;
+		fout << endl << students[i].ID << endl << students[i].fullName << endl << students[i].gender << endl << students[i].DoB << endl << students[i].classID<<endl<<students[i].active<<endl << endl;
 		i++;
 	}
 	fin.close();
@@ -167,7 +172,7 @@ void filterStudentToClass(string filename)
 			cout << "Cant create file" << endl;
 			return;
 		}
-		fout << a[i].ID << endl << a[i].fullName << endl << a[i].DoB << endl << a[i].gender << endl;
+		fout << a[i].ID << endl << a[i].fullName << endl << a[i].DoB << endl << a[i].gender << endl<<a[i].active<<endl<<endl;
 		fout.close();
 	}
 }
