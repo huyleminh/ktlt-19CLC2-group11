@@ -126,14 +126,19 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 	fout << nStudent << endl;
 	while (!fin.eof()) {
 		//Read each line in csv 
+		
 		getline(fin, ignore, ',');
 		getline(fin, students[i].ID, ',');
 		getline(fin, students[i].fullName, ',');
 		getline(fin, students[i].gender, ',');
 		getline(fin, students[i].DoB, ',');
-		getline(fin, students[i].classID, '\n');
+		getline(fin, students[i].classID, ',');
+		fin>>students[i].active;
+		getline(fin, ignore, '\n');
+		
+		//getline(fin, ignore, '\n');
 		//Export to Students.txt
-		fout << endl << students[i].ID << endl << students[i].fullName << endl << students[i].gender << endl << students[i].DoB << endl << students[i].classID << endl;
+		fout << endl << students[i].ID << endl << students[i].fullName << endl << students[i].gender << endl << students[i].DoB << endl << students[i].classID<<endl<<students[i].active<<endl << endl;
 		i++;
 	}
 	fin.close();
@@ -167,7 +172,7 @@ void filterStudentToClass(string filename)
 			cout << "Cant create file" << endl;
 			return;
 		}
-		fout << a[i].ID << endl << a[i].fullName << endl << a[i].DoB << endl << a[i].gender << endl;
+		fout << a[i].ID << endl << a[i].fullName << endl << a[i].DoB << endl << a[i].gender << endl<<a[i].active<<endl<<endl;
 		fout.close();
 	}
 }
@@ -242,6 +247,8 @@ void addStudentToClass() {
 	fout.close();
 }
 
+// viewFunction
+///remember delete dynamic array when call this  function
 //3. Edit existing student.
 ///remember delete dynamic array when call these function
 void getListClass(int& n, string*& Class)
@@ -713,7 +720,7 @@ void addStudentIntoCourse() {
 		getline(finCourse, fileCourse, '\n');
 		source = fileCourse;
 		splitClassID(source);
-		source += "-Students.txt";  
+		source += "-Students.txt";
 
 		copyFile(source, fileCourse);
 	}
@@ -721,6 +728,7 @@ void addStudentIntoCourse() {
 }
 
 //3. Manually add a new course.(15)
+
 void addNewCourse(int& nCourses)
 {
 	Course c;
@@ -812,50 +820,52 @@ void addNewCourse(int& nCourses)
 
 //4. Edit an existing course.
 //5. Remove a course.
-void loadCoursesFromTXT(string filename, Course*& courses, int n) {
-	ifstream fin;
-	if(isFileOpen(fin, filename) == false)
+void loadCoursesFromTXT(string filename, Course*& courses, int& n) {
+	fstream f;
+
+	f.open(filename, ios::in);
+
+	if (!f.is_open())
 		return;
 
-	fin >> n;
+	f >> n;
+
 	courses = new Course[n];
+
 	string ignore = "";
 
-	fin.ignore(1);
+	f.ignore(1);
+	getline(f, ignore, '\n');
 
-	for (int i = 0; i < n; i++) {
-		getline(fin, ignore, '\n');
-		getline(fin, courses[i].ID, '\n');
-		getline(fin, courses[i].classID, '\n');
-		getline(fin, courses[i].name, '\n');
-		getline(fin, courses[i].lecAccount, '\n');
-
-		fin >> courses[i].startDate.day;
-		getline(fin, ignore, '-');
-		fin >> courses[i].startDate.month;
-		getline(fin, ignore, '-');
-		fin >> courses[i].startDate.year;
-		
-		fin >> courses[i].endDate.day;
-		getline(fin, ignore, '-');
-		fin >> courses[i].endDate.month;
-		getline(fin, ignore, '-');
-		fin >> courses[i].endDate.year;
-
-		getline(fin, courses[i].courseTime.dayOfWeek);
-		
-		fin >> courses[i].courseTime.startHour;
-		getline(fin, ignore, ':');
-		fin >> courses[i].courseTime.startMin;
-
-		fin >> courses[i].courseTime.endHour;
-		getline(fin, ignore, ':');
-		fin >> courses[i].courseTime.endMin;
-
-		getline(fin, courses[i].room);
+	for (int i = 0; i < n; i++)
+	{
+		getline(f, courses[i].ID, '\n');
+		getline(f, courses[i].name, '\n');
+		getline(f, courses[i].classID, '\n');
+		getline(f, courses[i].lecAccount, '\n');
+		string temp = "";
+		getline(f, temp, '-');
+		courses[i].startDate.day = stoi(temp);
+		getline(f, temp, '-');
+		courses[i].startDate.month = stoi(temp);
+		getline(f, temp, '\n');
+		courses[i].startDate.year = stoi(temp);
+		getline(f, temp, '-');
+		courses[i].endDate.day = stoi(temp);
+		getline(f, temp, '-');
+		courses[i].endDate.month = stoi(temp);
+		getline(f, temp, '\n');
+		courses[i].endDate.year = stoi(temp);
+		getline(f, courses[i].courseTime.dayOfWeek, '\n');
+		getline(f, courses[i].courseTime.startHour, ':');
+		getline(f, courses[i].courseTime.startMin, '\n');
+		getline(f, courses[i].courseTime.endHour, ':');
+		getline(f, courses[i].courseTime.endMin, '\n');
+		getline(f, courses[i].room, '\n');
+		getline(f, ignore, '\n');
 	}
 
-	fin.close();
+	f.close();
 }
 
 void removeCourse () {
@@ -1120,6 +1130,163 @@ void createNewLecturer()
 	delete[] lec;
 }
 
+//22 view attendance list
+void loadDataCourse(string filename, Student*& aStudents, int& n)
+{
+	ifstream in(filename);
+	if (!in.is_open())
+	{
+		cout << "Cant load course's data";
+		return;
+	}
+
+	in >> n;
+
+	aStudents = new Student[n];
+	string ignore = "";
+
+	in.ignore(1);
+
+	for (int i = 0; i < n; i++) {
+		getline(in, ignore, '\n');
+		getline(in, aStudents[i].ID, '\n');
+		getline(in, aStudents[i].fullName, '\n');
+		getline(in, aStudents[i].gender, '\n');
+		getline(in, aStudents[i].DoB, '\n');
+		getline(in, aStudents[i].classID, '\n');
+		in >> aStudents[i].active;
+		in.ignore(1);
+	}
+}
+
+void viewAttendanceList()
+{
+	string courseID;
+	string classID;
+
+	cout << "Input Class ID: ";
+	cin >> classID;
+	cout << "Input Course ID: ";
+	cin >> courseID;
+
+	Course* aCourses;
+	int nCourses;
+
+	loadCoursesFromTXT("Courses.txt", aCourses, nCourses);
+
+	Course course;
+	course.ID = "";
+	//course.name = "";
+	for (int i = 0; i < nCourses; i++)
+	{
+		if (aCourses[i].ID.compare(courseID) == 0 || aCourses[i].classID.compare(classID) == 0)
+		{
+			course = aCourses[i];
+			break;
+		}
+	}
+	if (course.ID.compare("") == 0)
+	{
+		cout << "Cant find the inputted course"<<endl;
+		return;
+	}
+	string filename = "";
+	filename = classID + "-" + courseID + ".txt";
+
+	Student* aStudents;
+	int nStudents;
+
+	loadDataCourse(filename, aStudents, nStudents);
+
+	cout << "THE ATTENDANCE LIST: " << endl;
+	for (int i = 0; i < nStudents; i++)
+	{
+		if (aStudents[i].active == 1) {
+			cout << i + 1 << ") " << aStudents[i].ID << " - " << aStudents[i].fullName << endl;
+		}
+	}
+	return;
+}
+
+// 19 add student to course
+void addStudentToCourse()
+{
+	string courseID;
+	string classID;
+
+	cout << "Input Class ID: ";
+	cin >> classID;
+	cout << "Input Course ID: ";
+	cin >> courseID;
+
+	Course* aCourses;
+	int nCourses;
+
+	loadCoursesFromTXT("Courses.txt", aCourses, nCourses);
+
+	Course course;
+	course.ID = "";
+	for (int i = 0; i < nCourses; i++)
+	{
+		if (aCourses[i].ID.compare(courseID) == 0 || aCourses[i].classID.compare(classID) == 0)
+		{
+			course = aCourses[i];
+			break;
+		}
+	}
+	if (course.ID.compare("") == 0)
+	{
+		cout << "Cant find the inputted course" << endl;
+		return;
+	}
+
+	Student newStudent;
+
+	cout << "> Enter student infomation: \n";
+	cout << " Full name: "; getline(cin, newStudent.fullName);
+	getline(cin, newStudent.fullName);
+	cout << " ID: "; getline(cin, newStudent.ID);
+	cout << " Gender: "; getline(cin, newStudent.gender);
+	cout << " Date of birth: "; getline(cin, newStudent.DoB);
+	cout << " Class ID: "; getline(cin, newStudent.classID);
+	cout << " Active status(0:No, 1:Yes) : "; cin >> newStudent.active;
+
+	string filename = "";
+	filename = classID + "-" + courseID + ".txt";
+
+	Student* aStudents, * temp;
+	int nStudents;
+
+	loadDataCourse(filename, temp, nStudents);
+
+	aStudents = new Student[nStudents + 1];
+	for (int i = 0; i < nStudents; i++)
+	{
+		aStudents[i] = temp[i];
+	}
+	aStudents[nStudents] = newStudent;
+	nStudents++;
+
+	ofstream out(filename);
+	if (!out.is_open())
+	{
+		cout << "Cant open course file";
+		return;
+	}
+	out << nStudents << endl << endl;
+	for (int i = 0; i < nStudents; i++)
+	{
+		out << aStudents[i].ID << endl;
+		out << aStudents[i].fullName << endl;
+		out << aStudents[i].gender << endl;
+		out << aStudents[i].DoB << endl;
+		out << aStudents[i].classID << endl;
+		out << aStudents[i].active << endl;
+		out << endl;
+	}
+
+	return;
+}
 void createDupUsername(string& username, string name)
 {
 	convertToLower(name);
@@ -1368,6 +1535,29 @@ void editLecturers()
 
 
 //**3. Scoreboard.
+void createlistofscoreboard()
+{
+	//string file = "ListCourses.txt";
+	ifstream in;
+	in.open("ListCourses.txt");
+	ofstream out;
+	out.open("ListScoreBoard.txt");
+	if (!in.is_open())
+		cout << "can't open file ListCourses.txt" << endl;
+	else
+		if (!out.is_open())
+			cout << "can't open file ListScoreBoard.txt" << endl;
+		else {
+			string buffer;
+			while (!in.eof()) {
+				getline(in,buffer);
+				//string temp = buffer;
+				buffer += "-Scoreboard.txt";
+				out << buffer;
+			}
+			in.close();
+		}
+}
 //25. Export a scoreboard to a csv file.
 
 void getDestinationTXT(const string sourceTXT, string& destinationCSV) {
