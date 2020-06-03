@@ -396,6 +396,7 @@ void Edit() {
 	
 	cout << "1.delete a student.\n";
 	cout << "2. change class a student.\n";
+	cout << "3.Back to menu.\n";
 
 	cout << "Choose mode:\n";
 	cin >> buffer2;
@@ -404,17 +405,20 @@ void Edit() {
 	switch (buffer2) {
 		case 1: 
 			deleteStudent(Class[buffer]);
+			delete[] Class;
 			break;
 		case 2:
 			int buffer3;
 			cout << "choose class destination :";
 			cin >> buffer3;
 			Changeclass(Class[buffer], Class[buffer3]);
+			delete[] Class;
 			break;
+		case 3:
+			classAndStudentMode();
 		default:
 			cout << "Error";
 	}
-	delete[] Class;
 }
 
 //4. View list of classes.
