@@ -20,7 +20,12 @@
 
 
 int main() {
-	cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.2" << endl;
-	menu();
+	//cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.2" << endl;
+	//menu();
+
+	//viewAttendanceList();
+
+	//importScoreboardToTXT();
+	filterStudentToClass("Students.txt");
 	return 0;
 }

@@ -48,13 +48,21 @@ struct Student_User {
 	string name;
 };
 
+struct Score {
+	float midterm;
+	float final;
+	float bonus;
+	float total;
+};
+
 struct Student {
 	string ID;
 	string fullName;
 	string gender;
 	string DoB;
 	string classID;
-	bool active = true;
+	bool active;
+	Score score;
 };
 
 struct Time

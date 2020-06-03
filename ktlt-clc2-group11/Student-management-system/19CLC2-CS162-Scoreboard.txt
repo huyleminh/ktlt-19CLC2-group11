@@ -1,0 +1,29 @@
+4
+
+19126001
+Trinh Van Minh
+1
+2
+3
+4
+
+19127010
+Nguyen Van 1
+2
+3
+4
+5
+
+19127002
+Nguyen Van 2
+3
+4
+5
+6
+
+18127100
+Thang Nguyen
+4
+5
+6
+7
