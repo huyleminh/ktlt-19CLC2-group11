@@ -7,14 +7,12 @@ Male
 19CLC2
 1
 
-
 19127181
 Bach Minh Khoi
 Male
 2020-05-13
 19CLC2
 1
-
 
 19127150
 Nguyen Hua Hung
@@ -23,7 +21,6 @@ Male
 19CLC1
 1
 
-
 19127141
 Phan Minh Hieu
 Male
@@ -31,3 +28,32 @@ Male
 19CLC1
 1
 
+19127100
+Phan Hieu Minh
+FeMale
+2020-06-09
+19CLC1
+
+19127158
+Phan Hieu Minh
+FeMale
+2020-06-09
+19CLC2
+
+19127158
+Phan Hieu Minh
+Male
+2020-06-09
+19CLC2
+
+19127159
+Hot le
+Male
+2020-06-09
+19CLC2
+
+123
+Huy 
+male
+2020-06-09
+19CLC2
