@@ -203,6 +203,7 @@ void changeStudentPassword(User& user) {
 	Student_User* students;
 	int n = 0;
 
+	cin.ignore(1);
 	changePassword(user);
 	loadStudentUser(students, n);
 	for (int i = 0; i < n; i++) {
@@ -215,7 +216,7 @@ void changeStudentPassword(User& user) {
 	ofstream fout("StudentUsers.txt");
 	fout << n << endl;
 	for (int i = 0; i < n; i++) {
-		fout << students[i].user.username << endl << students[i].user.password << endl << students[i].name << endl;
+		fout << endl << students[i].user.username << endl << students[i].user.password << endl << students[i].name << endl;
 	}
 
 	fout.close();
