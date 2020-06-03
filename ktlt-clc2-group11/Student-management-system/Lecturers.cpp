@@ -68,6 +68,7 @@ void changeLecPassword(User& user) {
 	Lecturer* lecturers;
 	int n = 0;
 
+	cin.ignore(1);
 	changePassword(user);
 	loadLecturerUser(lecturers, n);
 	for (int i = 0; i < n; i++) {
@@ -76,11 +77,11 @@ void changeLecPassword(User& user) {
 			break;
 		}
 	}
-
+	cout << lecturers[0].user.username << endl;
 	ofstream fout("Lecturers.txt");
 	fout << n << endl;
 	for (int i = 0; i < n; i++) {
-		fout << lecturers[i].user.username << endl << lecturers[i].user.password << endl << lecturers[i].name << endl;
+		fout << endl << lecturers[i].user.username << endl << lecturers[i].user.password << endl << lecturers[i].name << endl;
 	}
 
 	fout.close();
