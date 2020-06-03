@@ -75,13 +75,13 @@ OPTION:
 	switch (option)
 	{
 	case 1:
-		filterStudentToClass("Students.txt");
+		filterStudentToClass("Students.txt");  //ok
 		break;
 	case 2:
-		addStudentToClass();
+		addStudentToClass(); //0k 50%
 		break;
 	case 3:
-		Edit();
+		Edit(); //nhap sai bao, them case back to menu class and student mode
 		break;
 	case 4:
 		getListClass(nClass, Class);
@@ -138,7 +138,7 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 		
 		//getline(fin, ignore, '\n');
 		//Export to Students.txt
-		fout << endl << students[i].ID << endl << students[i].fullName << endl << students[i].gender << endl << students[i].DoB << endl << students[i].classID<<endl<<students[i].active<<endl << endl;
+		fout << endl << students[i].ID << endl << students[i].fullName << endl << students[i].gender << endl << students[i].DoB << endl << students[i].classID<<endl<<students[i].active << endl;
 		i++;
 	}
 	fin.close();
@@ -149,19 +149,16 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 
 void filterStudentToClass(string filename)
 {
-	ifstream in(filename);
+	Student* a;
 	int nStudents;
+	importStudentsFromCSV(a, nStudents);
+	ifstream in(filename);
+	
 	if (!in.is_open())
 	{
 		cout << "Cant open " << filename << endl;
 		return;
 	}
-
-	in >> nStudents;
-
-	Student* a = new Student[nStudents];
-
-	importStudentsFromCSV(a, nStudents);
 
 	for (int i = 0; i < nStudents; i++)
 	{
@@ -195,10 +192,11 @@ void createUserPassword(Student* students, const int nStudent) {
 	fout.close();
 }
 
-//2. Add a student to a class.
+//2. Add a student to a class.  //Check valid student before add
 void addStudentToClass() {
 	Student newStudent;
 
+	cin.ignore(1);
 	cout << "> Enter student infomation: \n";
 	cout << " Full name: "; getline(cin, newStudent.fullName, '\n');
 	cout << " ID: "; getline(cin, newStudent.ID, '\n');
@@ -230,7 +228,7 @@ void addStudentToClass() {
 		return;
 	}
 
-	fout << newUser.username << endl << newUser.password << endl << newUser.name << endl;
+	fout << endl << newUser.username << endl << newUser.password << endl << newUser.name << endl;
 	fout.close();
 
 	string file = newStudent.classID + "-Students.txt";
@@ -269,7 +267,7 @@ void getListClass(int& n, string*& Class)
 	{
 		++i;
 		getline(data, Class[i], '\n');
-		cout << i << ". " << Class[i] << endl;
+		cout << i + 1 << ". " << Class[i] << endl;
 	}
 	data.close();
 }
@@ -396,12 +394,13 @@ void Edit() {
 	cout << "choose your class you want to edit:\n";
 	cin >> buffer;
 	
+	cout << "1.delete a student.\n";
+	cout << "2. change class a student.\n";
+
 	cout << "Choose mode:\n";
 	cin >> buffer2;
 	
-	cout << "1.delete a student.\n";
-	cout << "2. change class a student.\n";
-	
+	buffer -= 1;
 	switch (buffer2) {
 		case 1: 
 			deleteStudent(Class[buffer]);
@@ -1537,7 +1536,6 @@ void editLecturers()
 //**3. Scoreboard.
 void createlistofscoreboard()
 {
-	//string file = "ListCourses.txt";
 	ifstream in;
 	in.open("ListCourses.txt");
 	ofstream out;
@@ -1551,7 +1549,6 @@ void createlistofscoreboard()
 			string buffer;
 			while (!in.eof()) {
 				getline(in,buffer);
-				//string temp = buffer;
 				buffer += "-Scoreboard.txt";
 				out << buffer;
 			}
@@ -1629,6 +1626,7 @@ void changeStaffPassword(User& user) {
 	Staff* staffs;
 	int n = 0;
 
+	cin.ignore(1);
 	changePassword(user);
 	loadStaffUser(staffs, n);
 	for (int i = 0; i < n; i++) {
@@ -1641,7 +1639,7 @@ void changeStaffPassword(User& user) {
 	ofstream fout("Staff.txt");
 	fout << n << endl;
 	for (int i = 0; i < n; i++) {
-		fout << staffs[i].user.username << endl << staffs[i].user.password << endl << staffs[i].name << endl;
+		fout << endl << staffs[i].user.username << endl << staffs[i].user.password << endl << staffs[i].name << endl;
 	}
 
 	fout.close();
