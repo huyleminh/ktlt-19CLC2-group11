@@ -13,7 +13,6 @@ void classAndStudentMode();
 //1. Import students from csv file.
 void importStudentsFromCSV(Student*& students, int& nStudent);
 void filterStudentToClass(string filename);
-
 void createUserPassword(Student* students, const int nStudent);
 
 //2. Add a student to a class.
@@ -48,7 +47,7 @@ void addStudentIntoCourse();
 void addNewCourse(int& nCourses);
 //4. Edit an existing course.
 //5. Remove a course.
-void loadCoursesFromTXT(string filename, Course*& courses, int n);
+void loadCoursesFromTXT(string filename, Course*& courses, int& n);
 void removeCourse();
 //6. Remove a specific student from a course.
 void removeSpecificStudent();
@@ -83,4 +82,14 @@ void changeStaffPassword(User& user);
 //This function is located in Header.h
 //**7. Log out
 
+//22
+void viewAttendanceList();
+void loadCoursesFromTXT(string filename, Course*& courses, int& n);
+//void loadCoursesFromTXT(string filename1, Course*& courses, int & n);
+void loadDataCourse(string filename, Student*& aStudents, int& n);
+
+void createlistofscoreboard();
+
+//19
+void addStudentToCourse();
 #endif
