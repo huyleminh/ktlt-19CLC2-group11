@@ -88,6 +88,8 @@ void loadCoursesFromTXT(string filename, Course*& courses, int& n);
 //void loadCoursesFromTXT(string filename1, Course*& courses, int & n);
 void loadDataCourse(string filename, Student*& aStudents, int& n);
 
+void createlistofscoreboard();
+
 //19
 void addStudentToCourse();
 #endif
