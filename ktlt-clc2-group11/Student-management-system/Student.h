@@ -2,7 +2,7 @@
 #define _STUDENT_H_
 
 #include "Header.h"
-#include "Staff.h"
+
 
 /*Main student menu*/
 
@@ -13,6 +13,7 @@ void showStudentMenu(User& user);
 //3. View schedules.
 void loadListClass(int& n, string*& Class);
 void createScheduleFile();
+void viewSchedule();
 //4. View your scores of a course.
 
 //5. Change password.
