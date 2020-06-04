@@ -50,6 +50,19 @@ void login(User& userLogin, int& loginMode) {
 	cout << "\t\t\t\t\t\t\t#                            #\n";
 	cout << "\t\t\t\t\t\t\t##############################\n";
 
+	int option = 0;
+OPTION: 
+	cout << "1. Start app.\n";
+	cout << "2. Exit.\n";
+	cin >> option;
+
+	if(option != 1 && option != 2)
+		goto OPTION;
+	else {
+		if(option == 2) 
+			exit(0);
+	}
+
 	cin.ignore(1);
 	cout << " > Enter your User name : "; 
 	getline(cin, userLogin.username, '\n');
