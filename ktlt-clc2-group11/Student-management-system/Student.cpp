@@ -1,5 +1,6 @@
 #include "Student.h"
 #include "AllRole.h"
+#include "Staff.h"
 
 /*Main student menu*/
 
@@ -28,6 +29,7 @@ OPTION:
 	case 2:
 		break;
 	case 3:
+		viewSchedule();
 		break;
 	case 4:
 		break;
