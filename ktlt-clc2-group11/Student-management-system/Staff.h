@@ -17,6 +17,8 @@ void createUserPassword(Student* students, const int nStudent);
 
 //2. Add a student to a class.
 void addStudentToClass();
+void loadStudent(ifstream& fin, string filename, Student*& students, int& n);
+void writeStudent(ofstream& fout, string filename, const Student* students, const int n);
 //3. Edit existing student.
 void getListStudents(string classID, Student*& Students, int& nStudents);
 void saveStudent(Student* Students, int nStudent, string fclass);
@@ -52,10 +54,13 @@ void removeCourse();
 //6. Remove a specific student from a course.
 void removeSpecificStudent();
 //7. Add a specific student to a course.
+void addStudentToCourse();
 //8. View list of courses in the current semester.
 //9. View list of students of a course.
 void viewListStudentsOfCourse();
 //10. View attendance list of a course.
+void loadDataCourse(string filename, Student*& aStudents, int& n);
+void viewAttendanceList();
 //11. Create / update / delete / view all lecturers.
 void convertToLower(string& s);
 void createUsername(string& username, string name);
@@ -69,27 +74,28 @@ void editLecturers();
 //12. Back to staff menu.
 //Call showStaffMenu.
 
-//**3. Scoreboard.(
-//25. Export a scoreboard to a csv file.
+//**3. Scoreboard.
+void scoreBoardMode();
+void createListOfScoreBoard();
+//2. Export a scoreboard to a csv file.
 void getDestinationTXT(const string sourceTXT, string& destinationCSV);
 void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV);
+//3. Export all scoreboard to a csv files.
 void exportScoreBoardToCSV();
 
 //**4. Attendance list.
+void attendanceListMode();
+//1. Search and view attendance list of a course.
+//viewAttendanceList()
+//2. Export a attendance list to a csv file.
+//3. Back to staff menu.
+
 //**5. Change staff password.
 void changeStaffPassword(User& user); 
+
 //**6. View profile information.
 //This function is located in Header.h
+
 //**7. Log out
 
-//22
-void viewAttendanceList();
-void loadCoursesFromTXT(string filename, Course*& courses, int& n);
-//void loadCoursesFromTXT(string filename1, Course*& courses, int & n);
-void loadDataCourse(string filename, Student*& aStudents, int& n);
-
-void createlistofscoreboard();
-
-//19
-void addStudentToCourse();
 #endif
