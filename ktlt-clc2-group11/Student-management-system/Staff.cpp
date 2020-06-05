@@ -34,7 +34,7 @@ OPTION:
 			scoreBoardMode();
 			break;
 		case 4: 
-			//call attendance list
+			attendanceListMode();
 			break;
 		case 5:
 			changeStaffPassword(user);
@@ -85,7 +85,8 @@ OPTION:
 		delete[] Class;
 		break;
 	case 5: 
-		cout << "Enter class ID you want to view its students: ";
+		cin.ignore(1);
+		cout << "\nEnter class ID you want to view its students: ";
 		getline(cin, classID, '\n');
 		viewListStudents(classID);
 		break;
@@ -164,7 +165,7 @@ void filterStudentToClass(string filename)
 			cout << "Cant create file" << endl;
 			return;
 		}
-		fout << a[i].ID << endl << a[i].fullName << endl << a[i].DoB << endl << a[i].gender << endl<<a[i].active<<endl<<endl;
+		fout << a[i].ID << endl << a[i].fullName << endl << a[i].DoB << endl << a[i].gender << endl << a[i].active << endl << endl;
 		fout.close();
 	}
 }
@@ -198,6 +199,7 @@ void addStudentToClass() {
 	cout << " Gender: "; getline(cin, newStudent.gender, '\n');
 	cout << " Date of birth: "; getline(cin, newStudent.DoB, '\n');
 	cout << " Class ID: "; getline(cin, newStudent.classID, '\n');
+	newStudent.active = 1;
 
 	User newUser;
 	newUser.name = newStudent.fullName;
@@ -245,12 +247,11 @@ void addStudentToClass() {
 	ofstream fout;
 
 	loadStudent(fin, "Students.txt", students, n);	
-	students[n].ID = newStudent.ID;
-	students[n].fullName = newStudent.fullName;
-	students[n].gender = newStudent.gender;
-	students[n].DoB = newStudent.DoB;
-	students[n].classID = newStudent.classID;
-	students[n].active = true;
+	students[n - 1].ID = newStudent.ID;
+	students[n - 1].fullName = newStudent.fullName;
+	students[n - 1].DoB = newStudent.DoB;
+	students[n - 1].gender = newStudent.gender;
+	students[n - 1].active = 1;
 
 	writeStudent(fout, "Students.txt", students, n);
 	createUserPassword(students, n);
@@ -261,18 +262,16 @@ void addStudentToClass() {
 	string path = newStudent.classID;
 	convertToUpper(path);
 	path += "-Students.txt";
+	
 	fout.open(path, ios::app);
 
-	fout << endl;
 	fout << newStudent.ID << endl;
 	fout << newStudent.fullName << endl;
-	fout << newStudent.gender << endl;
 	fout << newStudent.DoB << endl;
-	fout << newStudent.classID << endl;
-	fout << newStudent.active << endl;
+	fout << newStudent.gender << endl;
+	fout << ((newStudent.active == true) ? 1 : 0) << endl << endl;
 
 	fout.close();
-	
 }
 
 void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
@@ -282,6 +281,7 @@ void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
 	fin >> n;
 	students = new Student[n + 1];
 	string ignore = "";
+	getline(fin, ignore, '\n');
 
 	for (int i = 0; i < n; i++) {
 		getline(fin, ignore, '\n');
@@ -290,7 +290,8 @@ void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
 		getline(fin, students[i].gender,'\n');
 		getline(fin, students[i].DoB,'\n');
 		getline(fin, students[i].classID,'\n');
-		fin >> students[i].active;
+		getline(fin, ignore, '\n');
+		students[i].active = stoi(ignore);
 	}
 
 	students[n].ID = "";
@@ -298,7 +299,7 @@ void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
 	students[n].gender = "";
 	students[n].DoB = "";
 	students[n].classID = "";
-	students[n].active = false;
+	students[n].active = 0;
 	n++;
 
 	fin.close();
@@ -320,7 +321,7 @@ void writeStudent(ofstream& fout, string filename, const Student* students, cons
 		fout << students[i].gender << endl;
 		fout << students[i].DoB << endl;
 		fout << students[i].classID << endl;
-		fout << students[i].active << endl;
+		fout << ((students[i].active == true) ? 1 : 0) << endl;
 	}
 
 	fout.close();
@@ -517,23 +518,29 @@ void viewListStudents(string classID)
 		return;
 	}
 
-	string buff;
-	int nStudents;
-	data >> nStudents;
+	string buff, buff1;
+	int nStudent = 0;
+	cout << "**List of students in class " << classID << ":\n";
 
-	getline(data, buff, '\n');
-
-	cout << "Total students in class " << classID << " is " << nStudents << endl << endl;
-	cout << "List of students in class " << classID << ":\n\n";
-
-	while (!data.eof())
-	{
+	while (!data.eof()) {
 		getline(data, buff, '\n');
-		cout << "Name: " << buff << endl;
+		if(buff == "" && buff1 == "")
+			break;
+		cout << "\nID: " << buff << endl;
 		getline(data, buff, '\n');
-		cout << "ID  : " << buff << endl;
+		cout << "Full name: " << buff << endl;
+		getline(data, buff, '\n');
+		cout << "Day of birth: " << buff << endl;
+		getline(data, buff, '\n');
+		cout << "Gender: " << buff << endl;
+		getline(data, buff, '\n');
+		getline(data, buff1, '\n');
+		nStudent++;
 	}
 	data.close();
+
+	cout << "\nTotal students: " << nStudent << endl;
+	cout << "===============================\n";
 }
 
 void convertToUpper(string& s)
@@ -590,8 +597,10 @@ OPTION:
 		removeCourse();
 		break;
 	case 6:
+		removeSpecificStudent();
 		break;
-	case 7:
+	case 7:	
+		addStudentToCourse();
 		break;
 	case 8: 
 		break;
