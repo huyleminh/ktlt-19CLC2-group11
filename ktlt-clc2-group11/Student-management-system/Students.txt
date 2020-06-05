@@ -1,4 +1,4 @@
-6
+4
 
 19127157
 Le Minh Huy
@@ -26,18 +26,4 @@ Phan Minh Hieu
 Male
 2020-05-15
 19CLC1
-1
-
-123
-le minh
-male
-2020-01-03
-19clc1
-1
-
-123
-nguyen
-male
-2020-02-03
-
 1
