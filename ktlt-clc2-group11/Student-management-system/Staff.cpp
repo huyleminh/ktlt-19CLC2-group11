@@ -72,13 +72,15 @@ OPTION:
 	switch (option)
 	{
 	case 1:
-		filterStudentToClass("Students.txt");  //ok
+		filterStudentToClass("Students.txt");
+		cout << "Import successfully.\n";
+		cout << "===================================\n";
 		break;
 	case 2:
-		addStudentToClass(); //0k 50%
+		addStudentToClass();
 		break;
 	case 3:
-		Edit(); //nhap sai bao, them case back to menu class and student mode
+		Edit(); 
 		break;
 	case 4:
 		getListClass(nClass, Class);
@@ -205,40 +207,6 @@ void addStudentToClass() {
 	newUser.name = newStudent.fullName;
 	newUser.username = newStudent.ID;
 	newUser.password = newStudent.DoB;
-
-	// ofstream fout;
-	
-	// fout.open("Students.txt", ios::app); 
-	// if (!fout.is_open()) {
-	// 	cout << "Can not open Students.txt\n";
-	// 	return;
-	// }
-
-	// fout << endl << newStudent.ID << endl << newStudent.fullName << endl << newStudent.gender << endl <<
-	// 	newStudent.DoB << endl << newStudent.classID << endl;
-	// fout.close();
-
-	// fout.open("StudentUsers.txt", ios::app);
-	// if (!fout.is_open()) {
-	// 	cout << "Can not open StudentUsers.txt\n";
-	// 	return;
-	// }
-
-	// fout << endl << newUser.username << endl << newUser.password << endl << newUser.name << endl;
-	// fout.close();
-
-	// string file = newStudent.classID + "-Students.txt";
-
-	// fout.open(file, ios::app);
-	// if (!fout.is_open()) {
-	// 	cout << "Can not open Students.txt\n";
-	// 	return;
-	// }
-
-	// fout << endl << newStudent.ID << endl << newStudent.fullName << endl << newStudent.gender << endl <<
-	// 	newStudent.DoB << endl << newStudent.classID << endl;
-
-	// fout.close();
 
 	Student* students;
 	int n = 0;
@@ -540,7 +508,7 @@ void viewListStudents(string classID)
 	data.close();
 
 	cout << "\nTotal students: " << nStudent << endl;
-	cout << "===============================\n";
+	cout << "===================================\n";
 }
 
 void convertToUpper(string& s)
