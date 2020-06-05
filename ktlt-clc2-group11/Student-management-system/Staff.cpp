@@ -365,26 +365,34 @@ void getListStudents(string classID, Student*&Students, int &nStudents)
 		cout << "Can not open " << inputPath << endl;
 		return;
 	}
-	string buff;
-	data >> nStudents;
-	Students = new Student[nStudents];
-	getline(data, buff, '\n');
+	
+	string buff, buff1;
 
-	cout << "Total students in class " << classID << " is " << nStudents << endl << endl;
 	cout << "List of students in class " << classID << ":\n\n";
-	int i = -1;
+	
 	while (!data.eof())
 	{
-		++i;
+		getline(data, buff, '\n');
+		if (buff == "" && buff1 == "")
+			break;
+		cout << "ID: " << buff << endl;
+
 		getline(data, buff, '\n');
 		cout << "Name: " << buff << endl;
 
 		getline(data, buff, '\n');
-		cout << "ID  : " << buff << endl;
+		cout << "Date of birth: " << buff << endl;
+
+		getline(data, buff, '\n');
+		cout << "Gender: " << buff << endl;
 
 		getline(data, buff, '\n');
 		cout << "active  : " << buff << endl;
+
+		getline(data, buff1, '\n');
+		nStudents++;
 	}
+	cout << "Total students in class " << classID << " is " << nStudents << endl << endl;
 	data.close();
 }
 void saveStudent(Student* Students,int nStudent,string fclass) {
