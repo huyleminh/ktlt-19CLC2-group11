@@ -470,12 +470,12 @@ void Edit() {
 	getListClass(n, Class);
 	int buffer,buffer2;
 	
-	cout << "choose your class you want to edit:\n";
+	cout << "Choose your class you want to edit:\n";
 	cin >> buffer;
 	
-	cout << "1.delete a student.\n";
-	cout << "2. change class a student.\n";
-	cout << "3.Back to menu.\n";
+	cout << "1. Delete a student.\n";
+	cout << "2. Change class a student.\n";
+	cout << "3. Back to menu.\n";
 OPTION:
 	cout << "Choose mode:\n";
 	cin >> buffer2;
