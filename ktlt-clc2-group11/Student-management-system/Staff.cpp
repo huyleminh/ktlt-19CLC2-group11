@@ -912,7 +912,9 @@ void removeCourse () {
 		return;
 	}
 
-	fout << n << endl;
+	int temp = n - 1;
+
+	fout << temp << endl;
 
 	for(int i = 0; i < n; i++) {
 		if (courses[i].active == true)
