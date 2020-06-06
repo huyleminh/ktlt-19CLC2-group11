@@ -2,13 +2,14 @@
 #define _STUDENT_H_
 
 #include "Header.h"
-
-
+#include <time.h>
 /*Main student menu*/
 
 void showStudentMenu(User& user);
 
 //1. Check-in.
+void checkIn(string ID);
+bool checkStudentInCourse(string ID, string filename,bool& flag);
 //2. View check-in result.
 //3. View schedules.
 void loadListClass(int& n, string*& Class);
