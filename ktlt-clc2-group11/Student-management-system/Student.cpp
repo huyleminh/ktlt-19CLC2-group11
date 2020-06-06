@@ -47,6 +47,57 @@ OPTION:
 	showStudentMenu(user);
 }
 
+bool checkStudentInCourse(string ID,string filename,bool &flag) {
+	fstream in;
+	in.open(filename, ios::in);
+	if (!in.is_open()) {
+		cout << "Cant open file " << filename << endl;
+		flag = false;
+		return true;
+	}
+		in.close();
+}
+
+void checkIn(string ID)
+{
+	bool flag = false;
+	string Class,course,buff;
+	//int buff = 0;
+OPTION:
+	cout << "1.Input/Input again Class and course \n";
+	cout << "2.Back to menu\n";
+	getline(cin, buff);
+	if (buff == "2")
+		return;
+	cout << "Input your class:"; cin >> Class;
+	cout << "Input your course :"; cin >> course;
+	string path = Class + "-" + course + ".txt";
+	if (checkStudentInCourse(ID, path, flag)) {
+		if (flag) {
+			cout << "Please input again\n";
+			goto OPTION;
+		}
+	}
+	else
+	{
+		cout << "This ID <" << ID << "> doesn't exist in this course\n";
+		cout << "Please input again\n";
+		goto OPTION;
+	}
+
+
+	ofstream out;
+	path = Class + "-" + course + "-checkin.txt";
+	out.open(path, ios::app);
+	char* ctime(const time_t * timer);
+	time_t curtime;
+	time(&curtime);
+	string time = ctime(&curtime);
+	out << ID<<endl;
+	out << time << endl;
+	out.close();
+}
+
 //1. Check-in.
 //2. View check-in result.
 //3. View schedules.
