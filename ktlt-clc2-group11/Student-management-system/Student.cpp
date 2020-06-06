@@ -144,6 +144,7 @@ void viewSchedule()
 {
 	createScheduleFile();
 
+	cin.ignore(1);
 	string classID = "";
 
 	cout << "Enter class: ";
