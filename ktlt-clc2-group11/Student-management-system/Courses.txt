@@ -1,4 +1,4 @@
-3
+4
 
 CS162
 Ky thuat lap trinh 
@@ -31,4 +31,15 @@ htthanh
 monday
 13:30
 17:30
+I41
+
+CS150
+nhap mon lap trinh
+19CLC2
+htthanh
+2020-2-12
+2020-5-13
+monday
+13:30
+17:00
 I41
