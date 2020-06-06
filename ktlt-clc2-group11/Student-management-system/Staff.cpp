@@ -800,14 +800,15 @@ void addStudentIntoCourse() {
 	finCourse.close();
 }
 
-//3. Manually add a new course.
-void addNewCourse(int& nCourses)
+//3. Manually add a new course.(15)
+void addNewCourse()
 {
 	Course c;
 	cout << "Enter course ID: ";
 	getline(cin, c.ID);
+	convertToUpper(c.ID);
 	cout << endl;
-	
+
 	cout << "Enter course name: ";
 	getline(cin, c.name);
 	cout << endl;
@@ -862,32 +863,56 @@ void addNewCourse(int& nCourses)
 	convertToUpper(c.room);
 	cout << endl;
 
-	ofstream out;
-	
-	out.open("Courses.csv", ios::app);
+	Course* courses;
+	int nCourses;
 
-	if (!out.is_open())
+	loadCoursesFromTXT("Courses.txt", courses, nCourses);
+
+	int temp = nCourses + 1;
+
+	ofstream fout;
+
+	fout.open("Courses.txt");
+
+	if (!fout.is_open())
 	{
-		cout << "Cannot open file Courses.csv\n";
+		cout << "Cannot open file Courses.txt\n";
 		return;
 	}
 
-	nCourses++;
+	fout << temp << endl;
 
-	out << endl;
-	out << nCourses << ",";
-	out << c.ID << ",";
-	out << c.name << ",";
-	out << c.classID << ",";
-	out << c.lecAccount << ",";
-	out << c.startDate.year << "-" << c.startDate.month << "-" << c.startDate.day << ",";
-	out << c.endDate.year << "-" << c.endDate.month << "-" << c.endDate.day << ",";
-	out << c.courseTime.dayOfWeek << ",";
-	out << c.courseTime.startHour << ":" << c.courseTime.startMin << ",";
-	out << c.courseTime.endHour << ":" << c.courseTime.endMin << ",";
-	out << c.room;
-
-	out.close();
+	for (int i = 0; i < temp; i++) {
+		if (i != temp - 1)
+		{
+			fout << endl << courses[i].ID << endl;
+			fout << courses[i].name << endl;
+			fout << courses[i].classID << endl;
+			fout << courses[i].lecAccount << endl;
+			fout << courses[i].startDate.year << '-' << courses[i].startDate.month << '-' << courses[i].startDate.day << endl;
+			fout << courses[i].endDate.year << '-' << courses[i].endDate.month << '-' << courses[i].endDate.day << endl;
+			fout << courses[i].courseTime.dayOfWeek << endl;
+			fout << courses[i].courseTime.startHour << ':' << courses[i].courseTime.startMin << endl;
+			fout << courses[i].courseTime.endHour << ':' << courses[i].courseTime.endMin << endl;
+			fout << courses[i].room << endl;
+		}
+		else
+		{
+			fout << endl << c.ID << endl;
+			fout << c.name << endl;
+			fout << c.classID << endl;
+			fout << c.lecAccount << endl;
+			fout << c.startDate.year << '-' << c.startDate.month << '-' << c.startDate.day << endl;
+			fout << c.endDate.year << '-' << c.endDate.month << '-' << c.endDate.day << endl;
+			fout << c.courseTime.dayOfWeek << endl;
+			fout << c.courseTime.startHour << ':' << c.courseTime.startMin << endl;
+			fout << c.courseTime.endHour << ':' << c.courseTime.endMin << endl;
+			fout << c.room << endl;
+		}
+	}
+	delete[] courses;
+	fout.close();
+	cout << "\nAdd new courses successfully.\n";
 }
 
 //4. Edit an existing course.
@@ -917,17 +942,17 @@ void loadCoursesFromTXT(string filename, Course*& courses, int& n) {
 		getline(f, courses[i].lecAccount, '\n');
 		string temp = "";
 		getline(f, temp, '-');
-		courses[i].startDate.day = stoi(temp);
+		courses[i].startDate.year = stoi(temp);
 		getline(f, temp, '-');
 		courses[i].startDate.month = stoi(temp);
 		getline(f, temp, '\n');
-		courses[i].startDate.year = stoi(temp);
+		courses[i].startDate.day = stoi(temp);
 		getline(f, temp, '-');
-		courses[i].endDate.day = stoi(temp);
+		courses[i].endDate.year = stoi(temp);
 		getline(f, temp, '-');
 		courses[i].endDate.month = stoi(temp);
 		getline(f, temp, '\n');
-		courses[i].endDate.year = stoi(temp);
+		courses[i].endDate.day = stoi(temp);
 		getline(f, courses[i].courseTime.dayOfWeek, '\n');
 		getline(f, courses[i].courseTime.startHour, ':');
 		getline(f, courses[i].courseTime.startMin, '\n');
@@ -967,20 +992,24 @@ void removeCourse () {
 		return;
 	}
 
-	fout << n << endl;
+	int temp = n - 1;
+
+	fout << temp << endl;
 
 	for(int i = 0; i < n; i++) {
-		fout << endl << courses[i].ID << endl;
-		fout << courses[i].name << endl;
-		fout << courses[i].classID << endl;
-		fout << courses[i].lecAccount << endl;
-		fout << courses[i].startDate.year << '-' << courses[i].startDate.month << '-' << courses[i].startDate.day << endl;
-		fout << courses[i].endDate.year << '-' << courses[i].endDate.month << '-' << courses[i].endDate.day << endl;
-		fout << courses[i].courseTime.dayOfWeek << endl;
-		fout << courses[i].courseTime.startHour << ':' << courses[i].courseTime.startMin << endl;
-		fout << courses[i].courseTime.endHour << ':' << courses[i].courseTime.endMin << endl;
-		fout << courses[i].room << endl;
-		fout << courses[i].active << endl;
+		if (courses[i].active == true)
+		{
+			fout << endl << courses[i].ID << endl;
+			fout << courses[i].name << endl;
+			fout << courses[i].classID << endl;
+			fout << courses[i].lecAccount << endl;
+			fout << courses[i].startDate.year << '-' << courses[i].startDate.month << '-' << courses[i].startDate.day << endl;
+			fout << courses[i].endDate.year << '-' << courses[i].endDate.month << '-' << courses[i].endDate.day << endl;
+			fout << courses[i].courseTime.dayOfWeek << endl;
+			fout << courses[i].courseTime.startHour << ':' << courses[i].courseTime.startMin << endl;
+			fout << courses[i].courseTime.endHour << ':' << courses[i].courseTime.endMin << endl;
+			fout << courses[i].room << endl;
+		}
 	}
 	fout.close();
 }
