@@ -1232,8 +1232,7 @@ void addStudentToCourse()
 	{
 		aStudents[i] = temp[i];
 	}
-	aStudents[nStudents] = newStudent;
-	nStudents++;
+	aStudents[nStudents - 1] = newStudent;
 
 	ofstream out(filename);
 	if (!out.is_open())
@@ -1241,19 +1240,16 @@ void addStudentToCourse()
 		cout << "Cant open course file";
 		return;
 	}
-	out << nStudents << endl << endl;
+
 	for (int i = 0; i < nStudents; i++)
 	{
 		out << aStudents[i].ID << endl;
 		out << aStudents[i].fullName << endl;
-		out << aStudents[i].gender << endl;
 		out << aStudents[i].DoB << endl;
-		out << aStudents[i].classID << endl;
+		out << aStudents[i].gender << endl;
 		out << aStudents[i].active << endl;
 		out << endl;
 	}
-
-	return;
 }
 
 //9. View list of students of a course.
@@ -1327,29 +1323,33 @@ void viewListStudentsOfCourse()
 //10. View attendance list of a course.
 void loadDataCourse(string filename, Student*& aStudents, int& n)
 {
-	ifstream in(filename);
-	if (!in.is_open())
-	{
-		cout << "Cant load course's data";
+	ifstream in;
+	if (isFileOpen(in, filename) == false)
 		return;
-	}
 
-	in >> n;
+	n = 0;
+	string ignore;
+	while (!in.eof()) {
+		getline(in, ignore, '\n');
+		if(ignore == "")
+			n++;
+	}
+	n -= 1;
+	in.close();
+
+	if (isFileOpen(in, filename) == false)
+		return;
 
 	aStudents = new Student[n];
-	string ignore = "";
-
-	in.ignore(1);
 
 	for (int i = 0; i < n; i++) {
-		getline(in, ignore, '\n');
 		getline(in, aStudents[i].ID, '\n');
 		getline(in, aStudents[i].fullName, '\n');
-		getline(in, aStudents[i].gender, '\n');
 		getline(in, aStudents[i].DoB, '\n');
-		getline(in, aStudents[i].classID, '\n');
-		in >> aStudents[i].active;
-		in.ignore(1);
+		getline(in, aStudents[i].gender, '\n');
+		getline(in, ignore, '\n');
+		aStudents[i].active = ((ignore == "1") ? 1 : 0);
+		getline(in, ignore, '\n');
 	}
 }
 
