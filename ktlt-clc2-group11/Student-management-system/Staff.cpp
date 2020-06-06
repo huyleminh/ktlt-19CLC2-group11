@@ -1005,20 +1005,22 @@ void removeCourse () {
 
 	cout << "> Enter course ID: "; 
 	cin >> course.ID;
+	convertToUpper(course.ID);
 	cout << "> Enter course class ID: ";
 	cin >> course.classID;
+	convertToUpper(course.classID);
 
 	Course* courses;
 	int n = 0;
 
 	loadCoursesFromTXT("Courses.txt", courses, n);
 
-	for(int i = 0; i < n; i++) {
-		if(courses[i].ID == course.ID && courses[i].classID == course.classID) {
-			courses[i].active == 0;
-			break;
-		}
-	}
+	// for(int i = 0; i < n; i++) {
+	// 	if(courses[i].ID == course.ID && courses[i].classID == course.classID) {
+	// 		courses[i].active == 0;
+	// 		break;
+	// 	}
+	// }
 
 	ofstream fout;
 	fout.open("Courses.txt", ios::out);
@@ -1032,8 +1034,9 @@ void removeCourse () {
 	fout << temp << endl;
 
 	for(int i = 0; i < n; i++) {
-		if (courses[i].active == 1)
-		{
+		if (courses[i].ID == course.ID && courses[i].classID == course.classID)
+			continue;
+		else {
 			fout << endl << courses[i].ID << endl;
 			fout << courses[i].name << endl;
 			fout << courses[i].classID << endl;
@@ -1046,6 +1049,7 @@ void removeCourse () {
 			fout << courses[i].room << endl;
 		}
 	}
+	cout << "Remove " << course.ID << " in " << course.classID << " successfully.\n";
 	fout.close();
 }
 
@@ -1058,6 +1062,7 @@ void removeSpecificStudent()
 	string course = "";
 	string ID = "";
 
+	cin.ignore(1);
 	cout << "Enter class: ";
 	getline(cin, classID);
 
@@ -1117,7 +1122,9 @@ void removeSpecificStudent()
 		string active = "";
 		getline(fin, active, '\n');
 		if (active == "0")
-			s[i].active = false;
+			s[i].active = 0;
+		else 
+			s[i].active = 1;
 		s[i].classID = classID;
 		getline(fin, ignore, '\n');
 	}
@@ -1128,7 +1135,7 @@ void removeSpecificStudent()
 	{
 		if (s[i].ID == ID)
 		{
-			s[i].active = false;
+			s[i].active = 0;
 			flag = true;
 		}
 	}
@@ -1147,9 +1154,10 @@ void removeSpecificStudent()
 		fin << s[i].fullName << endl;
 		fin << s[i].DoB << endl;
 		fin << s[i].gender << endl;
-		if (s[i].active == true)
+		if (s[i].active == 1)
 			fin << "1";
-		else fin << "0";
+		else 
+			fin << "0";
 		if (i != nStudents - 1)
 			fin << endl << endl;
 	}
@@ -1160,7 +1168,8 @@ void removeSpecificStudent()
 
 	if (flag == true)
 		cout << "Remove student with ID [" << ID << "][" << classID << "] successfully.\n";
-	else cout << "Cannot find student with [" << ID << "][" << classID << "] in course.\n";
+	else 
+		cout << "Cannot find student with [" << ID << "][" << classID << "] in course.\n";
 
 	return;
 }
@@ -1173,8 +1182,10 @@ void addStudentToCourse()
 
 	cout << "Input Class ID: ";
 	cin >> classID;
+	convertToUpper(classID);
 	cout << "Input Course ID: ";
 	cin >> courseID;
+	convertToUpper(courseID);
 
 	Course* aCourses;
 	int nCourses;
