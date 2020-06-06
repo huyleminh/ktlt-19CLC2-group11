@@ -72,13 +72,17 @@ OPTION:
 	switch (option)
 	{
 	case 1:
-		filterStudentToClass("Students.txt");  //ok
+		filterStudentToClass("Students.txt");
+		cout << "Import successfully.\n";
+		cout << "===================================\n";
 		break;
 	case 2:
-		addStudentToClass(); //0k 50%
+		addStudentToClass();
+		cout << "Add successfully.\n";
+		cout << "===================================\n";
 		break;
 	case 3:
-		Edit(); //nhap sai bao, them case back to menu class and student mode
+		Edit(); 
 		break;
 	case 4:
 		getListClass(nClass, Class);
@@ -206,40 +210,6 @@ void addStudentToClass() {
 	newUser.username = newStudent.ID;
 	newUser.password = newStudent.DoB;
 
-	// ofstream fout;
-	
-	// fout.open("Students.txt", ios::app); 
-	// if (!fout.is_open()) {
-	// 	cout << "Can not open Students.txt\n";
-	// 	return;
-	// }
-
-	// fout << endl << newStudent.ID << endl << newStudent.fullName << endl << newStudent.gender << endl <<
-	// 	newStudent.DoB << endl << newStudent.classID << endl;
-	// fout.close();
-
-	// fout.open("StudentUsers.txt", ios::app);
-	// if (!fout.is_open()) {
-	// 	cout << "Can not open StudentUsers.txt\n";
-	// 	return;
-	// }
-
-	// fout << endl << newUser.username << endl << newUser.password << endl << newUser.name << endl;
-	// fout.close();
-
-	// string file = newStudent.classID + "-Students.txt";
-
-	// fout.open(file, ios::app);
-	// if (!fout.is_open()) {
-	// 	cout << "Can not open Students.txt\n";
-	// 	return;
-	// }
-
-	// fout << endl << newStudent.ID << endl << newStudent.fullName << endl << newStudent.gender << endl <<
-	// 	newStudent.DoB << endl << newStudent.classID << endl;
-
-	// fout.close();
-
 	Student* students;
 	int n = 0;
 
@@ -365,50 +335,70 @@ void getListStudents(string classID, Student*&Students, int &nStudents)
 		cout << "Can not open " << inputPath << endl;
 		return;
 	}
-	
-	string buff, buff1;
 
-	cout << "List of students in class " << classID << ":\n\n";
-	
-	while (!data.eof())
-	{
+	string buff;
+	nStudents = 0;
+	while (!data.eof()) {
 		getline(data, buff, '\n');
-		if (buff == "" && buff1 == "")
-			break;
-		cout << "ID: " << buff << endl;
-
-		getline(data, buff, '\n');
-		cout << "Name: " << buff << endl;
-
-		getline(data, buff, '\n');
-		cout << "Date of birth: " << buff << endl;
-
-		getline(data, buff, '\n');
-		cout << "Gender: " << buff << endl;
-
-		getline(data, buff, '\n');
-		cout << "active  : " << buff << endl;
-
-		getline(data, buff1, '\n');
-		nStudents++;
+		if(buff == "")
+			nStudents++;
 	}
-	cout << "Total students in class " << classID << " is " << nStudents << endl << endl;
+	data.close();
+
+	data.open(inputPath);
+
+	if (!data.is_open()) {
+		cout << "Can not open " << inputPath << endl;
+		return;
+	}
+
+	nStudents -= 1;
+	Students = new Student[nStudents];
+
+	cout << "List of students in class " << classID << " :\n";
+
+	for (int i = 0; i < nStudents; i++) {
+		getline(data, buff, '\n');
+		Students[i].ID = buff;
+		
+		getline(data, buff, '\n');
+		Students[i].fullName = buff;
+		
+		getline(data, buff, '\n');
+		Students[i].DoB = buff;
+		
+		getline(data, buff, '\n');
+		Students[i].gender = buff;
+		
+		getline(data, buff, '\n');
+		Students[i].active = ((buff == "1") ? 1 : 0);
+
+		getline(data, buff, '\n');
+
+		if (Students[i].active == 1) {
+			cout << "\nID: " << Students[i].ID << endl;
+			cout << "Full name: " << Students[i].fullName << endl;
+			cout << "Day of birth: " << Students[i].DoB << endl;
+			cout << "Gender: " << Students[i].gender << endl;
+		}
+	}
+	cout << "===================================\n";
 	data.close();
 }
-void saveStudent(Student* Students,int nStudent,string fclass) {
+
+void saveStudent(Student* Students, int nStudent, string fclass) {
 	ofstream data;
 	data.open(fclass);
 	if (!data.is_open()) {
 		cout << "Can't open file " << fclass;
 	}
 	else {
-		data << nStudent<<endl;
 		for (int i = 0; i < nStudent; i++) {
-			data << Students[i].ID;
-			data << Students[i].fullName;
-			data << Students[i].gender;
-			data << Students[i].DoB;
-			data << Students[i].active;
+			data << Students[i].ID << endl; 
+			data << Students[i].fullName << endl;
+			data << Students[i].DoB << endl;
+			data << Students[i].gender << endl;
+			data << Students[i].active << endl << endl;
 		}
 	}
 	delete[] Students;
@@ -422,15 +412,18 @@ void deleteStudent(string Aclass) {
 	string ID;
 	cout << "Input ID want to delete :"; cin >> ID;
 	bool flag = true;
+
 	for (int i = 0; i < nStudents; i++) {
-		if (Students[i].ID == ID) {
+		if (Students[i].ID == ID && Students[i].active == 1) {
 			Students[i].active = false;
-			flag = true;
+			flag = false;
+			break;
 		}
-		break;
 	}
+
 	if (flag == true) {
 		cout << "Don't have ID <" << ID << "> in this class.\n";
+		cout << "===================================\n";
 	}
 	else
 	{
@@ -438,14 +431,18 @@ void deleteStudent(string Aclass) {
 		string extension = "-Students.txt";
 		inputPath = Aclass + extension;
 		saveStudent(Students, nStudents, inputPath);
+		cout << "Delete successfully.\n";
+		cout << "===================================\n";
 	}
 }
 
 void Changeclass(string origin, string des) {
 	Student* Students,*Students2;
 	int nStudents,nStudents2;
+	
 	getListStudents(origin, Students, nStudents);
 	getListStudents(des, Students2, nStudents2);
+	
 	string ID;
 	cout << "Input ID want to delete :"; cin >> ID;
 	bool flag = true;
@@ -478,14 +475,14 @@ void Edit() {
 	getListClass(n, Class);
 	int buffer,buffer2;
 	
-	cout << "Choose your class you want to edit:\n";
+	cout << "Choose your class you want to edit:";
 	cin >> buffer;
 	
 	cout << "1. Delete a student.\n";
 	cout << "2. Change class a student.\n";
 	cout << "3. Back to menu.\n";
 OPTION:
-	cout << "Choose mode:\n";
+	cout << "Choose mode: ";
 	cin >> buffer2;
 	if (buffer2 > 3 || buffer < 1)
 		goto OPTION;
@@ -497,7 +494,7 @@ OPTION:
 			break;
 		case 2:
 			int buffer3;
-			cout << "choose class destination :";
+			cout << "Choose class destination: ";
 			cin >> buffer3;
 			Changeclass(Class[buffer], Class[buffer3]);
 			break;
@@ -548,7 +545,7 @@ void viewListStudents(string classID)
 	data.close();
 
 	cout << "\nTotal students: " << nStudent << endl;
-	cout << "===============================\n";
+	cout << "===================================\n";
 }
 
 void convertToUpper(string& s)
