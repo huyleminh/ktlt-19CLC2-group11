@@ -115,7 +115,7 @@ struct Course
 	Date endDate;
 	Time courseTime;
 	string room;
-	bool active = true;
+	bool active = 1;
 };
 
 struct Semester {
