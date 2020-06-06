@@ -868,6 +868,7 @@ void addNewCourse()
 
 	cout << "Enter day of week: ";
 	getline(cin, c.courseTime.dayOfWeek);
+	convertToUpper(c.courseTime.dayOfWeek);
 	cout << endl;
 
 	cout << "Enter start hour: ";
@@ -1000,7 +1001,7 @@ void loadCoursesFromTXT(string filename, Course*& courses, int& n) {
 	f.close();
 }
 
-void removeCourse () {
+void removeCourse() {
 	Course course;
 
 	cout << "> Enter course ID: "; 
@@ -1015,12 +1016,12 @@ void removeCourse () {
 
 	loadCoursesFromTXT("Courses.txt", courses, n);
 
-	// for(int i = 0; i < n; i++) {
-	// 	if(courses[i].ID == course.ID && courses[i].classID == course.classID) {
-	// 		courses[i].active == 0;
-	// 		break;
-	// 	}
-	// }
+	for(int i = 0; i < n; i++) {
+	 	if(courses[i].ID == course.ID && courses[i].classID == course.classID) {
+			courses[i].active == 0;
+	 		break;
+	 	}
+	}
 
 	ofstream fout;
 	fout.open("Courses.txt", ios::out);
@@ -1455,6 +1456,7 @@ void createUsername(string& username, string name)
 
 void createNewLecturer()
 {
+	cin.ignore(1);
 	string name;
 
 	cout << "Lecturer Infomation:\n";
@@ -1501,6 +1503,7 @@ void createNewLecturer()
 
 	data.close();
 	delete[] lec;
+	cout << "\nCreate account for lecturer [" << name << "] successfully.\n";
 }
 
 void createDupUsername(string& username, string name)
@@ -1562,6 +1565,7 @@ void updateLecturer()
 
 	if (mode == 1)
 	{
+		cin.ignore(1);
 		string username = "";
 
 		cout << "Enter username: ";
@@ -1636,6 +1640,7 @@ void deleteLecturer()
 	int nLec;
 	loadLecturerUser(lec, nLec);
 
+	cin.ignore(1);
 	string username = "";
 
 	cout << "Enter username to delete: ";
@@ -1714,6 +1719,7 @@ void viewAllLecturers()
 		cout << endl;
 	}
 	delete[] lec;
+	system("pause");
 }
 
 void editLecturers()
