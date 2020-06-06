@@ -1001,7 +1001,7 @@ void loadCoursesFromTXT(string filename, Course*& courses, int& n) {
 	f.close();
 }
 
-void removeCourse () {
+void removeCourse() {
 	Course course;
 
 	cout << "> Enter course ID: "; 
@@ -1016,12 +1016,12 @@ void removeCourse () {
 
 	loadCoursesFromTXT("Courses.txt", courses, n);
 
-	// for(int i = 0; i < n; i++) {
-	// 	if(courses[i].ID == course.ID && courses[i].classID == course.classID) {
-	// 		courses[i].active == 0;
-	// 		break;
-	// 	}
-	// }
+	for(int i = 0; i < n; i++) {
+	 	if(courses[i].ID == course.ID && courses[i].classID == course.classID) {
+			courses[i].active == 0;
+	 		break;
+	 	}
+	}
 
 	ofstream fout;
 	fout.open("Courses.txt", ios::out);
