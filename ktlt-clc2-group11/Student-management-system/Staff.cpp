@@ -1455,6 +1455,7 @@ void createUsername(string& username, string name)
 
 void createNewLecturer()
 {
+	cin.ignore(1);
 	string name;
 
 	cout << "Lecturer Infomation:\n";
@@ -1501,6 +1502,7 @@ void createNewLecturer()
 
 	data.close();
 	delete[] lec;
+	cout << "\nCreate account for lecturer [" << name << "] successfully.\n";
 }
 
 void createDupUsername(string& username, string name)
@@ -1562,6 +1564,7 @@ void updateLecturer()
 
 	if (mode == 1)
 	{
+		cin.ignore(1);
 		string username = "";
 
 		cout << "Enter username: ";
@@ -1636,6 +1639,7 @@ void deleteLecturer()
 	int nLec;
 	loadLecturerUser(lec, nLec);
 
+	cin.ignore(1);
 	string username = "";
 
 	cout << "Enter username to delete: ";
@@ -1714,6 +1718,7 @@ void viewAllLecturers()
 		cout << endl;
 	}
 	delete[] lec;
+	system("pause");
 }
 
 void editLecturers()
