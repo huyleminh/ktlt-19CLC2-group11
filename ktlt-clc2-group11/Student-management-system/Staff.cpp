@@ -86,6 +86,7 @@ OPTION:
 		break;
 	case 4:
 		getListClass(nClass, Class);
+		cout << "===================================\n";
 		delete[] Class;
 		break;
 	case 5: 
