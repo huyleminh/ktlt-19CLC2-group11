@@ -441,20 +441,37 @@ void Changeclass(string origin, string des) {
 	int nStudents,nStudents2;
 	
 	getListStudents(origin, Students, nStudents);
-	getListStudents(des, Students2, nStudents2);
+	//getListStudents(des, Students2, nStudents2);
 	
 	string ID;
-	cout << "Input ID want to delete :"; cin >> ID;
+	cout << "Input ID want to change class :"; cin >> ID;
 	bool flag = true;
 	for (int i = 0; i < nStudents; i++) {
-		if (Students[i].ID == ID) {
-			nStudents2 += 1;
-			Students2[nStudents2] = Students[i];
+		if (Students[i].ID == ID && Students[i].active==1) {
 			Students[i].active = false;
 			flag = false;
-		}
-		break;
+			//
+			string Path = "";
+			string extension = "-Students.txt";
+			Path = des + extension;
+			ofstream out;
+			out.open(Path, ios::app);
+			if (!out.is_open()) {
+				cout << "Cant open file:"<<Path<<endl;
+				return;
+			}
+			out << Students[i].ID << endl;
+			out << Students[i].fullName << endl;
+			out << Students[i].DoB << endl;
+			out << Students[i].gender << endl;
+			out << 1 << endl << endl;
+			out.close();
+			cout << "Change class successfully.\n";
+			cout << "===================================\n";
+			break;
+		}	
 	}
+
 	if (flag == true) {
 		cout << "Don't have ID <" << ID << "> in this class.\n";
 	}
@@ -464,8 +481,6 @@ void Changeclass(string origin, string des) {
 		string extension = "-Students.txt";
 		inputPath = origin + extension;
 		saveStudent(Students, nStudents, inputPath);
-		inputPath = des + extension;
-		saveStudent(Students2, nStudents2, inputPath);
 	}
 }
 
@@ -473,36 +488,43 @@ void Edit() {
 	string* Class;
 	int n;
 	getListClass(n, Class);
-	int buffer,buffer2;
-	
+	int buffer,buffer2,buffer3;
+	//string buffer3;
+CLASS1:
 	cout << "Choose your class you want to edit:";
 	cin >> buffer;
-	
+	buffer -= 1;
+	if (buffer < 0 || buffer > n-1)
+		goto CLASS1;
 	cout << "1. Delete a student.\n";
 	cout << "2. Change class a student.\n";
 	cout << "3. Back to menu.\n";
 OPTION:
 	cout << "Choose mode: ";
 	cin >> buffer2;
-	if (buffer2 > 3 || buffer < 1)
+	if (buffer2 > 3)
 		goto OPTION;
 	
-	buffer -= 1;
+	
 	switch (buffer2) {
 		case 1: 
 			deleteStudent(Class[buffer]);
 			break;
 		case 2:
-			int buffer3;
-			cout << "Choose class destination: ";
-			cin >> buffer3;
-			Changeclass(Class[buffer], Class[buffer3]);
+			for (int i=0;i<n;i++)
+			 cout << i + 1 << ". " << Class[i] << endl;
+		CLASS:
+			cout << "Choose class destination: "; cin >> buffer3;
+			buffer3 -= 1;
+			if (buffer ==buffer3 || buffer3<0||buffer3 >n-1)
+				goto CLASS;
+			Changeclass(Class[buffer],Class[buffer3]);
 			break;
 		case 3:
 			break;
 	}
 	delete[] Class;
-	classAndStudentMode();
+	//classAndStudentMode();
 }
 
 //4. View list of classes.
