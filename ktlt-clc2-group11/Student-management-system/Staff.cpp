@@ -868,6 +868,7 @@ void addNewCourse()
 
 	cout << "Enter day of week: ";
 	getline(cin, c.courseTime.dayOfWeek);
+	convertToUpper(c.courseTime.dayOfWeek);
 	cout << endl;
 
 	cout << "Enter start hour: ";
