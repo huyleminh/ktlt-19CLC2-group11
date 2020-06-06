@@ -542,6 +542,7 @@ void viewListStudents(string classID)
 	}
 
 	string buff, buff1;
+	Student student;
 	int nStudent = 0;
 	cout << "**List of students in class " << classID << ":\n";
 
@@ -549,16 +550,28 @@ void viewListStudents(string classID)
 		getline(data, buff, '\n');
 		if(buff == "" && buff1 == "")
 			break;
-		cout << "\nID: " << buff << endl;
+		student.ID = buff;
+		
 		getline(data, buff, '\n');
-		cout << "Full name: " << buff << endl;
+		student.fullName = buff;
+		
 		getline(data, buff, '\n');
-		cout << "Day of birth: " << buff << endl;
+		student.DoB = buff;
+		
 		getline(data, buff, '\n');
-		cout << "Gender: " << buff << endl;
+		student.gender = buff;
+		
 		getline(data, buff, '\n');
+		student.active = ((buff == "1") ? 1 : 0);
 		getline(data, buff1, '\n');
-		nStudent++;
+		
+		if (student.active == 1) {
+			cout << "\nID: " << student.ID << endl;
+			cout << "Full name: " << student.fullName << endl;
+			cout << "Day of birth: " << student.DoB << endl;
+			cout << "Gender: " << student.gender << endl;
+			nStudent++;
+		}
 	}
 	data.close();
 
@@ -610,30 +623,38 @@ OPTION:
 		break;
 	case 2:
 		importCoursesFromCsvFile(courses, nCourse);
+		cout << "Import successfully.\n";
+		cout << "===================================\n";
 		break;
 	case 3:
-		//addNewCourse(nCourse);
+		addNewCourse();
+		cout << "===================================\n";
 		break;
 	case 4:
 		break;
 	case 5: 
 		removeCourse();
+		cout << "===================================\n";
 		break;
 	case 6:
 		removeSpecificStudent();
+		cout << "===================================\n";
 		break;
 	case 7:	
 		addStudentToCourse();
+		cout << "===================================\n";
 		break;
 	case 8: 
 		break;
 	case 9:
 		viewListStudentsOfCourse();
+		cout << "===================================\n";
 		break;
 	case 10:
 		break;
 	case 11:
 		editLecturers();
+		cout << "===================================\n";
 		break;
 	case 12:
 		return;
@@ -661,15 +682,19 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 		getline(fin, ignore, '\n');
 		nCourse++;
 	}
+	nCourse -= 1;
+	fin.close();
 
+	if (isFileOpen(fin, "Courses.csv") == false)
+		return;
+	
 	courses = new Course[nCourse];
 	fout << nCourse << endl;
 
 	ignore = "";
 
-	fin.seekg(0, fin.beg);
 	int i = 0;
-	while (!fin.eof())
+	for (int i = 0; i < nCourse; i++)
 	{
 		getline(fin, ignore, ',');
 
@@ -715,16 +740,14 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 		fout << courses[i].courseTime.startHour << ':' << courses[i].courseTime.startMin << endl;
 		fout << courses[i].courseTime.endHour << ':' << courses[i].courseTime.endMin << endl;
 		fout << courses[i].room << endl;
-		fout << courses[i].active << endl;
-
-		i++;
+		//fout << courses[i].active << endl;
 	}
 
 	fin.close();
 	fout.close();
 
 	createClassCourse(courses, nCourse);
-	addStudentIntoCourse();
+	addStudentIntoCourse(nCourse);
 }
 
 //Create course-class file 
@@ -781,7 +804,7 @@ void splitClassID(string& str) {
 	str = classId;
 }
 
-void addStudentIntoCourse() {
+void addStudentIntoCourse(const int n) {
 	string fileCourse = "";
 	string source = "";
 
@@ -789,7 +812,7 @@ void addStudentIntoCourse() {
 	if(isFileOpen(finCourse, "ListCourses.txt") == false) 
 		return;
 
-	while(!finCourse.eof()){
+	for (int i = 0; i < n; i++) {
 		getline(finCourse, fileCourse, '\n');
 		source = fileCourse;
 		splitClassID(source);
@@ -805,6 +828,7 @@ void addNewCourse()
 {
 	Course c;
 	cout << "Enter course ID: ";
+	cin.ignore(1);
 	getline(cin, c.ID);
 	convertToUpper(c.ID);
 	cout << endl;
@@ -980,7 +1004,7 @@ void removeCourse () {
 
 	for(int i = 0; i < n; i++) {
 		if(courses[i].ID == course.ID && courses[i].classID == course.classID) {
-			courses[i].active == false;
+			courses[i].active == 0;
 			break;
 		}
 	}
@@ -997,7 +1021,7 @@ void removeCourse () {
 	fout << temp << endl;
 
 	for(int i = 0; i < n; i++) {
-		if (courses[i].active == true)
+		if (courses[i].active == 1)
 		{
 			fout << endl << courses[i].ID << endl;
 			fout << courses[i].name << endl;
@@ -1218,11 +1242,10 @@ void viewListStudentsOfCourse()
 	cout << "Input course:"; cin >> classID;
 	cout << "Input class:"; cin >> course;
 	string inputPath = "";
-	string extension = ".txt";
 
 	convertToUpper(classID);
 	convertToUpper(course);
-	inputPath = classID + "-" + course + extension;
+	inputPath = course + "-" + classID + ".txt";
 
 	data.open(inputPath);
 
@@ -1232,20 +1255,49 @@ void viewListStudentsOfCourse()
 	}
 
 	string buff;
-	int nStudents;
-	data >> nStudents;
+	int nStudents = 0;
+	while (!data.eof()) {
+		getline(data, buff, '\n');
+		if (buff == "")
+			nStudents++;
+	}
+	data.close();
 
-	getline(data, buff, '\n');
+	data.open(inputPath);
+	if (!data.is_open()) {
+		cout << "Can not open " << inputPath << endl;
+		return;
+	}
 
-	cout << "Total students in course " << classID << " is " << nStudents << endl << endl;
+	nStudents -= 1;
+	Student* students = new Student[nStudents];
+
 	cout << "List of students in course " << classID << ":\n\n";
 
-	while (!data.eof())
-	{
+	for (int i = 0; i < nStudents; i++) {
 		getline(data, buff, '\n');
-		cout << "Name: " << buff << endl;
+		students[i].ID = buff;
+
 		getline(data, buff, '\n');
-		cout << "ID  : " << buff << endl;
+		students[i].fullName = buff;
+
+		getline(data, buff, '\n');
+		students[i].DoB = buff;
+
+		getline(data, buff, '\n');
+		students[i].gender = buff;
+
+		getline(data, buff, '\n');
+		students[i].active = ((buff == "1") ? 1 : 0);
+
+		getline(data, buff, '\n');
+
+		if (students[i].active == 1) {
+			cout << "\nID: " << students[i].ID << endl;
+			cout << "Full name: " << students[i].fullName << endl;
+			cout << "Day of birth: " << students[i].DoB << endl;
+			cout << "Gender: " << students[i].gender << endl;
+		}
 	}
 	data.close();
 }
