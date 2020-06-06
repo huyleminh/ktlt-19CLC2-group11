@@ -832,6 +832,17 @@ void addNewCourse()
 	}
 	delete[] courses;
 	fout.close();
+
+	fstream f;
+	f.open("ListCourses.txt", ios::out | ios::app);
+
+	string filecourses = c.classID + "-" + c.ID + ".txt";
+
+	f << filecourses << endl;
+	f.close();
+	string source = c.classID + "-Students.txt";
+	copyFile(source, filecourses);
+
 	cout << "\nAdd new courses successfully.\n";
 }
 
