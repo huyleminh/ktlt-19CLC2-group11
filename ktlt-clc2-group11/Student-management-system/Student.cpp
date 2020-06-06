@@ -47,7 +47,8 @@ OPTION:
 	showStudentMenu(user);
 }
 
-bool checkStudentInCourse(string ID,string filename,bool &flag) {
+//1. Check-in.
+bool checkStudentInCourse(string ID, string filename, bool& flag) {
 	fstream in;
 	in.open(filename, ios::in);
 	if (!in.is_open()) {
@@ -55,13 +56,13 @@ bool checkStudentInCourse(string ID,string filename,bool &flag) {
 		flag = false;
 		return true;
 	}
-		in.close();
+	in.close();
 }
 
 void checkIn(string ID)
 {
 	bool flag = false;
-	string Class,course,buff;
+	string Class, course, buff;
 	//int buff = 0;
 OPTION:
 	cout << "1.Input/Input again Class and course \n";
@@ -93,12 +94,10 @@ OPTION:
 	time_t curtime;
 	time(&curtime);
 	string time = ctime(&curtime);
-	out << ID<<endl;
+	out << ID << endl;
 	out << time << endl;
 	out.close();
 }
-
-//1. Check-in.
 //2. View check-in result.
 //3. View schedules.
 void loadListClass(int& n, string*& Class)
