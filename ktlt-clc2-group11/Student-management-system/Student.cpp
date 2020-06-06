@@ -56,6 +56,13 @@ bool checkStudentInCourse(string ID, string filename, bool& flag) {
 		flag = false;
 		return true;
 	}
+	string buff;
+	while (!in.eof()) {
+		getline(in, buff);
+		if (buff == ID)
+			return true;
+	}
+	return false;
 	in.close();
 }
 
