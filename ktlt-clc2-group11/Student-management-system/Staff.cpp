@@ -946,12 +946,224 @@ void addNewCourse()
 	f << filecourses << endl;
 	f.close();
 	string source = c.classID + "-Students.txt";
-	copyFile(source, filecourses);
 
+	fstream f1;
+	f1.open(source, ios::in);
+
+	if (!f1.is_open())
+	{
+		f1.close();
+		f1.open(source, ios::out);
+		f1.close();
+	}
+	else
+		f1.close();
+
+	copyFile(source, filecourses);
 	cout << "\nAdd new courses successfully.\n";
 }
 
 //4. Edit an existing course.
+void editCourse()
+{
+	cin.ignore(1);
+	string buffer = "";
+	string courseID = "";
+	string classID = "";
+	cout << "Enter course ID: ";
+	getline(cin, courseID);
+	convertToUpper(courseID);
+
+	cout << "Enter class ID: ";
+	getline(cin, classID);
+	convertToUpper(classID);
+
+	Course* courses;
+	int nCourses;
+
+	loadCoursesFromTXT("Courses.txt", courses, nCourses);
+
+	int index = -1;
+	for (int i = 0; i < nCourses; i++)
+	{
+		if ((courses[i].ID == courseID) && (courses[i].classID == classID))
+		{
+			index = i;
+			break;
+		}
+	}
+
+	if (index == -1)
+	{
+		cout << "Cannot find course with ID [" << courseID << "][" << classID << "].\n";
+		return;
+	}
+
+	cout << "\n==========Information==========\n";
+	cout << "Course ID         : " << courses[index].ID << endl;
+	cout << "Course Name       : " << courses[index].name << endl;
+	cout << "Class ID          : " << courses[index].classID << endl;
+	cout << "Lecturer Username : " << courses[index].lecAccount << endl;
+	cout << "Start Date        : " << courses[index].startDate.year << "-" << courses[index].startDate.month << "-" << courses[index].startDate.day << endl;
+	cout << "End Date          : " << courses[index].endDate.year << "-" << courses[index].endDate.month << "-" << courses[index].endDate.day << endl;
+	cout << "Day Of Week       : " << courses[index].courseTime.dayOfWeek << endl;
+	cout << "Start Hour        : " << courses[index].courseTime.startHour << ":" << courses[index].courseTime.startMin << endl;
+	cout << "End Hour          : " << courses[index].courseTime.endHour << ":" << courses[index].courseTime.endMin << endl;
+	cout << "Room              : " << courses[index].room << endl;
+
+	int mode = -1;
+	bool flag = false;
+
+	while (mode != 10)
+	{
+		if (flag == true)
+		{
+			cout << "\n==========Information==========\n";
+			cout << "Course ID         : " << courses[index].ID << endl;
+			cout << "Course Name       : " << courses[index].name << endl;
+			cout << "Class ID          : " << courses[index].classID << endl;
+			cout << "Lecturer Username : " << courses[index].lecAccount << endl;
+			cout << "Start Date        : " << courses[index].startDate.year << "-" << courses[index].startDate.month << "-" << courses[index].startDate.day << endl;
+			cout << "End Date          : " << courses[index].endDate.year << "-" << courses[index].endDate.month << "-" << courses[index].endDate.day << endl;
+			cout << "Day Of Week       : " << courses[index].courseTime.dayOfWeek << endl;
+			cout << "Start Hour        : " << courses[index].courseTime.startHour << ":" << courses[index].courseTime.startMin << endl;
+			cout << "End Hour          : " << courses[index].courseTime.endHour << ":" << courses[index].courseTime.endMin << endl;
+			cout << "Room              : " << courses[index].room << endl;
+		}
+		flag = true;
+		cout << "\n==========Features==========\n";
+		cout << "1. Change course ID.\n";
+		cout << "2. Change course name.\n";
+		cout << "3. Change lecturer (username).\n";
+		cout << "4. Change start date.\n";
+		cout << "5. Change end date.\n";
+		cout << "6. Change day of week.\n";
+		cout << "7. Change start time.\n";
+		cout << "8. Change end time.\n";
+		cout << "9. Change room.\n";
+		cout << "10. Exit and save.\n";
+		cout << "Enter mode: ";
+		cin >> mode;
+		cout << endl;
+
+		cin.ignore(1);
+
+		if (mode == 1)
+		{
+			cout << "Enter new course ID: ";
+			getline(cin, buffer);
+			convertToUpper(buffer);
+			courses[index].ID = buffer;
+		}
+		if (mode == 2)
+		{
+			cout << "Enter new course name: ";
+			getline(cin, buffer);
+			courses[index].name = buffer;
+		}
+		if (mode == 3)
+		{
+			cout << "Enter new lecturer (username): ";
+			getline(cin, buffer);
+			courses[index].lecAccount = buffer;
+		}
+		if (mode == 4)
+		{
+			cout << "Enter new start date: \n";
+			cout << "Day: ";
+			cin >> buffer;
+			courses[index].startDate.day = stoi(buffer);
+			cout << "Month: ";
+			cin >> buffer;
+			courses[index].startDate.month = stoi(buffer);
+			cout << "Year: ";
+			cin >> buffer;
+			courses[index].startDate.year = stoi(buffer);
+		}
+		if (mode == 5)
+		{
+			cout << "Enter new end date: \n";
+			cout << "Day: ";
+			cin >> buffer;
+			courses[index].endDate.day = stoi(buffer);
+			cout << "Month: ";
+			cin >> buffer;
+			courses[index].endDate.month = stoi(buffer);
+			cout << "Year: ";
+			cin >> buffer;
+			courses[index].endDate.year = stoi(buffer);
+		}
+		if (mode == 6)
+		{
+			cout << "Enter new day of week: ";
+			getline(cin, buffer);
+			convertToUpper(buffer);
+			courses[index].courseTime.dayOfWeek = buffer;
+		}
+		if (mode == 7)
+		{
+			cout << "Enter new start time: \n";
+			cout << "Start hour: ";
+			getline(cin, buffer);
+			courses[index].courseTime.startHour = buffer;
+			cout << "Start min: ";
+			getline(cin, buffer);
+			courses[index].courseTime.startMin = buffer;
+		}
+		if (mode == 8)
+		{
+			cout << "Enter new end time: \n";
+			cout << "End hour: ";
+			getline(cin, buffer);
+			courses[index].courseTime.endHour = buffer;
+			cout << "End min: ";
+			getline(cin, buffer);
+			courses[index].courseTime.endMin = buffer;
+		}
+		if (mode == 9)
+		{
+			cout << "Enter new room: ";
+			getline(cin, buffer);
+			convertToUpper(buffer);
+			courses[index].room = buffer;
+		}
+		if ((mode < 1) || (mode > 10))
+			cout << "Invalid Mode.\n";
+		else
+			if (mode != 10)
+				cout << "Done.\n";
+	}
+
+	ofstream fout;
+
+	fout.open("Courses.txt");
+
+	if (!fout.is_open())
+	{
+		cout << "Cannot open file Courses.txt\n";
+		return;
+	}
+
+	fout << nCourses << endl;
+
+	for (int i = 0; i < nCourses; i++) {
+		fout << endl << courses[i].ID << endl;
+		fout << courses[i].name << endl;
+		fout << courses[i].classID << endl;
+		fout << courses[i].lecAccount << endl;
+		fout << courses[i].startDate.year << '-' << courses[i].startDate.month << '-' << courses[i].startDate.day << endl;
+		fout << courses[i].endDate.year << '-' << courses[i].endDate.month << '-' << courses[i].endDate.day << endl;
+		fout << courses[i].courseTime.dayOfWeek << endl;
+		fout << courses[i].courseTime.startHour << ':' << courses[i].courseTime.startMin << endl;
+		fout << courses[i].courseTime.endHour << ':' << courses[i].courseTime.endMin << endl;
+		fout << courses[i].room << endl;
+	}
+
+	fout.close();
+	delete[] courses;
+
+	cout << "\nSaved successfully.\n";
+}
 //5. Remove a course.
 void loadCoursesFromTXT(string filename, Course*& courses, int& n) {
 	fstream f;
