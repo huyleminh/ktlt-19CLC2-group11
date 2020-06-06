@@ -44,7 +44,7 @@ void courseMode();
 void importCoursesFromCsvFile(Course*& courses, int& nCourse);
 void createClassCourse(Course*& courses, const int nCourse);
 void splitClassID(string& str);
-void addStudentIntoCourse();
+void addStudentIntoCourse(const int n);
 //3. Manually add a new course.
 void addNewCourse();
 //4. Edit an existing course.
