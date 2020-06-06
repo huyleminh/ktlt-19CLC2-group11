@@ -25,8 +25,10 @@ OPTION:
 	switch (option)
 	{
 	case 1:
+		checkIn(user.username);
 		break;
 	case 2:
+		checkInResult(user.username);
 		break;
 	case 3:
 		viewSchedule();
@@ -79,6 +81,8 @@ OPTION:
 		return;
 	cout << "Input your class:"; cin >> Class;
 	cout << "Input your course :"; cin >> course;
+	convertToUpper(Class);
+	convertToUpper(course);
 	string path = Class + "-" + course + ".txt";
 	if (checkStudentInCourse(ID, path, flag)) {
 		if (flag) {
@@ -106,6 +110,48 @@ OPTION:
 	out.close();
 }
 //2. View check-in result.
+void checkInResult(string ID) {
+	string path, Class, course,buff,time;
+OPTION2:
+	cout << "1.Input/Input again Class and course \n";
+	cout << "2.Back to menu\n";
+	getline(cin, buff);
+	if (buff == "2")
+		return;
+	cout << "Input your class:"; cin >> Class;
+	cout << "Input your course :"; cin >> course;
+	convertToUpper(Class);
+	convertToUpper(course);
+
+	ifstream in;
+	path = Class + "-" + course + "-checkin.txt";
+	in.open(path);
+	if (!in.is_open()) {
+		cout << "Cant open file " << path << endl;
+		cout << "Please input again" << endl;
+		goto OPTION2;
+	}
+
+	bool flag = true;
+	system("cls");
+	cout << "\n==========Information==========\n";
+	cout << "ID:" << ID << endl;
+	while (!in.eof()) {
+		getline(in, buff);
+		//in.ignore(1);
+		getline(in, time);
+		if (buff == ID)
+		{
+			flag = false;
+			cout << time << endl;
+		}
+		getline(in, buff);
+	}
+	if (flag) {
+		cout << " NO DATA\n";
+	}
+	in.close();
+}
 //3. View schedules.
 void loadListClass(int& n, string*& Class)
 {
