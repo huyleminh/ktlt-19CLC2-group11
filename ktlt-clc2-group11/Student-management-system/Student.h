@@ -11,6 +11,7 @@ void showStudentMenu(User& user);
 void checkIn(string ID);
 bool checkStudentInCourse(string ID, string filename,bool& flag);
 //2. View check-in result.
+void checkInResult(string ID);
 //3. View schedules.
 void loadListClass(int& n, string*& Class);
 void createScheduleFile();
