@@ -2,13 +2,13 @@
 Le Minh Huy
 2020-05-12
 Male
-1
+0
 
 19127181
 Bach Minh Khoi
 2020-05-13
 Male
-0
+1
 
 19127141
 Phan Minh Hieu
@@ -16,14 +16,9 @@ Phan Minh Hieu
 Male
 0
 
-19127157
-Le Minh Huy
-2020-05-12
-Male
-0
+123
+le
+2020-02-02
+male
+1
 
-
-
-
-
-0
