@@ -631,6 +631,8 @@ OPTION:
 		cout << "===================================\n";
 		break;
 	case 4:
+		editCourse();
+		cout << "===================================\n";
 		break;
 	case 5: 
 		removeCourse();
