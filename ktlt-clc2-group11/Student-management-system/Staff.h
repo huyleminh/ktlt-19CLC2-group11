@@ -78,6 +78,9 @@ void editLecturers();
 //**3. Scoreboard.
 void scoreBoardMode();
 void createListOfScoreBoard();
+//1. Search and view the scoreboard of a course.
+void viewScoreBoard(string sourceTXT);
+void loadScoreBoard(string filename);
 //2. Export a scoreboard to a csv file.
 void getDestinationTXT(const string sourceTXT, string& destinationCSV);
 void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV);
