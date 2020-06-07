@@ -2,7 +2,7 @@
 Le Minh Huy
 2020-05-12
 Male
-0
+1
 
 19127181
 Bach Minh Khoi
@@ -20,5 +20,5 @@ Male
 le
 2020-02-02
 male
-1
+0
 

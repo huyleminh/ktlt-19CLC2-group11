@@ -647,12 +647,15 @@ OPTION:
 		cout << "===================================\n";
 		break;
 	case 8: 
+		//View list of courses in the current semester.
 		break;
 	case 9:
 		viewListStudentsOfCourse();
 		cout << "===================================\n";
 		break;
 	case 10:
+		viewAttendanceList();
+		cout << "===================================\n";
 		break;
 	case 11:
 		editLecturers();
@@ -1978,29 +1981,37 @@ OPTION:
 	cout << "> Which mode do you want to access ? \n";
 	int option;
 	cin >> option;
-	if (option < 1 || option > 3)
+	if (option < 1 || option > 4)
 		goto OPTION;
 	
 	string classID = "", courseID = "", sourceTXT = "", destinationCSV = "";
-	cout << "> Enter class ID: ";
-	getline(cin, classID, '\n');
-	convertToUpper(classID);
-	cout << "> Enter course ID: ";
-	getline(cin, courseID, '\n');
-	convertToUpper(courseID);
+	cin.ignore(1);
 	
-	sourceTXT = classID + '-' + courseID + "-Scoreboard.txt";
-
+	createListOfScoreBoard();
+	
 	switch(option) {
 		case 1: 
 			break;
 		case 2:
+			cout << "> Enter class ID: ";
+			getline(cin, classID, '\n');
+			convertToUpper(classID);
+			
+			cout << "> Enter course ID: ";
+			getline(cin, courseID, '\n');
+			convertToUpper(courseID);
+			sourceTXT = classID + '-' + courseID + "-Scoreboard.txt";
+
 			getDestinationTXT(sourceTXT, destinationCSV);
 			export_A_ScoreboardToCsv(sourceTXT, destinationCSV);
-			cout << "> Export " << sourceTXT << " to " << destinationCSV << "successfully.\n";
+			
+			cout << "Export " << sourceTXT << " to " << destinationCSV << " successfully.\n";
+			cout << "===================================\n";
 			break;
 		case 3: 
 			exportScoreBoardToCSV();
+			cout << "Export all score board successfully.\n";
+			cout << "===================================\n";
 			break;
 		case 4: 
 			return;
@@ -2022,13 +2033,21 @@ void createListOfScoreBoard()
 		if (!out.is_open())
 			cout << "can't open file ListScoreBoard.txt" << endl;
 		else {
-			string buffer;
+			string buffer, buffer1;
 			while (!in.eof()) {
 				getline(in,buffer);
-				buffer += "-Scoreboard.txt";
-				out << buffer;
+				if (buffer == "")
+					break;
+
+				buffer1 = "";
+				for (int i = 0; buffer[i] != '.'; i++)
+					buffer1 += buffer[i];
+				
+				buffer1 += "-Scoreboard.txt";
+				out << buffer1 << endl;
 			}
 			in.close();
+			out.close();
 		}
 }
 
@@ -2036,7 +2055,7 @@ void createListOfScoreBoard()
 void getDestinationTXT(const string sourceTXT, string& destinationCSV) {
 	destinationCSV = "";
 
-	for (int i = 0; i != '.'; i++)
+	for (int i = 0; sourceTXT[i] != '.'; i++)
 		destinationCSV += sourceTXT[i];
 	
 	destinationCSV += ".csv";
@@ -2063,9 +2082,10 @@ void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV) {
 	scores = new ScoreBoard[nScor];
 	
 	for(int i = 0; i < nScor; i++) {
-		fin >> ignore;
-		fin >> scores[i].studentID;
-		fin >> scores[i].name;
+		fin.ignore(1);
+		getline(fin, ignore, '\n');
+		getline(fin, scores[i].studentID, '\n');
+		getline(fin, scores[i].name, '\n');
 		fin >> scores[i]._midTerm;
 		fin >> scores[i]._final;
 		fin >> scores[i]._bonus;
@@ -2078,7 +2098,7 @@ void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV) {
 		fout << scores[i].studentID << ',';
 		fout << scores[i].name << ',';
 		fout << scores[i]._midTerm << ',';
-		fout << scores[i]._final<< ',';
+		fout << scores[i]._final << ',';
 		fout << scores[i]._bonus << ',';
 		fout << scores[i]._total << endl;
 	}
