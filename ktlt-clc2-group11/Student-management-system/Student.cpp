@@ -1,7 +1,7 @@
 #include "Student.h"
 #include "AllRole.h"
 #include "Staff.h"
-
+#pragma warning(disable : 4996)
 /*Main student menu*/
 
 void showStudentMenu(User& user) {
@@ -101,8 +101,8 @@ OPTION:
 	ofstream out;
 	path = Class + "-" + course + "-checkin.txt";
 	out.open(path, ios::app);
-	char* ctime(const time_t * timer);
-	time_t curtime;
+	//char* ctime(const time_t * timer);
+	time_t curtime=time(NULL);
 	time(&curtime);
 	string time = ctime(&curtime);
 	out << ID << endl;

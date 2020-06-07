@@ -2,7 +2,8 @@
 #define _STUDENT_H_
 
 #include "Header.h"
-
+#include <ctime>
+#include <iomanip>
 /*Main student menu*/
 
 void showStudentMenu(User& user);
