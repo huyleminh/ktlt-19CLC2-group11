@@ -1983,40 +1983,100 @@ OPTION:
 	cin >> option;
 	if (option < 1 || option > 4)
 		goto OPTION;
+	if (option == 4)
+		return;
 	
 	string classID = "", courseID = "", sourceTXT = "", destinationCSV = "";
 	cin.ignore(1);
 	
 	createListOfScoreBoard();
+
+	cout << "> Enter class ID: ";
+	getline(cin, classID, '\n');
+	convertToUpper(classID);
+
+	cout << "> Enter course ID: ";
+	getline(cin, courseID, '\n');
+	convertToUpper(courseID);
+	sourceTXT = classID + '-' + courseID + "-Scoreboard.txt";
+
+	getDestinationTXT(sourceTXT, destinationCSV);
 	
 	switch(option) {
 		case 1: 
+			viewScoreBoard(sourceTXT);
+			cout << "===================================\n";
 			break;
 		case 2:
-			cout << "> Enter class ID: ";
-			getline(cin, classID, '\n');
-			convertToUpper(classID);
-			
-			cout << "> Enter course ID: ";
-			getline(cin, courseID, '\n');
-			convertToUpper(courseID);
-			sourceTXT = classID + '-' + courseID + "-Scoreboard.txt";
-
-			getDestinationTXT(sourceTXT, destinationCSV);
 			export_A_ScoreboardToCsv(sourceTXT, destinationCSV);
-			
-			cout << "Export " << sourceTXT << " to " << destinationCSV << " successfully.\n";
 			cout << "===================================\n";
 			break;
 		case 3: 
 			exportScoreBoardToCSV();
-			cout << "Export all score board successfully.\n";
 			cout << "===================================\n";
 			break;
-		case 4: 
-			return;
 	}
 	scoreBoardMode();
+}
+
+//Search and view the scoreboard of a course.
+void viewScoreBoard(string sourceTXT) {
+	ifstream fin;
+	if(isFileOpen(fin, "ListScoreBoard.txt") == false)
+		return;
+
+	string cmpStr = "";
+
+	while (!fin.eof()) {
+		getline(fin, cmpStr, '\n');
+		if(cmpStr == "")
+			break;
+		
+		if(cmpStr == sourceTXT) {
+			loadScoreBoard(sourceTXT);
+			cout << "-----------------------------------\n";
+			fin.close();
+			return;
+		} 
+	}
+	cout << "Can not found " << sourceTXT << ", the file has not been created yet.\n";
+
+	fin.close();
+}
+
+void loadScoreBoard(string filename) {
+	ifstream fin;
+	if (isFileOpen(fin, filename) == false) 
+		return;
+
+	string line, ignore;
+	getline(fin, line, '\n');
+	cout << "Number of student: " << line << ".\n";
+	getline(fin, ignore, '\n');
+
+	while (!fin.eof()) {
+		getline(fin, line, '\n');
+		if (line == "")
+			break;
+		cout << "\nStudent ID: " << line << endl;
+
+		getline(fin, line, '\n');
+		cout << "Name: " << line << endl;
+
+		getline(fin, line, '\n');
+		cout << "Midterm: " << line << endl;
+
+		getline(fin, line, '\n');
+		cout << "Final: " << line << endl;
+
+		getline(fin, line, '\n');
+		cout << "Bonus: " << line << endl;
+
+		getline(fin, line, '\n');
+		cout << "Total: " << line << endl;
+		getline(fin, ignore, '\n');
+	}
+	fin.close();
 }
 
 void createListOfScoreBoard()
@@ -2094,17 +2154,19 @@ void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV) {
 	fin.close();
 
 	for (int i = 0; i < nScor; i++) {
-		fout << nScor + 1 << ',';
+		fout << i + 1 << ',';
 		fout << scores[i].studentID << ',';
-		fout << scores[i].name << ',';
-		fout << scores[i]._midTerm << ',';
-		fout << scores[i]._final << ',';
-		fout << scores[i]._bonus << ',';
-		fout << scores[i]._total << endl;
+		fout << fixed << setprecision(2) << scores[i].name << ',';
+		fout << fixed << setprecision(2) << scores[i]._midTerm << ',';
+		fout << fixed << setprecision(2) << scores[i]._final << ',';
+		fout << fixed << setprecision(2) << scores[i]._bonus << ',';
+		fout << fixed << setprecision(2) << scores[i]._total << endl;
 	}
 	fout.close();
 
 	delete[] scores;
+
+	cout << "Export " << sourceTXT << " to " << destinationCSV << " successfully.\n";
 }
 
 //3. Export all scoreboard to csv files.
@@ -2119,8 +2181,9 @@ void exportScoreBoardToCSV() {
 
 	while (!fin.eof()) {
 		getline(fin, filename, '\n');
-
-		string temp = filename;
+		if (filename == "")
+			break;
+		string temp = "";
 		getDestinationTXT(filename, temp);
 
 		export_A_ScoreboardToCsv(filename, temp);
