@@ -44,10 +44,11 @@ void courseMode();
 void importCoursesFromCsvFile(Course*& courses, int& nCourse);
 void createClassCourse(Course*& courses, const int nCourse);
 void splitClassID(string& str);
-void addStudentIntoCourse();
+void addStudentIntoCourse(const int n);
 //3. Manually add a new course.
 void addNewCourse();
 //4. Edit an existing course.
+void editCourse();
 //5. Remove a course.
 void loadCoursesFromTXT(string filename, Course*& courses, int& n);
 void removeCourse();
@@ -77,6 +78,9 @@ void editLecturers();
 //**3. Scoreboard.
 void scoreBoardMode();
 void createListOfScoreBoard();
+//1. Search and view the scoreboard of a course.
+void viewScoreBoard(string sourceTXT);
+void loadScoreBoard(string filename);
 //2. Export a scoreboard to a csv file.
 void getDestinationTXT(const string sourceTXT, string& destinationCSV);
 void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV);

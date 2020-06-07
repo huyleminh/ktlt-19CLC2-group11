@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iomanip>
 #define MAX_BUF 1000
 using namespace std;
 
@@ -115,7 +116,7 @@ struct Course
 	Date endDate;
 	Time courseTime;
 	string room;
-	bool active = true;
+	bool active = 1;
 };
 
 struct Semester {

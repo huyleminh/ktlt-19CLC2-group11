@@ -1,12 +1,34 @@
-1
+3
 
 CS162
-Program
+Ky thuat lap trinh 
 19CLC2
 nmhuy
-15-2-2020
-15-3-2020
-fri
-11:00
-11:30
+2020-3-14
+2020-5-30
+Friday
+13:00
+16:30
 I42
+
+PHY00005
+Vat ly dai cuong
+19CLC1
+nkquan
+2020-3-16
+2020-1-6
+Monday
+7:00
+10:30
+I33
+
+CHO
+KHONG ROT MON
+19CLC3
+nmhuy
+2020-20-12
+2020-9-2
+Wes
+12:30
+21:0
+I52
