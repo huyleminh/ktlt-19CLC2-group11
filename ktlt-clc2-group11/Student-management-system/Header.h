@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <time.h>
+#include <iomanip>
 #define MAX_BUF 1000
 using namespace std;
 
