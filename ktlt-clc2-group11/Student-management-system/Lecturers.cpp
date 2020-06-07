@@ -132,6 +132,11 @@ void importScoreboardFromCsvToTXT() {
 }
 
 //6. Edit grade of a student.
+void editGrade()
+{
+	string classID, courseID;
+}
+
 
 //7. View a scoreboard.
 
