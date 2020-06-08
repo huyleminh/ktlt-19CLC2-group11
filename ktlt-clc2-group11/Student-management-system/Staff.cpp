@@ -741,7 +741,8 @@ void deleteCourses(Course& course)
 void deleteSemester(Semester& semester)
 {
 	semester.numberOfCourses = 0;
-	semester.coursesArray = nullptr;
+	delete[] semester.coursesArray;
+	semester.coursesArray=nullptr;
 }
 
 void deleteYear(academicYear& year)
