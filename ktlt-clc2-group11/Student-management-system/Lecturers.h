@@ -21,7 +21,7 @@ void showLecturerMenu(User& user);
 void importScoreboardFromCsvToTXT();
 
 //6. Edit grade of a student.
-
+void editGrade();
 //7. View a scoreboard.
 
 //8. Change lecturer password.

@@ -668,7 +668,90 @@ OPTION:
 }
 
 //1. Edit academic years and semesters.
+void createCourse(Course& course) {
+	cout << "Input course's ID: ";
+	cin >> course.ID;
 
+	cout << "Input course's name: ";
+	cin >> course.name;
+
+	cout << "Input course's classID: ";
+	cin >> course.classID;
+
+	cout << "Input course's lecturer's account: ";
+	cin >> course.lecAccount;
+
+	cout << "Input course's start day: ";
+	course.startDate.inputDay();
+
+	cout << "Input course's end day: ";
+	course.endDate.inputDay();
+
+	cout << "Input course's time: ";
+	course.courseTime.inputTime();
+
+	cout << "Input course's room: ";
+	cin >> course.room;
+}
+
+void createSemester(Semester& temp)
+{
+	//semester temp;
+	cout << "Input the number of courses: ";
+	cin >> temp.numberOfCourses;
+	temp.coursesArray = new Course[temp.numberOfCourses];
+	for (int i = 0; i < temp.numberOfCourses; i++)
+	{
+		createCourse(temp.coursesArray[i]);
+	}
+}
+
+void createAcademicYear(academicYear& year)
+{
+	cout << "Input starting year: ";
+	cin >> year.startYear;
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "INPUT SEMESTER " << i + 1 << " " << endl;
+		createSemester(year.semesterArray[i]);
+	}
+}
+
+void deleteCourses(Course& course)
+{
+	course.ID = "";
+
+	course.name = "";
+
+	course.classID = "";
+
+	course.lecAccount = "";
+
+	course.startDate.deleteDay();
+
+	course.endDate.deleteDay();
+
+	course.classID = "";
+
+	course.courseTime.deleteTime();
+
+	course.room = "";
+}
+
+void deleteSemester(Semester& semester)
+{
+	semester.numberOfCourses = 0;
+	semester.coursesArray = nullptr;
+}
+
+void deleteYear(academicYear& year)
+{
+	year.startYear = 0;
+	for (int i = 0; i < 3; i++)
+	{
+		deleteSemester(year.semesterArray[i]);
+	}
+}
 //2. Import courses from csv file to txt file.(14)
 void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 	ifstream fin;

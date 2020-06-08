@@ -96,34 +96,41 @@ void importScoreboardFromCsvToTXT() {
 	int nStudents = 0;
 	string ignore = "";
 	while (!fin.eof()) {
-		getline(fin, ignore,'\r');
+		getline(fin, ignore, '\n');
 		++nStudents;
 	}
 
 	nStudents--;
 	Student* aStudents = new Student[nStudents];
-	fin.seekg(0, fin.beg);
+	//fin.seekg(0, fin.beg);
+	fin.close();
+	fin.open(filenameCSV);
 
 	int i = 0;
-	getline(fin, ignore, '\r');
+	/*getline(fin, ignore, '\n');*/
 
 	fout << nStudents << endl;
 	while (!fin.eof()) {
 		//Read each line in csv 
+		if (i == nStudents)
+			break;
 		getline(fin, ignore, ',');
 		getline(fin, aStudents[i].ID, ',');
 		getline(fin, aStudents[i].fullName, ',');
-		fin>>aStudents[i].score.midterm;
+		fin >> aStudents[i].score.midterm;
+		//getline(fin, ignore, ',');
 		fin.ignore(1);
 		fin >> aStudents[i].score.final;
 		fin.ignore(1);
+		//getline(fin, ignore, ',');
 		fin >> aStudents[i].score.bonus;
 		fin.ignore(1);
+		//getline(fin, ignore, ',');
 		fin >> aStudents[i].score.total;
 		fin.ignore(1);
+		//getline(fin, ignore, ',');
 		//Export 
 		fout << endl << aStudents[i].ID << endl << aStudents[i].fullName << endl << aStudents[i].score.midterm << endl << aStudents[i].score.final << endl << aStudents[i].score.bonus << endl << aStudents[i].score.total << endl;
-		//Test
 		cout << endl << aStudents[i].ID << endl << aStudents[i].fullName << endl << aStudents[i].score.midterm << endl << aStudents[i].score.final << endl << aStudents[i].score.bonus << endl << aStudents[i].score.total << endl;
 		i++;
 	}
@@ -132,6 +139,111 @@ void importScoreboardFromCsvToTXT() {
 }
 
 //6. Edit grade of a student.
+void editGrade()
+{
+	string classID, courseID, studentID, filename;
+	cout << "Input class ID: ";
+	cin >> classID;
+	cout << "Input course ID: ";
+	cin >> courseID;
+
+	filename = classID + "-" + courseID + "-" + "Scoreboard.txt";
+	fstream file(filename);
+	if (!file.is_open())
+	{
+		cout << "Cant open " << filename << endl;
+		return;
+	}
+	cout << "Input studentID: ";
+	cin >> studentID;
+
+	int nStudents;
+	file >> nStudents;
+
+	Student* aStudents = new Student[nStudents];
+	for (int i = 0; i < nStudents; i++)
+	{
+		file.ignore();
+		file.ignore();
+		getline(file, aStudents[i].ID, '\n');
+		getline(file, aStudents[i].fullName, '\n');
+		//file.ignore();
+		file >> aStudents[i].score.midterm;
+		file >> aStudents[i].score.final;
+		file >> aStudents[i].score.bonus;
+		file >> aStudents[i].score.total;
+		//file.ignore();
+	}
+	Student* tempS=new Student;
+
+	for (int i = 0; i < nStudents; i++)
+	{
+		if (aStudents[i].ID.compare(studentID) == 0)
+		{
+			cout << "FOUND" << endl;
+			tempS = &aStudents[i];
+			break;
+		}
+	}
+
+	int option;
+	cout << "SELECT YOUR OPTION: " << endl;
+	cout << "> 1. midterm: " << endl;
+	cout << "> 2. final: " << endl;
+	cout << "> 3. bonus: " << endl;
+	cout << "> 4. total: " << endl;
+	cin >> option;
+
+	if (option == 1)
+	{
+		cout << "ENTER NEW MIDTERM GRADE: ";
+		cin >> tempS->score.midterm;
+	}
+	else if (option == 2)
+	{
+		cout << "ENTER NEW FINAL GRADE: ";
+		cin >> tempS->score.final;
+	}
+	else if (option == 3)
+	{
+		cout << "ENTER NEW BONUS GRADE: ";
+		cin >> tempS->score.bonus;
+	}
+	else if (option == 4)
+	{
+		cout << "ENTER NEW FINAL GRADE: ";
+		cin >> tempS->score.final;
+	} 
+	else
+	{
+		cout << "There is no option match your choice";
+		return;
+	}
+	file.close();
+	ofstream out(filename);
+	if (!out.is_open())
+	{
+		cout << "Cant open " << filename << endl;
+		return;
+	}
+	
+	out << nStudents<<endl<<endl;
+	for (int i = 0; i < nStudents; i++)
+	{
+		out << aStudents[i].ID << endl;
+		out << aStudents[i].fullName << endl;
+		out << aStudents[i].score.midterm << endl;
+		out << aStudents[i].score.final << endl;
+		out << aStudents[i].score.bonus << endl;
+		out << aStudents[i].score.total << endl;
+		out << endl;
+	}
+	
+	out.close();
+
+	return;
+}
+
 
 //7. View a scoreboard.
 
