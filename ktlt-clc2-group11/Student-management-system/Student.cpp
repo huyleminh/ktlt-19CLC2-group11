@@ -34,6 +34,7 @@ OPTION:
 		viewSchedule();
 		break;
 	case 4:
+		//
 		break;
 	case 5:
 		changeStudentPassword(user);
@@ -71,18 +72,25 @@ bool checkStudentInCourse(string ID, string filename, bool& flag) {
 void checkIn(string ID)
 {
 	bool flag = false;
-	string Class, course, buff;
-	//int buff = 0;
+	string Class, course;
+	int buff;
+
 OPTION:
 	cout << "1.Input/Input again Class and course \n";
 	cout << "2.Back to menu\n";
-	getline(cin, buff);
-	if (buff == "2")
+	cin >> buff;
+
+	if (buff == 2)
 		return;
+
+	cin.ignore(1);
+
 	cout << "Input your class:"; cin >> Class;
 	cout << "Input your course :"; cin >> course;
+
 	convertToUpper(Class);
 	convertToUpper(course);
+
 	string path = Class + "-" + course + ".txt";
 	if (checkStudentInCourse(ID, path, flag)) {
 		if (flag) {
@@ -101,14 +109,15 @@ OPTION:
 	ofstream out;
 	path = Class + "-" + course + "-checkin.txt";
 	out.open(path, ios::app);
-	//char* ctime(const time_t * timer);
-	time_t curtime=time(NULL);
+	time_t curtime = time(NULL);
 	time(&curtime);
 	string time = ctime(&curtime);
 	out << ID << endl;
 	out << time << endl;
 	out.close();
+	cout << "\nCheck in successfully.\n";
 }
+
 //2. View check-in result.
 void checkInResult(string ID) {
 	string path, Class, course,buff,time;
