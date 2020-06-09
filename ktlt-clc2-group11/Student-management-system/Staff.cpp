@@ -127,8 +127,10 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 	int i = 0;
 	
 	fout << nStudent << endl;
+	fin.ignore();
 	while (!fin.eof()) {
 		//Read each line in csv 
+		
 		getline(fin, ignore, ',');
 		getline(fin, students[i].ID, ',');
 		getline(fin, students[i].fullName, ',');

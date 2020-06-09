@@ -138,6 +138,35 @@ void importScoreboardFromCsvToTXT() {
 	fout.close();
 }
 
+//5.1. export scoreboard to csv
+
+void exportScoreboard()
+{
+	string courseID;
+	string classID;
+
+	cout << "Input Class ID: ";
+	cin >> classID;
+	cout << "Input Course ID: ";
+	cin >> courseID;
+
+	string filenameCSV = classID + "-" + courseID + "-Scoreboard.csv";
+	string filenameTXT = classID + "-" + courseID + "-Scoreboard.txt";
+
+	ifstream fin(filenameTXT);
+	ofstream fout(filenameCSV);
+
+	if (!fin.is_open()) {
+		cout << "Can not open " << filenameCSV << endl;
+		return;
+	}
+
+	if (!fout.is_open()) {
+		cout << "Can not open " << filenameTXT << endl;
+		return;
+	}
+}
+
 //6. Edit grade of a student.
 void editGrade()
 {
