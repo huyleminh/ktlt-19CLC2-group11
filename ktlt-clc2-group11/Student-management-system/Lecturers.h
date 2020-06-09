@@ -19,7 +19,7 @@ void showLecturerMenu(User& user);
 
 //5. Import scoreboard of a course(midterm, final, lab, bonus) from a csv file.
 void importScoreboardFromCsvToTXT();
-void exportScoreboard();
+void exportScoreboardToCSV();
 //6. Edit grade of a student.
 void editGrade();
 //7. View a scoreboard.

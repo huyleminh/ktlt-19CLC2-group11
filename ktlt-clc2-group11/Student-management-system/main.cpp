@@ -20,11 +20,8 @@
 
 
 int main() {
-	/*cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5" << endl;
-	menu();*/
+	cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5" << endl;
+	menu();
 
-	//importScoreboardFromCsvToTXT();
-	//editGrade();
-	exportScoreboard();
 	return 0;
 }

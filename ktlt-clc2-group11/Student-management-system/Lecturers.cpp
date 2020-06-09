@@ -140,7 +140,7 @@ void importScoreboardFromCsvToTXT() {
 
 //5.1. export scoreboard to csv
 
-void exportScoreboard()
+void exportScoreboardToCSV()
 {
 	string courseID;
 	string classID;
