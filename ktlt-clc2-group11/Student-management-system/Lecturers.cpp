@@ -145,6 +145,9 @@ void exportScoreboard()
 	string courseID;
 	string classID;
 
+	int nStudents;
+	Student* aStudents;
+
 	cout << "Input Class ID: ";
 	cin >> classID;
 	cout << "Input Course ID: ";
@@ -165,6 +168,29 @@ void exportScoreboard()
 		cout << "Can not open " << filenameTXT << endl;
 		return;
 	}
+
+	fin>>nStudents;
+	aStudents = new Student[nStudents];
+	fin.ignore();
+	for(int i=0;i<nStudents;i++)
+	{
+		fin.ignore();
+		getline(fin,aStudents[i].ID,'\n');
+		getline(fin,aStudents[i].fullName,'\n');
+		fin>>aStudents[i].score.midterm;
+		fin>>aStudents[i].score.final;
+		fin>>aStudents[i].score.bonus;
+		fin>>aStudents[i].score.total;
+		fin.ignore();
+	}
+	int index=1;
+	for(int i=0;i<nStudents;i++)
+	{
+		fout<<index<<","<<aStudents[i].ID<<","<<aStudents[i].fullName<<","<<aStudents[i].score.midterm<<","<<aStudents[i].score.final<<","<<aStudents[i].score.bonus<<","<<aStudents[i].score.total<<endl;
+		index++;
+	}
+
+	return;
 }
 
 //6. Edit grade of a student.

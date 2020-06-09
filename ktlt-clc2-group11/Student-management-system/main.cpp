@@ -25,12 +25,6 @@ int main() {
 
 	//importScoreboardFromCsvToTXT();
 	//editGrade();
-	Student* a;
-	int n, i = 0;
-	importStudentsFromCSV(a,n);
-	for (int i = 0; i < n; i++);
-	{
-		cout << a[i].fullName;
-	}
+	exportScoreboard();
 	return 0;
 }
