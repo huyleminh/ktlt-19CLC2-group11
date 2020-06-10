@@ -16,8 +16,9 @@ void checkInResult(string ID);
 //3. View schedules.
 void loadListClass(int& n, string*& Class);
 void createScheduleFile();
-void viewSchedule();
+void viewSchedule(User u);
 //4. View your scores of a course.
+void loadClassSchedule(string classID, int& n, Course*& courses);
 void viewScore(User u);
 //5. Change password.
 void changeStudentPassword(User& user);

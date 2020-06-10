@@ -31,7 +31,7 @@ OPTION:
 		checkInResult(user.username);
 		break;
 	case 3:
-		viewSchedule();
+		viewSchedule(user);
 		break;
 	case 4:
 		viewScore(user);
@@ -74,22 +74,61 @@ void checkIn(string ID)
 	bool flag = false;
 	string Class, course;
 	int buff;
+	
+	ifstream fin;
+	Student* s;
+	int n = 0;
+
+	loadStudent(fin, "Students.txt", s, n);
+
+	string classID = "";
+	for (int i = 0; i < n; i++)
+		if (s[i].ID == ID)
+		{
+			classID = s[i].classID;
+			break;
+		}
+
+	delete[] s;
+
+	Course* c;
+	int nCourses;
+
+	loadClassSchedule(classID, nCourses, c);
+
+	int index = 0;
+	cout << "==========Your_Courses==========\n";
+	for (int i = 0; i < nCourses; i++)
+	{
+		cout << "#" << i + 1 << endl;
+		cout << "Course ID         : " << c[i].ID << endl;
+		cout << "Course Name       : " << c[i].name << endl;
+		cout << endl;
+	}
+	cout << "================================\n\n";
+	cout << "Enter course you want to check in (by number): ";
+	cin >> index;
+
+	index--;
+	course = c[index].ID;
+	cout << endl;
 
 OPTION:
-	cout << "1.Input/Input again Class and course \n";
-	cout << "2.Back to menu\n";
+	//cout << "1.Input/Input again Class and course \n";
+	cout << "1. Check in \n";
+	cout << "2. Back to menu\n";
 	cin >> buff;
 
 	if (buff == 2)
 		return;
 
 	cin.ignore(1);
+	Class = classID;
+	//cout << "Input your class:"; cin >> Class;
+	//cout << "Input your course :"; cin >> course;
 
-	cout << "Input your class:"; cin >> Class;
-	cout << "Input your course :"; cin >> course;
-
-	convertToUpper(Class);
-	convertToUpper(course);
+	//convertToUpper(Class);
+	//convertToUpper(course);
 
 	string path = Class + "-" + course + ".txt";
 	if (checkStudentInCourse(ID, path, flag)) {
@@ -116,24 +155,66 @@ OPTION:
 	out << time << endl;
 	out.close();
 	cout << "\nCheck in successfully.\n";
+	delete[] c;
 }
 
 //2. View check-in result.
 void checkInResult(string ID) {
 	string path, Class, course, time, buff;
 	int buff1;
+
+	ifstream fin;
+	Student* s;
+	int n = 0;
+
+	loadStudent(fin, "Students.txt", s, n);
+
+	string classID = "";
+	for (int i = 0; i < n; i++)
+		if (s[i].ID == ID)
+		{
+			classID = s[i].classID;
+			break;
+		}
+
+	delete[] s;
+
+	Course* c;
+	int nCourses;
+
+	loadClassSchedule(classID, nCourses, c);
+
+	int index = 0;
+	cout << "==========Your_Courses==========\n";
+	for (int i = 0; i < nCourses; i++)
+	{
+		cout << "#" << i + 1 << endl;
+		cout << "Course ID         : " << c[i].ID << endl;
+		cout << "Course Name       : " << c[i].name << endl;
+		cout << endl;
+	}
+	cout << "================================\n\n";
+	cout << "Enter course you want view check in (by number): ";
+	cin >> index;
+
+	index--;
+	course = c[index].ID;
+	Class = classID;
+	cout << endl;
+
 OPTION2:
-	cout << "1. Input/Input again Class and course \n";
+	//cout << "1. Input/Input again Class and course \n";
+	cout << "1. View \n";
 	cout << "2. Back to menu\n";
 	cin >> buff1;
 	if (buff1 == 2)
 		return;
 
-	cout << "Input your class:"; cin >> Class;
-	cout << "Input your course :"; cin >> course;
+	//cout << "Input your class:"; cin >> Class;
+	//cout << "Input your course :"; cin >> course;
 
-	convertToUpper(Class);
-	convertToUpper(course);
+	//convertToUpper(Class);
+	//convertToUpper(course);
 
 	ifstream in;
 	path = Class + "-" + course + "-checkin.txt";
@@ -163,6 +244,7 @@ OPTION2:
 		cout << " NO DATA\n";
 	}
 	in.close();
+	delete[] c;
 }
 //3. View schedules.
 void loadListClass(int& n, string*& Class)
@@ -176,13 +258,8 @@ void loadListClass(int& n, string*& Class)
 	}
 	data >> n;
 	Class = new string[n];
-	data.ignore(1);
-	int i = -1;
-	while (!data.eof())
-	{
-		++i;
+	for (int i = 0; i < n; i++)
 		getline(data, Class[i], '\n');
-	}
 	data.close();
 }
 
@@ -255,18 +332,25 @@ void createScheduleFile()
 	return;
 }
 
-void viewSchedule()
+void viewSchedule(User u)
 {
 	createScheduleFile();
 
-	cin.ignore(1);
+	ifstream fin;
+	Student* s;
+	int n = 0;
+
+	loadStudent(fin, "Students.txt", s, n);
+
 	string classID = "";
+	for (int i = 0; i < n; i++)
+		if (s[i].ID == u.username)
+		{
+			classID = s[i].classID;
+			break;
+		}
 
-	cout << "Enter class: ";
-	getline(cin, classID);
-	cout << endl;
-
-	convertToUpper(classID);
+	delete[] s;
 
 	string filename = classID + "-Schedule.txt";
 
@@ -457,7 +541,7 @@ void viewScore(User u)
 			break;
 		}
 	}
-	cout << "\n================================\n";
+	cout << "\n================================\n\n";
 	file.close();
 	delete[] s;
 	delete[] c;
