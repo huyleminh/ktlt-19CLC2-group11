@@ -720,8 +720,8 @@ void createSemester(Semester& temp,string classID,string startYear, string endYe
 		fout<<temp.coursesArray[j].name<<endl;
 		fout<<temp.coursesArray[j].classID<<endl;
 		fout<<temp.coursesArray[j].lecAccount<<endl;
-		fout<<temp.coursesArray[j].startDate.day<<"/"<< temp.coursesArray[j].startDate.month<<"/"<< temp.coursesArray[j].startDate.year<<endl;
-		fout<<temp.coursesArray[j].endDate.day<<"/"<< temp.coursesArray[j].endDate.month<<"/"<< temp.coursesArray[j].endDate.year<<endl;
+		fout<<temp.coursesArray[j].startDate.year<<"/"<< temp.coursesArray[j].startDate.month<<"/"<< temp.coursesArray[j].startDate.day<<endl;
+		fout<<temp.coursesArray[j].endDate.year<<"/"<< temp.coursesArray[j].endDate.month<<"/"<< temp.coursesArray[j].endDate.day<<endl;
 		fout<<temp.coursesArray[j].courseTime.dayOfWeek<<"\n"<< temp.coursesArray[j].courseTime.startHour<<":"<< temp.coursesArray[j].courseTime.startMin<<endl<< temp.coursesArray[j].courseTime.endMin<<":"<< temp.coursesArray[j].courseTime.endHour<<endl;
 		fout<<temp.coursesArray[j].room<<endl;
 		fout<<endl;
@@ -768,8 +768,8 @@ void createAcademicYear()
 			fout<<year.semesterArray[i].coursesArray[j].name<<endl;
 			fout<<year.semesterArray[i].coursesArray[j].classID<<endl;
 			fout<<year.semesterArray[i].coursesArray[j].lecAccount<<endl;
-			fout<<year.semesterArray[i].coursesArray[j].startDate.day<<"/"<<year.semesterArray[i].coursesArray[j].startDate.month<<"/"<<year.semesterArray[i].coursesArray[j].startDate.year<<endl;
-			fout<<year.semesterArray[i].coursesArray[j].endDate.day<<"/"<<year.semesterArray[i].coursesArray[j].endDate.month<<"/"<<year.semesterArray[i].coursesArray[j].endDate.year<<endl;
+			fout<<year.semesterArray[i].coursesArray[j].startDate.year<<"/"<<year.semesterArray[i].coursesArray[j].startDate.month<<"/"<<year.semesterArray[i].coursesArray[j].startDate.day<<endl;
+			fout<<year.semesterArray[i].coursesArray[j].endDate.year<<"/"<<year.semesterArray[i].coursesArray[j].endDate.month<<"/"<<year.semesterArray[i].coursesArray[j].endDate.day<<endl;
 			fout<<year.semesterArray[i].coursesArray[j].courseTime.dayOfWeek<<"\n"<<year.semesterArray[i].coursesArray[j].courseTime.startHour<<":"<<year.semesterArray[i].coursesArray[j].courseTime.startMin<<endl<<year.semesterArray[i].coursesArray[j].courseTime.endMin<<":"<<year.semesterArray[i].coursesArray[j].courseTime.endHour<<endl;
 			fout<<year.semesterArray[i].coursesArray[j].room<<endl;
 			fout<<endl;
@@ -779,25 +779,14 @@ void createAcademicYear()
 
 
 
-void deleteCourses(Course& course)
+void deleteCourses()
 {
-	course.ID = "";
+	string classID,hk;
+	string hk;
 
-	course.name = "";
+	cout<<"Input class ID: ";
+	cin>>classID;
 
-	course.classID = "";
-
-	course.lecAccount = "";
-
-	course.startDate.deleteDay();
-
-	course.endDate.deleteDay();
-
-	course.classID = "";
-
-	course.courseTime.deleteTime();
-
-	course.room = "";
 }
 
 void deleteSemester()
