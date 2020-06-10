@@ -698,7 +698,8 @@ void createCourse(Course& course) {
 
 void createSemester(Semester& temp)
 {
-	//semester temp;
+	//semester temp
+
 	cout << "Input the number of courses: ";
 	cin >> temp.numberOfCourses;
 	temp.coursesArray = new Course[temp.numberOfCourses];
@@ -708,16 +709,45 @@ void createSemester(Semester& temp)
 	}
 }
 
-void createAcademicYear(academicYear& year)
+void createAcademicYear()
 {
+	academicYear year;
 	cout << "Input starting year: ";
 	cin >> year.startYear;
+
+	string startYear,endYear;
+	stringstream ss,ss2;
+	ss << year.startYear;
+	startYear = ss.str();
+	
+	ss2 << year.startYear+1;
+	endYear = ss2.str();
+	string filename=startYear+"-"+endYear+".txt";
+	ofstream fout(filename);
 	for (int i = 0; i < 3; i++)
 	{
 		cout << "INPUT SEMESTER " << i + 1 << " " << endl;
 		createSemester(year.semesterArray[i]);
 	}
+
+	for(int i=0;i<3;i++)
+	{
+		for(int j=0;j<year.semesterArray[i].numberOfCourses;j++)
+		{
+			fout<<year.semesterArray[i].numberOfCourses<<endl;
+			fout<<year.semesterArray[i].coursesArray[j].ID<<endl;
+			fout<<year.semesterArray[i].coursesArray[j].name<<endl;
+			fout<<year.semesterArray[i].coursesArray[j].classID<<endl;
+			fout<<year.semesterArray[i].coursesArray[j].lecAccount<<endl;
+			fout<<year.semesterArray[i].coursesArray[j].startDate.day<<"/"<<year.semesterArray[i].coursesArray[j].startDate.month<<"/"<<year.semesterArray[i].coursesArray[j].startDate.year<<endl;
+			fout<<year.semesterArray[i].coursesArray[j].endDate.day<<"/"<<year.semesterArray[i].coursesArray[j].endDate.month<<"/"<<year.semesterArray[i].coursesArray[j].endDate.year<<endl;
+			fout<<year.semesterArray[i].coursesArray[j].courseTime.dayOfWeek<<"\n"<<year.semesterArray[i].coursesArray[j].courseTime.startHour<<":"<<year.semesterArray[i].coursesArray[j].courseTime.startMin<<endl<<year.semesterArray[i].coursesArray[j].courseTime.endMin<<":"<<year.semesterArray[i].coursesArray[j].courseTime.endHour<<endl;
+			fout<<year.semesterArray[i].coursesArray[j].room<<endl;
+			fout<<endl;
+		}
+	}
 }
+
 
 void deleteCourses(Course& course)
 {
@@ -2325,6 +2355,72 @@ void changeStaffPassword(User& user) {
 
 	fout.close();
 	delete[]staffs;
+}
+
+
+//27 export attendance list to csv
+void exportAttendanceListToCSV()
+{
+	string courseID;
+	string classID;
+
+	cout << "Input Class ID: ";
+	cin >> classID;
+	cout << "Input Course ID: ";
+	cin >> courseID;
+
+	Course* aCourses;
+	int nCourses;
+
+	loadCoursesFromTXT("Courses.txt", aCourses, nCourses);
+
+	Course course;
+	course.ID = "";
+	//course.name = "";
+	for (int i = 0; i < nCourses; i++)
+	{
+		if (aCourses[i].ID.compare(courseID) == 0 && aCourses[i].classID.compare(classID) == 0)
+		{
+			course = aCourses[i];
+			break;
+		}
+	}
+	if (course.ID.compare("") == 0)
+	{
+		cout << "Cant find the inputted course" << endl;
+		return;
+	}
+	string filenameTXT = "";
+	filenameTXT = classID + "-" + course.ID + ".txt";
+	string filenameCSV = classID + "-" + course.ID + ".csv";
+
+	ifstream fin(filenameTXT);
+	ofstream fout(filenameCSV);
+
+	if (!fin.is_open())
+	{
+		cout << "Cant find " << filenameTXT;
+		return;
+	}
+
+	if (!fout.is_open())
+	{
+		cout << "Cant create " << filenameCSV;
+		return;
+	}
+
+	Student * aStudents;
+	int nStudents;
+
+	loadDataCourse(filenameTXT, aStudents, nStudents);
+
+	for (int i = 0; i < nStudents; i++)
+	{
+		if (aStudents[i].active == 1) {
+			fout << aStudents[i].ID << "," << aStudents[i].fullName<<","<< aStudents[i].DoB << "," << aStudents[i].gender << "," << endl;
+		}
+	}
+	return;
 }
 
 //**6. View profile information.

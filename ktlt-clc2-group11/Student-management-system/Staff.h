@@ -40,6 +40,12 @@ void convertToUpper(string& s);
 void courseMode();
 
 //1. Edit academic years and semesters.
+void createAcademicYear();
+void createSemester(Semester& temp);
+void createCourse(Course& course);
+void deleteCourses(Course& course);
+void deleteSemester(Semester& semester);
+void deleteYear(academicYear& year);
 //2. Import courses from csv file to txt file.
 void importCoursesFromCsvFile(Course*& courses, int& nCourse);
 void createClassCourse(Course*& courses, const int nCourse);
@@ -90,8 +96,9 @@ void exportScoreBoardToCSV();
 //**4. Attendance list.
 void attendanceListMode();
 //1. Search and view attendance list of a course.
-//viewAttendanceList()
+void viewAttendanceList();
 //2. Export a attendance list to a csv file.
+void exportAttendanceListToCSV();
 //3. Back to staff menu.
 
 //**5. Change staff password.

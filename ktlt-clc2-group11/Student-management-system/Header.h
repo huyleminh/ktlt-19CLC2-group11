@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
+#include <sstream>
 #define MAX_BUF 1000
 using namespace std;
 
@@ -126,6 +127,7 @@ struct Semester {
 
 struct academicYear {
 	int startYear;
+	int endYear = startYear + 1;
 	Semester semesterArray[3];
 };
 
