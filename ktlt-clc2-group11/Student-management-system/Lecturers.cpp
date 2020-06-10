@@ -38,8 +38,10 @@ OPTION:
 	case 4:
 		break;
 	case 5:
+		importScoreboardFromCsvToTXT();
 		break;
 	case 6: 
+		editGrade();
 		break;
 	case 7: 
 		break;
@@ -66,6 +68,9 @@ OPTION:
 //viewAttendanceList();
 
 //4. Edit an attendance.
+void editAttendace() {
+
+}
 
 //5. Import scoreboard of a course(midterm, final, lab, bonus) from a csv file.
 void importScoreboardFromCsvToTXT() {

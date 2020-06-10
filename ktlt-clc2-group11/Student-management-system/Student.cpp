@@ -120,15 +120,18 @@ OPTION:
 
 //2. View check-in result.
 void checkInResult(string ID) {
-	string path, Class, course,buff,time;
+	string path, Class, course, time, buff;
+	int buff1;
 OPTION2:
-	cout << "1.Input/Input again Class and course \n";
-	cout << "2.Back to menu\n";
-	getline(cin, buff);
-	if (buff == "2")
+	cout << "1. Input/Input again Class and course \n";
+	cout << "2. Back to menu\n";
+	cin >> buff1;
+	if (buff1 == 2)
 		return;
+
 	cout << "Input your class:"; cin >> Class;
 	cout << "Input your course :"; cin >> course;
+
 	convertToUpper(Class);
 	convertToUpper(course);
 
@@ -195,7 +198,7 @@ void createScheduleFile()
 
 	loadListClass(nClasses, classes);
 
-	for (int i = 0; i < nClasses; i++)
+	for (int i = 0; i < nClasses; i++)	
 	{
 		string filename = "";
 		filename = classes[i] + "-Schedule.txt";

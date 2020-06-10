@@ -20,10 +20,7 @@
 
 
 int main() {
-	/*cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5" << endl;
-	menu();*/
-
-	//importScoreboardFromCsvToTXT();
-	editGrade();
+	cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tSTUDENTS MANAGEMENT SYSTEM DEMO VERSION 1.0" << endl;
+	menu();
 	return 0;
 }

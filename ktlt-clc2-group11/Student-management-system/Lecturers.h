@@ -16,6 +16,7 @@ void showLecturerMenu(User& user);
 //viewAttendanceList();
 
 //4. Edit an attendance.
+void editAttendace();
 
 //5. Import scoreboard of a course(midterm, final, lab, bonus) from a csv file.
 void importScoreboardFromCsvToTXT();
