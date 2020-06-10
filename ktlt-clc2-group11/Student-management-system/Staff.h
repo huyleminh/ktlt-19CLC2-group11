@@ -40,12 +40,14 @@ void convertToUpper(string& s);
 void courseMode();
 
 //1. Edit academic years and semesters.
+void menuAcademicYear();
 void createAcademicYear();
 void createSemester(Semester& temp,string classID,string startYear, string endYear,string HK);
 void createCourse(Course& course,string classID);
-void deleteCourses(Course& course);
+void deleteCourses();
 void deleteSemester();
 void deleteYear();
+void createSemesterAlone();
 //2. Import courses from csv file to txt file.
 void importCoursesFromCsvFile(Course*& courses, int& nCourse);
 void createClassCourse(Course*& courses, const int nCourse);
