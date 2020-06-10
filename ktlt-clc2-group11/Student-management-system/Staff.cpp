@@ -38,9 +38,12 @@ OPTION:
 			break;
 		case 5:
 			changeStaffPassword(user);
+			cout << "Change password successfully.\n";
+			cout << "===================================\n";
 			break;
 		case 6:
 			viewProfile(user);
+			cout << "===================================\n";
 			break;
 		case 7: 
 			return;
@@ -188,11 +191,20 @@ void createUserPassword(Student* students, const int nStudent) {
 	fout << nStudent << endl;
 	for (int i = 0; i < nStudent; i++) {
 		fout << endl << students[i].ID << endl;
-		fout << students[i].DoB << endl;
+		string password = formatPassword(students[i].DoB);
+		fout << password << endl;
 		fout << students[i].fullName << endl;
 	}
 
 	fout.close();
+}
+
+string formatPassword(string password) {
+	string format = "";
+	for (int i = 0; i < password.length(); i++) 
+		if (password[i] != '-')
+			format += password[i];
+	return format;
 }
 
 //2. Add a student to a class.  //Check valid student before add
@@ -1909,8 +1921,10 @@ void viewAttendanceList()
 
 	cout << "Input Class ID: ";
 	cin >> classID;
+	convertToUpper(classID);
 	cout << "Input Course ID: ";
 	cin >> courseID;
+	convertToUpper(courseID);
 
 	Course* aCourses;
 	int nCourses;
@@ -1919,7 +1933,7 @@ void viewAttendanceList()
 
 	Course course;
 	course.ID = "";
-	//course.name = "";
+
 	for (int i = 0; i < nCourses; i++)
 	{
 		if (aCourses[i].ID.compare(courseID) == 0 || aCourses[i].classID.compare(classID) == 0)

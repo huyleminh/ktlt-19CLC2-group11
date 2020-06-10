@@ -1,0 +1,71 @@
+10
+
+19127157
+Le Minh Huy
+Male
+2001-11-20
+19CLC2
+1
+
+19127181
+Bach Minh Khoi
+Male
+2001-01-01
+19CLC2
+1
+
+19127150
+Nguyen Hua Hung
+Male
+2001-02-25
+19CLC2
+1
+
+19127141
+Phan Minh Hieu
+Male
+2001-10-12
+19CLC2
+1
+
+19127329
+Le Hoang Anh
+Male
+2001-07-05
+19CLC2
+1
+
+19127345
+Lam Quoc Cuong
+Male
+2001-09-10
+19CLC2
+1
+
+19127186
+Le Thanh Khoi
+Male
+2001-04-13
+19CLC1
+1
+
+19127012
+Vu Nguyen Thai Binh
+Male
+2001-06-18
+19CLC1
+1
+
+19127226
+Hoang Van Nguyen
+Male
+2001-05-12
+19CLC1
+1
+
+19127348
+Bui Cong Danh
+Male
+2001-04-03
+19CLC1
+1

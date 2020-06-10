@@ -14,6 +14,7 @@ void classAndStudentMode();
 void importStudentsFromCSV(Student*& students, int& nStudent);
 void filterStudentToClass(string filename);
 void createUserPassword(Student* students, const int nStudent);
+string formatPassword(string password);
 
 //2. Add a student to a class.
 void addStudentToClass();
