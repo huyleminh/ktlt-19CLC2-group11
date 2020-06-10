@@ -198,7 +198,7 @@ void createScheduleFile()
 
 	loadListClass(nClasses, classes);
 
-	for (int i = 0; i < nClasses; i++)	
+	for (int i = 0; i < nClasses; i++)
 	{
 		string filename = "";
 		filename = classes[i] + "-Schedule.txt";
@@ -225,8 +225,8 @@ void createScheduleFile()
 					f << c[j].name << endl;
 					f << c[j].classID << endl;
 					f << c[j].lecAccount << endl;
-					f << c[j].startDate.day << "-" << c[j].startDate.month << "-" << c[j].startDate.year << endl;
-					f << c[j].endDate.day << "-" << c[j].endDate.month << "-" << c[j].endDate.year << endl;
+					f << c[j].startDate.year << "-" << c[j].startDate.month << "-" << c[j].startDate.day << endl;
+					f << c[j].endDate.year << "-" << c[j].endDate.month << "-" << c[j].endDate.day << endl;
 					f << c[j].courseTime.dayOfWeek << endl;
 					f << c[j].courseTime.startHour << ":" << c[j].courseTime.startMin << endl;
 					f << c[j].courseTime.endHour << ":" << c[j].courseTime.endMin << endl;
@@ -239,8 +239,8 @@ void createScheduleFile()
 					f << c[j].name << endl;
 					f << c[j].classID << endl;
 					f << c[j].lecAccount << endl;
-					f << c[j].startDate.day << "-" << c[j].startDate.month << "-" << c[j].startDate.year << endl;
-					f << c[j].endDate.day << "-" << c[j].endDate.month << "-" << c[j].endDate.year << endl;
+					f << c[j].startDate.year << "-" << c[j].startDate.month << "-" << c[j].startDate.day << endl;
+					f << c[j].endDate.year << "-" << c[j].endDate.month << "-" << c[j].endDate.day << endl;
 					f << c[j].courseTime.dayOfWeek << endl;
 					f << c[j].courseTime.startHour << ":" << c[j].courseTime.startMin << endl;
 					f << c[j].courseTime.endHour << ":" << c[j].courseTime.endMin << endl;
