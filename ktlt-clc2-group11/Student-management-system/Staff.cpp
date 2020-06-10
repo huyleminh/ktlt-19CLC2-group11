@@ -239,6 +239,20 @@ void addStudentToClass() {
 	students[n - 1].active = 1;
 
 	writeStudent(fout, "Students.txt", students, n);
+	fout.open("Students.txt", ios::app);
+	if(!fout.is_open()) {
+		cout << "Can not open Students.txt" << endl;
+		return;
+	}
+	fout << endl;
+	fout << newStudent.ID << endl;
+	fout << newStudent.fullName << endl;
+	fout << newStudent.gender << endl;
+	fout << newStudent.DoB << endl;
+	fout << newStudent.classID << endl;
+	fout << ((newStudent.active == true) ? 1 : 0) << endl;
+	
+	fout.close();
 	createUserPassword(students, n);
 
 	delete[] students;
@@ -264,7 +278,7 @@ void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
 		return;
 
 	fin >> n;
-	students = new Student[n + 1];
+	students = new Student[n];
 	string ignore = "";
 	getline(fin, ignore, '\n');
 
@@ -278,14 +292,6 @@ void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
 		getline(fin, ignore, '\n');
 		students[i].active = stoi(ignore);
 	}
-
-	students[n].ID = "";
-	students[n].fullName = "";
-	students[n].gender = "";
-	students[n].DoB = "";
-	students[n].classID = "";
-	students[n].active = 0;
-	n++;
 
 	fin.close();
 }
@@ -1942,11 +1948,13 @@ void viewAttendanceList()
 			break;
 		}
 	}
+
 	if (course.ID.compare("") == 0)
 	{
 		cout << "Cant find the inputted course" << endl;
 		return;
 	}
+
 	string filename = "";
 	filename = classID + "-" + courseID + ".txt";
 	
@@ -1954,7 +1962,7 @@ void viewAttendanceList()
 	ofstream fout(filenameTXT);
 	if(!fout.is_open())
 	{
-		cout<<"Cant open "<<filenameTXT<<endl;
+		cout << "Cant open " << filenameTXT << endl;
 		return;
 	}
 
@@ -1968,14 +1976,16 @@ void viewAttendanceList()
 	{
 		if (aStudents[i].active == 1) {
 			cout << i + 1 << ") " << aStudents[i].ID << " - " << aStudents[i].fullName << endl;
-			fout<<aStudents[i].ID<<endl;
-			fout<<aStudents[i].fullName<<endl;
-			fout<<aStudents[i].DoB<<endl;
-			fout<<aStudents[i].gender<<endl;
-			fout<<aStudents[i].active<<endl;
-			fout<<endl;
+			fout << aStudents[i].ID << endl;
+			fout << aStudents[i].fullName << endl;
+			fout << aStudents[i].DoB << endl;
+			fout << aStudents[i].gender << endl;
+			fout << aStudents[i].active << endl;
+			fout << endl;
 		}
 	}
+	fout.close();
+
 	return;
 }
 
