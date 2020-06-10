@@ -6,6 +6,7 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
+#include <stdio.h>
 #define MAX_BUF 1000
 using namespace std;
 

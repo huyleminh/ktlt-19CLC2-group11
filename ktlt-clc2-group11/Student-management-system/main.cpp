@@ -27,5 +27,11 @@ int main() {
 	/*exportAttendanceListToCSV();*/
 
 	createAcademicYear();
+
+	//deleteYear();
+
+	//deleteSemester();
+
+
 	return 0;
 }

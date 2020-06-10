@@ -41,11 +41,11 @@ void courseMode();
 
 //1. Edit academic years and semesters.
 void createAcademicYear();
-void createSemester(Semester& temp);
-void createCourse(Course& course);
+void createSemester(Semester& temp,string classID,string startYear, string endYear,string HK);
+void createCourse(Course& course,string classID);
 void deleteCourses(Course& course);
-void deleteSemester(Semester& semester);
-void deleteYear(academicYear& year);
+void deleteSemester();
+void deleteYear();
 //2. Import courses from csv file to txt file.
 void importCoursesFromCsvFile(Course*& courses, int& nCourse);
 void createClassCourse(Course*& courses, const int nCourse);
