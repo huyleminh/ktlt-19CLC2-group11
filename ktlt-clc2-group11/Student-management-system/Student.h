@@ -18,7 +18,7 @@ void loadListClass(int& n, string*& Class);
 void createScheduleFile();
 void viewSchedule();
 //4. View your scores of a course.
-
+void viewScore(User u);
 //5. Change password.
 void changeStudentPassword(User& user);
 

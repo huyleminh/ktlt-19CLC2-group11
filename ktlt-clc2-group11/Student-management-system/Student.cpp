@@ -34,7 +34,7 @@ OPTION:
 		viewSchedule();
 		break;
 	case 4:
-		//
+		viewScore(user);
 		break;
 	case 5:
 		changeStudentPassword(user);
