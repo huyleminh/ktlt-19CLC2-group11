@@ -20,7 +20,7 @@
 
 
 int main() {
-	cout << "\t\t\t\t\t\t\t\tSTUDENTS MANAGEMENT SYSTEM DEMO VERSION 1.0" << endl;
+	cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tSTUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.1.1" << endl;
 	menu();
 	return 0;
 }
