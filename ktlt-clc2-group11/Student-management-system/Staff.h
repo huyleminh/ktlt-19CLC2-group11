@@ -101,6 +101,7 @@ void attendanceListMode();
 void viewAttendanceList();
 //2. Export a attendance list to a csv file.
 void exportAttendanceListToCSV();
+void exportAttendanceListToTXT();
 //3. Back to staff menu.
 
 //**5. Change staff password.

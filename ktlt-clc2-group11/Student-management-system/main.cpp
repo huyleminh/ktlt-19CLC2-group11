@@ -20,8 +20,8 @@
 
 
 int main() {
-	cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5" << endl;
-	menu();
+	/*cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5" << endl;
+	menu();*/
 
 	//viewAttendanceList();
 	/*exportAttendanceListToCSV();*/
@@ -34,8 +34,12 @@ int main() {
 
 	//deleteCourses();
 
-	menuAcademicYear();
+	/*menuAcademicYear();*/
 
+	//createAcademicYear();
+
+	viewAttendanceList();
+	
 
 	return 0;
 }
