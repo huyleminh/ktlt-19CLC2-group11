@@ -220,40 +220,22 @@ void addStudentToClass() {
 	cout << " Class ID: "; getline(cin, newStudent.classID, '\n');
 	newStudent.active = 1;
 
-	User newUser;
-	newUser.name = newStudent.fullName;
-	newUser.username = newStudent.ID;
-	newUser.password = newStudent.DoB;
-
-	Student* students;
+	Student* students, * students1;
 	int n = 0;
 
 	ifstream fin;	
 	ofstream fout;
 
-	loadStudent(fin, "Students.txt", students, n);	
-	students[n - 1].ID = newStudent.ID;
-	students[n - 1].fullName = newStudent.fullName;
-	students[n - 1].DoB = newStudent.DoB;
-	students[n - 1].gender = newStudent.gender;
-	students[n - 1].active = 1;
-
-	writeStudent(fout, "Students.txt", students, n);
-	fout.open("Students.txt", ios::app);
-	if(!fout.is_open()) {
-		cout << "Can not open Students.txt" << endl;
-		return;
+	loadStudent(fin, "Students.txt", students, n);
+	students1 = new Student[n + 1];
+	for (int i = 0; i < n; i++) {
+		students1[i] = students[i];
 	}
-	fout << endl;
-	fout << newStudent.ID << endl;
-	fout << newStudent.fullName << endl;
-	fout << newStudent.gender << endl;
-	fout << newStudent.DoB << endl;
-	fout << newStudent.classID << endl;
-	fout << ((newStudent.active == true) ? 1 : 0) << endl;
-	
-	fout.close();
-	createUserPassword(students, n);
+	students1[n] = newStudent;
+
+	writeStudent(fout, "Students.txt", students1, n + 1);
+
+	createUserPassword(students1, n + 1);
 
 	delete[] students;
 	n = 0;
