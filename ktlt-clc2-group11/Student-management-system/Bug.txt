@@ -1,0 +1,4 @@
+1. edit remove old file cs190->cs191
+2. remove filename in listcourses.txt
+3. input date of birth split to input day, month, year
+4. run all attendance list before run another feature

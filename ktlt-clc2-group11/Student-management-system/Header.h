@@ -119,6 +119,8 @@ struct Course
 	Time courseTime;
 	string room;
 	bool active = 1;
+	string sem;
+	string acaYear;
 };
 
 struct Semester {

@@ -1,127 +1,71 @@
-18
+11
 
 19127157
 Le Minh Huy
+Male
 2001-11-20
 19CLC2
-Male
 1
 
 19127181
 Bach Minh Khoi
-2001-01-01
-19CLC2
 Male
+2001-07-07
+19CLC2
 1
 
 19127150
 Nguyen Hua Hung
-2001-02-25
-19CLC2
 Male
+2001-06-21
+19CLC2
 1
 
 19127141
 Phan Minh Hieu
-2001-10-12
-19CLC2
 Male
+2001-01-18
+19CLC2
 1
 
 19127329
 Le Hoang Anh
+Male
 2001-07-05
 19CLC2
-Male
 1
 
 19127345
 Lam Quoc Cuong
+Male
 2001-09-10
 19CLC2
-Male
 1
 
 19127186
 Le Thanh Khoi
+Male
 2001-04-13
 19CLC1
-Male
 1
 
 19127012
 Vu Nguyen Thai Binh
+Male
 2001-06-18
 19CLC1
-Male
 1
 
 19127226
 Hoang Van Nguyen
+Male
+2001-05-12
 19CLC1
-19CLC1
-19CLC2
 1
 
 19127348
 Bui Cong Danh
+Male
 2001-04-03
 19CLC1
-Male
-1
-
-19127100
-Nguyen Van A
-male
-2020-01-09
-19clc2
-1
-
-19127101
-Nguyen Van B 
-Male
-2020-02-05
-19clc2
-1
-
-19127102
-Nguyen Van C
-Male
-2020-01-03
-19clc2
-1
-
-19127181
-BMK
-Male
-2020-07-07
-19CLC2
-1
-
-19155555
-chabifami
-male
-2020-03-05
-19CLC1
-1
-
-191324546456
-another
-male
-2020-2020
-19CLC1
-1
-
-10000
-no name
-male
-2020
-19CLC2
-1
-
-19121234
-Vo Van Tan
-male
-20011801
-19clc3
 1
