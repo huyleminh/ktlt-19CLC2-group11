@@ -395,8 +395,10 @@ void viewaScoreboard(User user) {
 	cout << "Input your classID:"; 
 	getline(cin, classID, '\n');
 	convertToUpper(classID);
-	loadClassSchedule(classID, nCourses, c);
+	//loadClassSchedule(classID, nCourses, c);
+	loadCoursesFromTXT("Courses.txt", c, nCourses);
 	int index = 0;
+	bool flag = true;
 	cout << "==========Your_Courses==========\n";
 	for (int i = 0; i < nCourses; i++)
 	{
@@ -405,10 +407,16 @@ void viewaScoreboard(User user) {
 			cout << "Course ID         : " << c[i].ID << endl;
 			cout << "Course Name       : " << c[i].name << endl;
 			cout << endl;
+			flag = false;
 		}
 	}
+	if (flag)
+		cout << "NO Data.\n";
 	cout << "================================\n\n";
-	cout << "Enter course you want to check in (by number): ";
+	if (!flag)
+		cout << "Enter course you want to check in (by number): ";
+	else
+		return;
 	cin >> index;
 
 	index--;
