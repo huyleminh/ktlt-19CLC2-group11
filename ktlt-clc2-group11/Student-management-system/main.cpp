@@ -30,6 +30,6 @@ int main() {
 	student.DoB = "2020-07-07";
 	student.active = 1;
 
-	writeStudentCaro("19CLC1-PHY00005.txt", &student);
+	addStudentToCourse();
 	return 0;
 }

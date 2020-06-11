@@ -1936,6 +1936,56 @@ void writeStudentCaro(string filename,Student* newStudent )
 	fout.close();
 }
 
+bool checkAppeared(string filename,Student* newStudent )
+{
+	ifstream fin(filename);
+	if(!fin.is_open())
+	{
+		cout<<"Cant open "<<filename<<endl;
+		return 0;
+	}
+
+	string ignore="";
+	int nStudents=0;
+	while(!fin.eof())  //count
+	{
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		nStudents++;
+		getline(fin,ignore,'\n');
+	}
+	nStudents++;
+	Student* aStudents=new Student[nStudents];
+	aStudents[nStudents - 1] = *newStudent;
+	fin.close();
+	fin.open(filename);
+	int a;
+	for(int i=0;i<nStudents;i++)
+	{
+		getline(fin, aStudents[i].ID,'\n');
+		getline(fin, aStudents[i].fullName,'\n');
+		getline(fin, aStudents[i].DoB, '\n');
+		getline(fin, aStudents[i].gender,'\n');
+		fin >> a;
+		aStudents[i].active = (bool)a;
+		fin.ignore();
+		fin.ignore();
+	}
+	fin.close();
+
+	for (int i = 0; i < nStudents; i++)
+	{
+		if (aStudents[i].ID.compare(newStudent->fullName) == 0)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
 void addStudentToCourse()
 {
 	string courseID;
@@ -1980,11 +2030,32 @@ void addStudentToCourse()
 	cout << " Class ID: "; getline(cin, newStudent.classID);
 	cout << " Active status(0:No, 1:Yes) : "; cin >> newStudent.active;
  
-
-
-	{
 	string filename = "";
+	//Students.txt
+	if (checkAppeared("Students.txt", &newStudent) == 0)
+	{
+		writeStudentCaro("Students.txt", &newStudent);
+	}
+	//Class-Students.txt
+	filename = newStudent.classID + "-Students.txt";
+	if (checkAppeared(filename, &newStudent) == 0)
+	{
+		writeStudentCaro(filename, &newStudent);
+	}
+	filename = classID + "-Students.txt";
+	if (checkAppeared(filename, &newStudent) == 0)
+	{
+		writeStudentCaro(filename, &newStudent);
+	}
+	//Class-Course.txt
 	filename = classID + "-" + courseID + ".txt";
+	if (checkAppeared(filename, &newStudent) == 0)
+	{
+		writeStudentCaro(filename, &newStudent);
+	}
+
+	/*{
+
 
 	Student* aStudents, * temp;
 	int nStudents;
@@ -2014,7 +2085,7 @@ void addStudentToCourse()
 		out << aStudents[i].active << endl;
 		out << endl;
 	}
-	}
+	}*/
 }
 
 //9. View list of students of a course.
