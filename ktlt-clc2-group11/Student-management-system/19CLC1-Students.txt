@@ -10,6 +10,12 @@ Phan Minh Hieu
 Male
 0
 
+19127226
+Hoang Van Nguyen
+2001-05-12
+Male
+0
+
 19127157
 Le Minh Huy
 2020-05-12
@@ -27,6 +33,7 @@ new
 2010
 male
 1
+0
 
 19127181
 CUC CUNG
