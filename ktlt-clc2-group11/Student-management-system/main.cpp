@@ -20,9 +20,8 @@
 
 
 int main() {
-	/*cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5" << endl;
-	menu();*/
-
-	addStudentToCourse();
+	cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5" << endl;
+	menu();
+	//addStudentToCourse();
 	return 0;
 }

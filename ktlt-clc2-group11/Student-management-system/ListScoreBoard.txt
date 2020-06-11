@@ -1,3 +1,3 @@
 19CLC2-CS162-Scoreboard.txt
-19CLC1-PHY00005-Scoreboard.txt
-19CLC3-CHO-Scoreboard.txt
+19CLC2-PHY00005-Scoreboard.txt
+19CLC1-MTH00003-Scoreboard.txt
