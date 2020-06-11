@@ -1545,7 +1545,8 @@ void loadListCourse(string*& list, int& n)
 		if (buff != "")
 			count++;
 	}
-
+	f.close();
+	f.open("ListCourses.txt", ios::in);
 	list = new string[count];
 
 	for (int i = 0; i < count; i++)
@@ -1754,37 +1755,37 @@ void editCourse()
 
 	fout.close();
 
-	string newFilename = courses[index].classID + "-" + courses[index].ID + ".txt";
+	if (flagID == true) {
+		string newFilename = courses[index].classID + "-" + courses[index].ID + ".txt";
 
-	copyFile(courseIDTemp, newFilename);
+		copyFile(courseIDTemp, newFilename);
 
-	if (remove(courseIDTemp.c_str()) != 0)
-		cout << "\nDelete Error.";
+		if (remove(courseIDTemp.c_str()) != 0)
+			cout << "\nDelete Error.";
 
-	string* list;
-	int n;
+		string* list;
+		int n;
 
-	loadListCourse(list, n);
+		loadListCourse(list, n);
 
-	for (int i = 0; i < n; i++)
-	{
-		if (list[i] == courseIDTemp)
-			list[i] = newFilename;
-		break;
+		for (int i = 0; i < n; i++)
+		{
+			if (list[i] == courseIDTemp)
+				list[i] = newFilename;
+			break;
+		}
+
+		fstream f;
+
+		f.open("ListCourses.txt", ios::out);
+
+		for (int i = 0; i < n; i++)
+			f << list[i] << endl;
+
+		f << endl;
+
+		f.close();
 	}
-
-	fstream f;
-
-	f.open("ListCourses.txt", ios::out);
-
-	f << n << endl;
-
-	for (int i = 0; i < n; i++)
-		f << list[i] << endl;
-
-	f << endl;
-
-	f.close();
 
 	delete[] courses;
 
