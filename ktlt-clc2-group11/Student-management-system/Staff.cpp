@@ -659,6 +659,8 @@ OPTION:
 	switch (option)
 	{
 	case 1:
+		menuAcademicYear();
+		cout << "===================================\n";
 		break;
 	case 2:
 		importCoursesFromCsvFile(courses, nCourse);
@@ -687,6 +689,8 @@ OPTION:
 		break;
 	case 8: 
 		//View list of courses in the current semester.
+		viewCourseSemester();
+		cout << "===================================\n";
 		break;
 	case 9:
 		viewListStudentsOfCourse();
@@ -1257,7 +1261,10 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 		getline(fin, courses[i].courseTime.endHour, ':');
 		getline(fin, courses[i].courseTime.endMin, ',');
 
-		getline(fin, courses[i].room, '\n');
+		getline(fin, courses[i].room, ',');
+
+		getline(fin, courses[i].sem, ',');
+		getline(fin, courses[i].acaYear, '\n');
 
 		fout << endl << courses[i].ID << endl;
 		fout << courses[i].name << endl;
@@ -1294,7 +1301,7 @@ void createClassCourse(Course*& courses, const int nCourse) {
 	filename += courses[0].classID + "-" + courses[0].ID + ".txt";
 	
 	f << filename << endl;  
-
+	//19CLC2-2019-2020-HK2.txt
 	ofstream fout;
 	fout.open(filename);
 	if (!fout.is_open()) {
