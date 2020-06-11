@@ -1884,6 +1884,40 @@ void removeSpecificStudent()
 }
 
 //7. Add a specific student to a course.
+void writeFileStudentTXT(Student& newStudent) 
+{
+
+	// cin.ignore(1);
+	// cout << "> Enter student infomation: \n";
+	// cout << " Full name: "; getline(cin, newStudent.fullName, '\n');
+	// cout << " ID: "; getline(cin, newStudent.ID, '\n');
+	// cout << " Gender: "; getline(cin, newStudent.gender, '\n');
+	// cout << " Date of birth: "; getline(cin, newStudent.DoB, '\n');
+	// cout << " Class ID: "; getline(cin, newStudent.classID, '\n');
+	// newStudent.active = 1;
+
+	Student* students, * students1;
+	int n = 0;
+
+	ifstream fin;	
+	ofstream fout;
+
+	loadStudent(fin, "Students.txt", students, n);
+	for(int i=0;i<n;i++)
+	{
+		if(students[i].ID.compare(newStudent.ID)==0)
+		{
+			return;
+		}
+	}
+	students1 = new Student[n + 1];
+	for (int i = 0; i < n; i++) {
+		students1[i] = students[i];
+	}
+	students1[n] = newStudent;
+
+	writeStudent(fout, "Students.txt", students1, n + 1);
+}
 void writeStudentCaro(string filename,Student* newStudent )
 {
 	ifstream fin(filename);
@@ -2034,19 +2068,23 @@ void addStudentToCourse()
 	//Students.txt
 	if (checkAppeared("Students.txt", &newStudent) == 0)
 	{
-		writeStudentCaro("Students.txt", &newStudent);
+		writeFileStudentTXT(newStudent);
 	}
 	//Class-Students.txt
-	filename = newStudent.classID + "-Students.txt";
-	if (checkAppeared(filename, &newStudent) == 0)
+	if(newStudent.classID.compare(classID)!=0)
 	{
-		writeStudentCaro(filename, &newStudent);
+		cout<<"YOU DONT HAVE PERMISSION TO JOIN ANOTHER CLASS."<<endl;
 	}
-	filename = classID + "-Students.txt";
-	if (checkAppeared(filename, &newStudent) == 0)
+	else
 	{
-		writeStudentCaro(filename, &newStudent);
+		filename = newStudent.classID + "-Students.txt";
+		if (checkAppeared(filename, &newStudent) == 0)
+		{
+			writeStudentCaro(filename, &newStudent);
+		}
 	}
+
+
 	//Class-Course.txt
 	filename = classID + "-" + courseID + ".txt";
 	if (checkAppeared(filename, &newStudent) == 0)
