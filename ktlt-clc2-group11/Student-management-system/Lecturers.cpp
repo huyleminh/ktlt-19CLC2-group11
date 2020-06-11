@@ -47,6 +47,7 @@ OPTION:
 		editGrade();
 		break;
 	case 7: 
+		viewaScoreboard(user);
 		break;
 	case 8:
 		changeLecPassword(user);
@@ -390,8 +391,10 @@ void viewaScoreboard(User user) {
 	int n = 0;
 	Course* c;
 	int nCourses;
+	cin.ignore(1);
 	cout << "Input your classID:"; 
 	getline(cin, classID, '\n');
+	convertToUpper(classID);
 	loadClassSchedule(classID, nCourses, c);
 	int index = 0;
 	cout << "==========Your_Courses==========\n";
