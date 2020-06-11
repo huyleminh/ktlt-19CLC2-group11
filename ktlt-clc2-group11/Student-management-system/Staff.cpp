@@ -331,7 +331,8 @@ void getListClass(int& n, string*& Class)
 	data >> n;
 	Class = new string[n];
 	data.ignore(1);
-	cout << "List of Classes:\n\n";
+	cout << "===================================\n";
+	cout << "List of Classes:\n";
 	// int i = -1;
 	// while (!data.eof())
 	// {
@@ -403,7 +404,7 @@ void getListStudents(string classID, Student*&Students, int &nStudents)
 		if (Students[i].active == 1) {
 			cout << "\nID: " << Students[i].ID << endl;
 			cout << "Full name: " << Students[i].fullName << endl;
-			cout << "Day of birth: " << Students[i].DoB << endl;
+			cout << "Date of birth: " << Students[i].DoB << endl;
 			cout << "Gender: " << Students[i].gender << endl;
 		}
 	}
@@ -467,7 +468,7 @@ void Changeclass(string origin, string des) {
 	getListStudents(origin, Students, nStudents);
 	
 	string ID;
-	cout << "Input ID want to change class :"; cin >> ID;
+	cout << "Input ID of student you want to change class :"; cin >> ID;
 	bool flag = true;
 	for (int i = 0; i < nStudents; i++) {
 		if (Students[i].ID == ID && Students[i].active == 1) {
@@ -489,8 +490,6 @@ void Changeclass(string origin, string des) {
 			out << Students[i].gender << endl;
 			out << 1 << endl << endl;
 			out.close();
-			cout << "Change class successfully.\n";
-			cout << "===================================\n";
 			break;
 		}
 	}
@@ -500,10 +499,40 @@ void Changeclass(string origin, string des) {
 	}
 	else
 	{
+		cout << "Change class successfully.\n";
+		cout << "===================================\n";
 		string inputPath = "";
 		string extension = "-Students.txt";
 		inputPath = origin + extension;
 		saveStudent(Students, nStudents, inputPath);
+		ifstream fin;
+		Student* S;
+		int n;
+		loadStudent(fin, "Students.txt", S, n);
+		for (int i = 0; i < n; i++) {
+			if (S[i].ID == ID) {
+				S[i].classID = des;
+				//break;
+			}
+		}
+		ofstream data;
+		data.open("Students.txt");
+		if (!data.is_open()) {
+			cout << "Can't open file " << "Students.txt";
+		}
+		else {
+			data << n << endl << endl;
+			for (int i = 0; i < n; i++) {
+				data << S[i].ID << endl;
+				data << S[i].fullName << endl;
+				data << S[i].DoB << endl;
+				data << S[i].classID << endl;
+				data << S[i].gender << endl;
+				data << S[i].active << endl << endl;
+			}
+		}
+		delete[] S;
+		data.close();
 	}
 }
 
@@ -518,12 +547,15 @@ CLASS1:
 	buffer -= 1;
 	if (buffer < 0 || buffer > n-1)
 		goto CLASS1;
+	cout << "===================================\n";
 	cout << "1. Delete a student.\n";
 	cout << "2. Change class a student.\n";
 	cout << "3. Back to menu.\n";
 OPTION:
 	cout << "Choose mode: ";
 	cin >> buffer2;
+	cin.ignore(1);
+	cout << "===================================\n";
 	if (buffer2 > 3)
 		goto OPTION;
 	
@@ -539,6 +571,7 @@ OPTION:
 			buffer3 -= 1;
 			if (buffer == buffer3 || buffer3<0 || buffer3 >n - 1)
 				goto CLASS;
+			cout << "===================================\n";
 			Changeclass(Class[buffer],Class[buffer3]);
 			break;
 		case 3:
