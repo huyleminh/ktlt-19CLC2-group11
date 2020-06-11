@@ -23,23 +23,7 @@ int main() {
 	/*cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5" << endl;
 	menu();*/
 
-	//viewAttendanceList();
-	/*exportAttendanceListToCSV();*/
-
-	//createAcademicYear();
-
-	//deleteYear();
-
-	//deleteSemester();
-
-	//deleteCourses();
-
-	/*menuAcademicYear();*/
-
-	//createAcademicYear();
-
-	viewAttendanceList();
-	
+	menuAcademicYear();
 
 	return 0;
 }

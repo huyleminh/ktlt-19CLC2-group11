@@ -43,11 +43,15 @@ void courseMode();
 void menuAcademicYear();
 void createAcademicYear();
 void createSemester(Semester& temp,string classID,string startYear, string endYear,string HK);
+void createSimpleSemester(Semester& temp,string classID,string startYear, string endYear,string HK);
 void createCourse(Course& course,string classID);
+void viewCourseSemester();
+void addCourseToSemester();
 void deleteCourses();
 void deleteSemester();
+void viewYear();
 void deleteYear();
-void createSemesterAlone();
+//void createSemesterAlone();
 //2. Import courses from csv file to txt file.
 void importCoursesFromCsvFile(Course*& courses, int& nCourse);
 void createClassCourse(Course*& courses, const int nCourse);
