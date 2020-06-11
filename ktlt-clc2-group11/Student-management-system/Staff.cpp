@@ -1915,7 +1915,7 @@ void addStudentToCourse()
 
 	Student newStudent;
 
-	cout << "> Enter student infomation: \n";
+	cout << "> Enter student information: \n";
 	cout << " Full name: "; getline(cin, newStudent.fullName);
 	getline(cin, newStudent.fullName);
 	cout << " ID: "; getline(cin, newStudent.ID);
