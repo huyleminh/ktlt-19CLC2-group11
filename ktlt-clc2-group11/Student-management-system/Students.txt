@@ -1,4 +1,4 @@
-10
+13
 
 19127157
 Le Minh Huy
@@ -68,4 +68,25 @@ Bui Cong Danh
 Male
 2001-04-03
 19CLC1
+1
+
+19127100
+Nguyen Van A
+male
+2020-01-09
+19clc2
+1
+
+19127101
+Nguyen Van B 
+Male
+2020-02-05
+19clc2
+1
+
+19127102
+Nguyen Van C
+Male
+2020-01-03
+19clc2
 1
