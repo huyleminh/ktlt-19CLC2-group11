@@ -34,39 +34,15 @@ Lam Quoc Cuong
 Male
 1
 
-19127157
-Le Minh Huy
-2001-11-20
+19127348
+Bui Cong Danh
+2001-04-03
 Male
-1
+0
 
-19127181
-Bach Minh Khoi
-2001-01-01
+19127226
+Hoang Van Nguyen
+2001-05-12
 Male
-1
-
-19127150
-Nguyen Hua Hung
-2001-02-25
-Male
-1
-
-19127141
-Phan Minh Hieu
-2001-10-12
-Male
-1
-
-19127329
-Le Hoang Anh
-2001-07-05
-Male
-1
-
-19127345
-Lam Quoc Cuong
-2001-09-10
-Male
-1
+0
 
