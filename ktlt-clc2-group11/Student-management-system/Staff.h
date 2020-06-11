@@ -61,6 +61,7 @@ void addStudentIntoCourse(const int n);
 //3. Manually add a new course.
 void addNewCourse();
 //4. Edit an existing course.
+void loadListCourse(string*& list, int& n);
 void editCourse();
 //5. Remove a course.
 void loadCoursesFromTXT(string filename, Course*& courses, int& n);

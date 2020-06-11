@@ -1530,6 +1530,30 @@ void addNewCourse()
 }
 
 //4. Edit an existing course.
+void loadListCourse(string*& list, int& n)
+{
+	fstream f;
+
+	f.open("ListCourses.txt", ios::in);
+
+	string buff = "";
+	int count = 0;
+
+	while (!f.eof())
+	{
+		getline(f, buff, '\n');
+		if (buff != "")
+			count++;
+	}
+
+	list = new string[count];
+
+	for (int i = 0; i < count; i++)
+		getline(f, list[i], '\n');
+
+	n = count;
+	f.close();
+}
 void editCourse()
 {
 	cin.ignore(1);
@@ -1579,6 +1603,8 @@ void editCourse()
 
 	int mode = -1;
 	bool flag = false;
+	bool flagID = false;
+	string courseIDTemp = classID + "-" + courses[index].ID + ".txt";
 
 	while (mode != 10)
 	{
@@ -1620,6 +1646,7 @@ void editCourse()
 			getline(cin, buffer);
 			convertToUpper(buffer);
 			courses[index].ID = buffer;
+			flagID = true;
 		}
 		if (mode == 2)
 		{
@@ -1726,6 +1753,39 @@ void editCourse()
 	}
 
 	fout.close();
+
+	string newFilename = courses[index].classID + "-" + courses[index].ID + ".txt";
+
+	copyFile(courseIDTemp, newFilename);
+
+	if (remove(courseIDTemp.c_str()) != 0)
+		cout << "\nDelete Error.";
+
+	string* list;
+	int n;
+
+	loadListCourse(list, n);
+
+	for (int i = 0; i < n; i++)
+	{
+		if (list[i] == courseIDTemp)
+			list[i] = newFilename;
+		break;
+	}
+
+	fstream f;
+
+	f.open("ListCourses.txt", ios::out);
+
+	f << n << endl;
+
+	for (int i = 0; i < n; i++)
+		f << list[i] << endl;
+
+	f << endl;
+
+	f.close();
+
 	delete[] courses;
 
 	cout << "\nSaved successfully.\n";
