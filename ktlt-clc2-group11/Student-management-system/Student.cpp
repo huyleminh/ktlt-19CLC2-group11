@@ -31,10 +31,10 @@ OPTION:
 		checkInResult(user.username);
 		break;
 	case 3:
-		viewSchedule();
+		viewSchedule(user);
 		break;
 	case 4:
-		//
+		viewScore(user);
 		break;
 	case 5:
 		changeStudentPassword(user);
@@ -74,22 +74,61 @@ void checkIn(string ID)
 	bool flag = false;
 	string Class, course;
 	int buff;
+	
+	ifstream fin;
+	Student* s;
+	int n = 0;
+
+	loadStudent(fin, "Students.txt", s, n);
+
+	string classID = "";
+	for (int i = 0; i < n; i++)
+		if (s[i].ID == ID)
+		{
+			classID = s[i].classID;
+			break;
+		}
+
+	delete[] s;
+
+	Course* c;
+	int nCourses;
+
+	loadClassSchedule(classID, nCourses, c);
+
+	int index = 0;
+	cout << "==========Your_Courses==========\n";
+	for (int i = 0; i < nCourses; i++)
+	{
+		cout << "#" << i + 1 << endl;
+		cout << "Course ID         : " << c[i].ID << endl;
+		cout << "Course Name       : " << c[i].name << endl;
+		cout << endl;
+	}
+	cout << "================================\n\n";
+	cout << "Enter course you want to check in (by number): ";
+	cin >> index;
+
+	index--;
+	course = c[index].ID;
+	cout << endl;
 
 OPTION:
-	cout << "1.Input/Input again Class and course \n";
-	cout << "2.Back to menu\n";
+	//cout << "1.Input/Input again Class and course \n";
+	cout << "1. Check in \n";
+	cout << "2. Back to menu\n";
 	cin >> buff;
 
 	if (buff == 2)
 		return;
 
 	cin.ignore(1);
+	Class = classID;
+	//cout << "Input your class:"; cin >> Class;
+	//cout << "Input your course :"; cin >> course;
 
-	cout << "Input your class:"; cin >> Class;
-	cout << "Input your course :"; cin >> course;
-
-	convertToUpper(Class);
-	convertToUpper(course);
+	//convertToUpper(Class);
+	//convertToUpper(course);
 
 	string path = Class + "-" + course + ".txt";
 	if (checkStudentInCourse(ID, path, flag)) {
@@ -116,21 +155,66 @@ OPTION:
 	out << time << endl;
 	out.close();
 	cout << "\nCheck in successfully.\n";
+	delete[] c;
 }
 
 //2. View check-in result.
 void checkInResult(string ID) {
-	string path, Class, course,buff,time;
+	string path, Class, course, time, buff;
+	int buff1;
+
+	ifstream fin;
+	Student* s;
+	int n = 0;
+
+	loadStudent(fin, "Students.txt", s, n);
+
+	string classID = "";
+	for (int i = 0; i < n; i++)
+		if (s[i].ID == ID)
+		{
+			classID = s[i].classID;
+			break;
+		}
+
+	delete[] s;
+
+	Course* c;
+	int nCourses;
+
+	loadClassSchedule(classID, nCourses, c);
+
+	int index = 0;
+	cout << "==========Your_Courses==========\n";
+	for (int i = 0; i < nCourses; i++)
+	{
+		cout << "#" << i + 1 << endl;
+		cout << "Course ID         : " << c[i].ID << endl;
+		cout << "Course Name       : " << c[i].name << endl;
+		cout << endl;
+	}
+	cout << "================================\n\n";
+	cout << "Enter course you want view check in (by number): ";
+	cin >> index;
+
+	index--;
+	course = c[index].ID;
+	Class = classID;
+	cout << endl;
+
 OPTION2:
-	cout << "1.Input/Input again Class and course \n";
-	cout << "2.Back to menu\n";
-	getline(cin, buff);
-	if (buff == "2")
+	//cout << "1. Input/Input again Class and course \n";
+	cout << "1. View \n";
+	cout << "2. Back to menu\n";
+	cin >> buff1;
+	if (buff1 == 2)
 		return;
-	cout << "Input your class:"; cin >> Class;
-	cout << "Input your course :"; cin >> course;
-	convertToUpper(Class);
-	convertToUpper(course);
+
+	//cout << "Input your class:"; cin >> Class;
+	//cout << "Input your course :"; cin >> course;
+
+	//convertToUpper(Class);
+	//convertToUpper(course);
 
 	ifstream in;
 	path = Class + "-" + course + "-checkin.txt";
@@ -160,6 +244,7 @@ OPTION2:
 		cout << " NO DATA\n";
 	}
 	in.close();
+	delete[] c;
 }
 //3. View schedules.
 void loadListClass(int& n, string*& Class)
@@ -173,13 +258,8 @@ void loadListClass(int& n, string*& Class)
 	}
 	data >> n;
 	Class = new string[n];
-	data.ignore(1);
-	int i = -1;
-	while (!data.eof())
-	{
-		++i;
+	for (int i = 0; i < n; i++)
 		getline(data, Class[i], '\n');
-	}
 	data.close();
 }
 
@@ -222,8 +302,8 @@ void createScheduleFile()
 					f << c[j].name << endl;
 					f << c[j].classID << endl;
 					f << c[j].lecAccount << endl;
-					f << c[j].startDate.day << "-" << c[j].startDate.month << "-" << c[j].startDate.year << endl;
-					f << c[j].endDate.day << "-" << c[j].endDate.month << "-" << c[j].endDate.year << endl;
+					f << c[j].startDate.year << "-" << c[j].startDate.month << "-" << c[j].startDate.day << endl;
+					f << c[j].endDate.year << "-" << c[j].endDate.month << "-" << c[j].endDate.day << endl;
 					f << c[j].courseTime.dayOfWeek << endl;
 					f << c[j].courseTime.startHour << ":" << c[j].courseTime.startMin << endl;
 					f << c[j].courseTime.endHour << ":" << c[j].courseTime.endMin << endl;
@@ -236,8 +316,8 @@ void createScheduleFile()
 					f << c[j].name << endl;
 					f << c[j].classID << endl;
 					f << c[j].lecAccount << endl;
-					f << c[j].startDate.day << "-" << c[j].startDate.month << "-" << c[j].startDate.year << endl;
-					f << c[j].endDate.day << "-" << c[j].endDate.month << "-" << c[j].endDate.year << endl;
+					f << c[j].startDate.year << "-" << c[j].startDate.month << "-" << c[j].startDate.day << endl;
+					f << c[j].endDate.year << "-" << c[j].endDate.month << "-" << c[j].endDate.day << endl;
 					f << c[j].courseTime.dayOfWeek << endl;
 					f << c[j].courseTime.startHour << ":" << c[j].courseTime.startMin << endl;
 					f << c[j].courseTime.endHour << ":" << c[j].courseTime.endMin << endl;
@@ -252,18 +332,25 @@ void createScheduleFile()
 	return;
 }
 
-void viewSchedule()
+void viewSchedule(User u)
 {
 	createScheduleFile();
 
-	cin.ignore(1);
+	ifstream fin;
+	Student* s;
+	int n = 0;
+
+	loadStudent(fin, "Students.txt", s, n);
+
 	string classID = "";
+	for (int i = 0; i < n; i++)
+		if (s[i].ID == u.username)
+		{
+			classID = s[i].classID;
+			break;
+		}
 
-	cout << "Enter class: ";
-	getline(cin, classID);
-	cout << endl;
-
-	convertToUpper(classID);
+	delete[] s;
 
 	string filename = classID + "-Schedule.txt";
 
@@ -312,6 +399,153 @@ void viewSchedule()
 	f.close();
 }
 //4. View your scores of a course.
+void loadClassSchedule(string classID, int& n, Course*& courses)
+{
+	string filename = classID + "-Schedule.txt";
+	fstream f;
+
+	f.open(filename, ios::in);
+
+	if (!f.is_open())
+		return;
+
+	int temp = 0;
+	string ignore = "";
+	while (!f.eof())
+	{
+		getline(f, ignore, '\n');
+		getline(f, ignore, '\n');
+		getline(f, ignore, '\n');
+		getline(f, ignore, '\n');
+		getline(f, ignore, '\n');
+		getline(f, ignore, '\n');
+		getline(f, ignore, '\n');
+		getline(f, ignore, '\n');
+		getline(f, ignore, '\n');
+		getline(f, ignore, '\n');
+		getline(f, ignore, '\n');
+		temp++;
+	}
+
+	f.close();
+
+	f.open(filename, ios::in);
+
+	if (!f.is_open())
+		return;
+
+	courses = new Course[temp];
+	n = temp;
+
+	int i = 0;
+	while (!f.eof())
+	{
+		getline(f, courses[i].ID, '\n');
+		getline(f, courses[i].name, '\n');
+		getline(f, courses[i].classID, '\n');
+		getline(f, courses[i].lecAccount, '\n');
+		string temp = "";
+		getline(f, temp, '-');
+		courses[i].startDate.year = stoi(temp);
+		getline(f, temp, '-');
+		courses[i].startDate.month = stoi(temp);
+		getline(f, temp, '\n');
+		courses[i].startDate.day = stoi(temp);
+		getline(f, temp, '-');
+		courses[i].endDate.year = stoi(temp);
+		getline(f, temp, '-');
+		courses[i].endDate.month = stoi(temp);
+		getline(f, temp, '\n');
+		courses[i].endDate.day = stoi(temp);
+		getline(f, courses[i].courseTime.dayOfWeek, '\n');
+		getline(f, courses[i].courseTime.startHour, ':');
+		getline(f, courses[i].courseTime.startMin, '\n');
+		getline(f, courses[i].courseTime.endHour, ':');
+		getline(f, courses[i].courseTime.endMin, '\n');
+		getline(f, courses[i].room, '\n');
+		getline(f, ignore, '\n');
+		i++;
+	}
+	f.close();
+}
+
+void viewScore(User u)
+{
+	createScheduleFile();
+	ifstream f;
+	Student* s;
+	int n = 0;
+
+	loadStudent(f, "Students.txt", s, n);
+
+	string classID = "";
+	for (int i = 0; i < n; i++)
+		if (s[i].ID == u.username)
+		{
+			classID = s[i].classID;
+			break;
+		}
+	Course* c;
+	int nCourses;
+
+	loadClassSchedule(classID, nCourses, c);
+
+	int index = 0;
+	cout << "==========Your_Courses==========\n";
+	for (int i = 0; i < nCourses; i++)
+	{
+		cout << "#" << i + 1 << endl;
+		cout << "Course ID         : " << c[i].ID << endl;
+		cout << "Course Name       : " << c[i].name << endl;
+		cout << endl;
+	}
+	cout << "================================\n\n";
+	cout << "Enter course you want to view scores (by number): ";
+	cin >> index;
+
+	index--;
+
+	string fileScore = classID + "-" + c[index].ID + "-" + "Scoreboard.txt";
+
+	fstream file;
+
+	file.open(fileScore, ios::in);
+
+	if (!file.is_open())
+	{
+		cout << "Cannot find " << fileScore << ".\n";
+		return;
+	}
+
+	string buffer = "";
+
+	cout << "\n================================\n\n";
+	cout << "Course ID         : " << c[index].ID << endl;
+	cout << "Course Name       : " << c[index].name << endl;
+	cout << endl;
+	cout << "=============Scores=============\n\n";
+	while (!file.eof())
+	{
+		getline(file, buffer, '\n');
+		if (buffer == u.username)
+		{
+			getline(file, buffer, '\n');
+			getline(file, buffer, '\n');
+			cout << "Midterm : " << buffer << endl;
+			getline(file, buffer, '\n');
+			cout << "Final   : " << buffer << endl;
+			getline(file, buffer, '\n');
+			cout << "Bonus   : " << buffer << endl;
+			getline(file, buffer, '\n');
+			cout << "Total   : " << buffer << endl;
+			break;
+		}
+	}
+	cout << "\n================================\n\n";
+	file.close();
+	delete[] s;
+	delete[] c;
+}
 
 //5. Change password.
 void changeStudentPassword(User& user) {

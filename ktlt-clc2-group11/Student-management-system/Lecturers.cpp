@@ -36,10 +36,14 @@ OPTION:
 		viewAttendanceList();
 		break;
 	case 4:
+		editAttendace();
+		cout << "===================================\n";
 		break;
 	case 5:
+		importScoreboardFromCsvToTXT();
 		break;
 	case 6: 
+		editGrade();
 		break;
 	case 7: 
 		break;
@@ -66,6 +70,83 @@ OPTION:
 //viewAttendanceList();
 
 //4. Edit an attendance.
+void editAttendace() {
+	cin.ignore(1);
+	string classID, courseID;
+
+	cout << "Enter class ID you want to edit: ";
+	getline(cin, classID, '\n');
+	convertToUpper(classID);
+
+	cout << "Enter course ID you want to edit: ";
+	getline(cin, courseID, '\n');
+	convertToUpper(courseID);
+
+	string path = classID + "-" + courseID + "-AttendanceList.txt";
+
+	Student* students;
+	int n = 0;
+	string ignore = "", ignore1 = "";
+
+	ifstream fin;
+	if(isFileOpen(fin, path) == false)
+		return;
+	
+	while (!fin.eof()) {
+		getline(fin, ignore, '\n');
+		if (ignore1 == ignore)
+			break;
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore1, '\n');
+		n++;
+	}
+	
+	n--;
+	students = new Student[n];
+	fin.close();
+
+	if(isFileOpen(fin, path) == false)
+		return;
+	for (int i = 0; i < n; i++) {
+		getline(fin, students[i].ID, '\n');
+		getline(fin, students[i].fullName, '\n');
+		getline(fin, students[i].DoB, '\n');
+		getline(fin, students[i].gender, '\n');
+		getline(fin, ignore, '\n');
+		students[i].active = 1;
+		getline(fin, ignore, '\n');
+	}
+	fin.close();
+
+	cout << "Enter student ID you want to edit his/her attendance: ";
+	getline(cin, ignore, '\n');
+
+	cout << "Change attendance status to active or inactive ?\n";
+	cout << "1. Active.\n2. Inactive.\n";
+	getline(cin, ignore1, '\n');
+
+	ofstream fout;
+	fout.open(path);
+	if(!fout.is_open()) {
+		cout << "Can not open " << path << endl;
+		return;
+	}
+
+	for (int i = 0; i < n; i++) {
+		fout << students[i].ID << endl;
+		fout << students[i].fullName << endl;
+		fout << students[i].DoB << endl;
+		fout << students[i].gender << endl;
+		if(ignore == students[i].ID)
+			fout << ((ignore1 == "1") ? 1 : 0) << endl << endl;
+		else 
+			fout << 1 << endl << endl;
+	}
+	fout.close();
+}
 
 //5. Import scoreboard of a course(midterm, final, lab, bonus) from a csv file.
 void importScoreboardFromCsvToTXT() {

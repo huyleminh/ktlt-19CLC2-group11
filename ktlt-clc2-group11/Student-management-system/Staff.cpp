@@ -38,9 +38,12 @@ OPTION:
 			break;
 		case 5:
 			changeStaffPassword(user);
+			cout << "Change password successfully.\n";
+			cout << "===================================\n";
 			break;
 		case 6:
 			viewProfile(user);
+			cout << "===================================\n";
 			break;
 		case 7: 
 			return;
@@ -188,11 +191,20 @@ void createUserPassword(Student* students, const int nStudent) {
 	fout << nStudent << endl;
 	for (int i = 0; i < nStudent; i++) {
 		fout << endl << students[i].ID << endl;
-		fout << students[i].DoB << endl;
+		string password = formatPassword(students[i].DoB);
+		fout << password << endl;
 		fout << students[i].fullName << endl;
 	}
 
 	fout.close();
+}
+
+string formatPassword(string password) {
+	string format = "";
+	for (int i = 0; i < password.length(); i++) 
+		if (password[i] != '-')
+			format += password[i];
+	return format;
 }
 
 //2. Add a student to a class.  //Check valid student before add
@@ -208,26 +220,22 @@ void addStudentToClass() {
 	cout << " Class ID: "; getline(cin, newStudent.classID, '\n');
 	newStudent.active = 1;
 
-	User newUser;
-	newUser.name = newStudent.fullName;
-	newUser.username = newStudent.ID;
-	newUser.password = newStudent.DoB;
-
-	Student* students;
+	Student* students, * students1;
 	int n = 0;
 
 	ifstream fin;	
 	ofstream fout;
 
-	loadStudent(fin, "Students.txt", students, n);	
-	students[n - 1].ID = newStudent.ID;
-	students[n - 1].fullName = newStudent.fullName;
-	students[n - 1].DoB = newStudent.DoB;
-	students[n - 1].gender = newStudent.gender;
-	students[n - 1].active = 1;
+	loadStudent(fin, "Students.txt", students, n);
+	students1 = new Student[n + 1];
+	for (int i = 0; i < n; i++) {
+		students1[i] = students[i];
+	}
+	students1[n] = newStudent;
 
-	writeStudent(fout, "Students.txt", students, n);
-	createUserPassword(students, n);
+	writeStudent(fout, "Students.txt", students1, n + 1);
+
+	createUserPassword(students1, n + 1);
 
 	delete[] students;
 	n = 0;
@@ -252,7 +260,7 @@ void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
 		return;
 
 	fin >> n;
-	students = new Student[n + 1];
+	students = new Student[n];
 	string ignore = "";
 	getline(fin, ignore, '\n');
 
@@ -266,14 +274,6 @@ void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
 		getline(fin, ignore, '\n');
 		students[i].active = stoi(ignore);
 	}
-
-	students[n].ID = "";
-	students[n].fullName = "";
-	students[n].gender = "";
-	students[n].DoB = "";
-	students[n].classID = "";
-	students[n].active = 0;
-	n++;
 
 	fin.close();
 }
@@ -314,10 +314,14 @@ void getListClass(int& n, string*& Class)
 	Class = new string[n];
 	data.ignore(1);
 	cout << "List of Classes:\n\n";
-	int i = -1;
-	while (!data.eof())
-	{
-		++i;
+	// int i = -1;
+	// while (!data.eof())
+	// {
+	// 	++i;
+	// 	getline(data, Class[i], '\n');
+	// 	cout << i + 1 << ". " << Class[i] << endl;
+	// }
+	for (int i = 0; i < n; i++) {
 		getline(data, Class[i], '\n');
 		cout << i + 1 << ". " << Class[i] << endl;
 	}
@@ -2121,8 +2125,10 @@ void viewAttendanceList()
 
 	cout << "Input Class ID: ";
 	cin >> classID;
+	convertToUpper(classID);
 	cout << "Input Course ID: ";
 	cin >> courseID;
+	convertToUpper(courseID);
 
 	Course* aCourses;
 	int nCourses;
@@ -2131,7 +2137,7 @@ void viewAttendanceList()
 
 	Course course;
 	course.ID = "";
-	//course.name = "";
+
 	for (int i = 0; i < nCourses; i++)
 	{
 		if (aCourses[i].ID.compare(courseID) == 0 || aCourses[i].classID.compare(classID) == 0)
@@ -2140,19 +2146,21 @@ void viewAttendanceList()
 			break;
 		}
 	}
+
 	if (course.ID.compare("") == 0)
 	{
 		cout << "Cant find the inputted course" << endl;
 		return;
 	}
+
 	string filename = "";
 	filename = classID + "-" + courseID + ".txt";
 	
-	string filenameTXT=classID+"-"+courseID+"-AttendanceList.txt";
+	string filenameTXT = classID + "-" + courseID + "-AttendanceList.txt";
 	ofstream fout(filenameTXT);
 	if(!fout.is_open())
 	{
-		cout<<"Cant open "<<filenameTXT<<endl;
+		cout << "Cant open " << filenameTXT << endl;
 		return;
 	}
 
@@ -2166,14 +2174,16 @@ void viewAttendanceList()
 	{
 		if (aStudents[i].active == 1) {
 			cout << i + 1 << ") " << aStudents[i].ID << " - " << aStudents[i].fullName << endl;
-			fout<<aStudents[i].ID<<endl;
-			fout<<aStudents[i].fullName<<endl;
-			fout<<aStudents[i].DoB<<endl;
-			fout<<aStudents[i].gender<<endl;
-			fout<<aStudents[i].active<<endl;
-			fout<<endl;
+			fout << aStudents[i].ID << endl;
+			fout << aStudents[i].fullName << endl;
+			fout << aStudents[i].DoB << endl;
+			fout << aStudents[i].gender << endl;
+			fout << aStudents[i].active << endl;
+			fout << endl;
 		}
 	}
+	fout.close();
+
 	return;
 }
 
@@ -2764,8 +2774,11 @@ OPTION:
 	switch(option) {
 		case 1: 
 			viewAttendanceList();
+			cout << "===================================\n";
 			break;
 		case 2:
+			exportAttendanceListToCSV();
+			cout << "===================================\n";
 			break;
 		case 3:
 			return;
@@ -2807,8 +2820,10 @@ void exportAttendanceListToCSV()
 
 	cout << "Input Class ID: ";
 	cin >> classID;
+	convertToUpper(classID);
 	cout << "Input Course ID: ";
 	cin >> courseID;
+	convertToUpper(courseID);
 
 	Course* aCourses;
 	int nCourses;
@@ -2817,7 +2832,7 @@ void exportAttendanceListToCSV()
 
 	Course course;
 	course.ID = "";
-	//course.name = "";
+
 	for (int i = 0; i < nCourses; i++)
 	{
 		if (aCourses[i].ID.compare(courseID) == 0 && aCourses[i].classID.compare(classID) == 0)
@@ -2831,9 +2846,10 @@ void exportAttendanceListToCSV()
 		cout << "Cant find the inputted course" << endl;
 		return;
 	}
+
 	string filenameTXT = "";
 	filenameTXT = classID + "-" + course.ID + ".txt";
-	string filenameCSV = classID + "-" + course.ID + ".csv";
+	string filenameCSV = classID + "-" + course.ID + "-AttendanceList.csv";
 
 	ifstream fin(filenameTXT);
 	ofstream fout(filenameCSV);
@@ -2861,69 +2877,8 @@ void exportAttendanceListToCSV()
 			fout << aStudents[i].ID << "," << aStudents[i].fullName<<","<< aStudents[i].DoB << "," << aStudents[i].gender << "," << endl;
 		}
 	}
-	return;
-}
 
-void exportAttendanceListToTXT()
-{
-	string courseID;
-	string classID;
-
-	cout << "Input Class ID: ";
-	cin >> classID;
-	cout << "Input Course ID: ";
-	cin >> courseID;
-
-	Course* aCourses;
-	int nCourses;
-
-	loadCoursesFromTXT("Courses.txt", aCourses, nCourses);
-
-	Course course;
-	course.ID = "";
-	for (int i = 0; i < nCourses; i++)
-	{
-		if (aCourses[i].ID.compare(courseID) == 0 && aCourses[i].classID.compare(classID) == 0)
-		{
-			course = aCourses[i];
-			break;
-		}
-	}
-	if (course.ID.compare("") == 0)
-	{
-		cout << "Cant find the inputted course" << endl;
-		return;
-	}
-	string filenameTXT = "";
-	filenameTXT = classID + "-" + course.ID + "-AttendanceList.txt";
-	string filenameCSV = classID + "-" + course.ID + "-AttendanceList.csv";
-
-	ifstream fin(filenameCSV);
-	ofstream fout(filenameTXT);
-
-	if (!fin.is_open())
-	{
-		cout << "Cant find " << filenameCSV;
-		return;
-	}
-
-	if (!fout.is_open())
-	{
-		cout << "Cant create " << filenameTXT;
-		return;
-	}
-
-	Student * aStudents;
-	int nStudents;
-
-	loadDataCourse(filenameCSV, aStudents, nStudents);
-
-	for (int i = 0; i < nStudents; i++)
-	{
-		if (aStudents[i].active == 1) {
-			fout << aStudents[i].ID <<endl << aStudents[i].fullName<<endl << aStudents[i].DoB << endl  << aStudents[i].gender << endl  << endl;
-		}
-	}
+	cout << "Export " << filenameTXT << " to " << filenameCSV << " successfully.\n";
 
 	fin.close();
 	fout.close();
