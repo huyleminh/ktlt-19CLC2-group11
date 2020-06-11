@@ -1257,7 +1257,10 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 		getline(fin, courses[i].courseTime.endHour, ':');
 		getline(fin, courses[i].courseTime.endMin, ',');
 
-		getline(fin, courses[i].room, '\n');
+		getline(fin, courses[i].room, ',');
+
+		getline(fin, courses[i].sem, ',');
+		getline(fin, courses[i].acaYear, '\n');
 
 		fout << endl << courses[i].ID << endl;
 		fout << courses[i].name << endl;
@@ -1288,11 +1291,12 @@ void createClassCourse(Course*& courses, const int nCourse) {
 		return;
 	}
 	
-	string filename = "";
+	string filename = "", filenameHk = "";
 	convertToUpper(courses[0].classID);
 	convertToUpper(courses[0].ID);
 	filename += courses[0].classID + "-" + courses[0].ID + ".txt";
-	
+	filenameHk += courses[0].classID + "-" + courses[0].acaYear + "-HK" + courses[0].sem + ".txt";
+
 	f << filename << endl;  
 
 	ofstream fout;
@@ -1303,13 +1307,25 @@ void createClassCourse(Course*& courses, const int nCourse) {
 	}
 	fout.close();
 
+	ofstream fout1;
+	fout1.open(filenameHk);
+	if (!fout1.is_open()) {
+		cout << "Can not open " << filenameHk << endl;
+		return;
+	}
+	fout1 << filename << endl;
+	fout1.close();
+
+
 	for (int i = 1; i < nCourse; i++) {
 		if (courses[i].classID == courses[i - 1].classID && courses[i].ID == courses[i - 1].ID)
 			continue;
 		filename = "";
+		filenameHk = "";
 		convertToUpper(courses[i].classID);
 		convertToUpper(courses[i].ID);
 		filename += courses[i].classID + "-" + courses[i].ID + ".txt";
+		filenameHk += courses[i].classID + "-" + courses[i].acaYear + "-HK" + courses[i].sem + ".txt";
 
 		f << filename << endl;
 
@@ -1320,6 +1336,15 @@ void createClassCourse(Course*& courses, const int nCourse) {
 			return;
 		}
 		fout.close();
+
+		ofstream fout1;
+		fout1.open(filenameHk);
+		if (!fout1.is_open()) {
+			cout << "Can not open " << filenameHk << endl;
+			return;
+		}
+		fout1 << filename << endl;
+		fout1.close();
 	}
 
 	f.close();
