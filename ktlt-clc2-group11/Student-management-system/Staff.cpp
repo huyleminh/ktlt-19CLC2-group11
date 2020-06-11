@@ -2039,6 +2039,46 @@ void writeStudentCaro(string filename,Student* newStudent )
 	}
 	fout.close();
 }
+/* checkAppearedTXT(string filename, Student* newStudent)
+{
+	ifstream fin;
+	fin.open(filename);
+	int nStudents;
+
+	fin >> nStudents;
+	fin.ignore();
+	nStudents++;
+	Student* aStudents = new Student[nStudents];
+	aStudents[nStudents - 1] = *newStudent;
+	fin.open(filename);
+	int a;
+	string ignore;
+	for (int i = 0; i < nStudents; i++)
+	{
+		getline(fin, aStudents[i].ID, '\n');
+		getline(fin, aStudents[i].fullName, '\n');
+		getline(fin, aStudents[i].DoB, '\n');
+		getline(fin, aStudents[i].gender, '\n');
+		//fin >> a;
+		getline(fin, ignore, '\n');
+		aStudents[i].active = ((ignore == "1") ? 1 : 0);
+		//fin.ignore();
+		//fin.ignore();
+		//getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+	}
+	fin.close();
+
+	for (int i = 0; i < nStudents; i++)
+	{
+		if (aStudents[i].ID.compare(newStudent->ID) == 0)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}*/
+
 
 bool checkAppeared(string filename,Student* newStudent )
 {
@@ -2082,7 +2122,7 @@ bool checkAppeared(string filename,Student* newStudent )
 
 	for (int i = 0; i < nStudents; i++)
 	{
-		if (aStudents[i].ID.compare(newStudent->fullName) == 0)
+		if (aStudents[i].ID.compare(newStudent->ID) == 0)
 		{
 			return 1;
 		}

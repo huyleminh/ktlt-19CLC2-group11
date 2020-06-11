@@ -257,6 +257,7 @@ void loadListClass(int& n, string*& Class)
 		return;
 	}
 	data >> n;
+	data.ignore();
 	Class = new string[n];
 	for (int i = 0; i < n; i++)
 		getline(data, Class[i], '\n');
@@ -360,7 +361,7 @@ void viewSchedule(User u)
 
 	if (!f.is_open())
 	{
-		cout << "Cannot find " << classID << "-Schedule.\n";
+		cout << "Cannot find " << classID << "-Schedule.txt\n";
 		return;
 	}
 
