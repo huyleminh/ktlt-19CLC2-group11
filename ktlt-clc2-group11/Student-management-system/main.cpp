@@ -23,16 +23,6 @@ int main() {
 	/*cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5" << endl;
 	menu();*/
 
-	Student student;
-	student.ID = "19127181";
-	student.fullName = "BMK";
-	student.gender = "Male";
-	student.classID = "19CLC2";
-	student.DoB = "2020-07-07";
-	student.active = 1;
-
-	//writeFileStudentTXT(student);
-
 	addStudentToCourse();
 	return 0;
 }
