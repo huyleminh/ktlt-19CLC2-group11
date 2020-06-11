@@ -24,7 +24,7 @@ void exportScoreboardToCSV();
 //6. Edit grade of a student.
 void editGrade();
 //7. View a scoreboard.
-
+void viewaScoreboard(User user);
 //8. Change lecturer password.
 void changeLecPassword(User& user);
 

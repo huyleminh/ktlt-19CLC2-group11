@@ -50,5 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Classes.txt" />
+    <Text Include="19CLC1-PHY00005.txt" />
+    <Text Include="19CLC1-Students.txt" />
+    <Text Include="Students.txt" />
   </ItemGroup>
 </Project>

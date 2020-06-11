@@ -1,6 +1,7 @@
 #include "Lecturers.h"
 #include "AllRole.h"
 #include "Staff.h"
+#include "Student.h"
 
 /*Main lecturer menu*/
 
@@ -46,6 +47,7 @@ OPTION:
 		editGrade();
 		break;
 	case 7: 
+		viewaScoreboard(user);
 		break;
 	case 8:
 		changeLecPassword(user);
@@ -382,7 +384,47 @@ void editGrade()
 
 
 //7. View a scoreboard.
+void viewaScoreboard(User user) {
+	string courseID;
+	string classID;
+	ifstream fin;
+	int n = 0;
+	Course* c;
+	int nCourses;
+	cin.ignore(1);
+	cout << "Input your classID:"; 
+	getline(cin, classID, '\n');
+	convertToUpper(classID);
+	//loadClassSchedule(classID, nCourses, c);
+	loadCoursesFromTXT("Courses.txt", c, nCourses);
+	int index = 0;
+	bool flag = true;
+	cout << "==========Your_Courses==========\n";
+	for (int i = 0; i < nCourses; i++)
+	{
+		if (c[i].lecAccount==user.username) {
+			cout << "#" << i + 1 << endl;
+			cout << "Course ID         : " << c[i].ID << endl;
+			cout << "Course Name       : " << c[i].name << endl;
+			cout << endl;
+			flag = false;
+		}
+	}
+	if (flag)
+		cout << "NO Data.\n";
+	cout << "================================\n\n";
+	if (!flag)
+		cout << "Enter course you want to check in (by number): ";
+	else
+		return;
+	cin >> index;
 
+	index--;
+	courseID = c[index].ID;
+	cout << endl;
+	string filenameTXT = classID + "-" + courseID + "-Scoreboard.txt";
+	loadScoreBoard(filenameTXT);
+}
 //8. Change lecturer password.
 void changeLecPassword(User& user) {
 	Lecturer* lecturers;

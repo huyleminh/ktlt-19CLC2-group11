@@ -20,7 +20,8 @@
 
 
 int main() {
-	cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tSTUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.1.1" << endl;
+	cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5" << endl;
 	menu();
+	//addStudentToCourse();
 	return 0;
 }

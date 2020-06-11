@@ -44,11 +44,15 @@ void courseMode();
 void menuAcademicYear();
 void createAcademicYear();
 void createSemester(Semester& temp,string classID,string startYear, string endYear,string HK);
+void createSimpleSemester(Semester& temp,string classID,string startYear, string endYear,string HK);
 void createCourse(Course& course,string classID);
+void viewCourseSemester();
+void addCourseToSemester();
 void deleteCourses();
 void deleteSemester();
+void viewYear();
 void deleteYear();
-void createSemesterAlone();
+//void createSemesterAlone();
 //2. Import courses from csv file to txt file.
 void importCoursesFromCsvFile(Course*& courses, int& nCourse);
 void createClassCourse(Course*& courses, const int nCourse);
@@ -64,6 +68,8 @@ void removeCourse();
 //6. Remove a specific student from a course.
 void removeSpecificStudent();
 //7. Add a specific student to a course.
+void writeFileStudentTXT(Student &newStudent);
+void writeStudentCaro(string filename,Student* newStudent );
 void addStudentToCourse();
 //8. View list of courses in the current semester.
 //9. View list of students of a course.

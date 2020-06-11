@@ -220,40 +220,22 @@ void addStudentToClass() {
 	cout << " Class ID: "; getline(cin, newStudent.classID, '\n');
 	newStudent.active = 1;
 
-	User newUser;
-	newUser.name = newStudent.fullName;
-	newUser.username = newStudent.ID;
-	newUser.password = newStudent.DoB;
-
-	Student* students;
+	Student* students, * students1;
 	int n = 0;
 
 	ifstream fin;	
 	ofstream fout;
 
-	loadStudent(fin, "Students.txt", students, n);	
-	students[n - 1].ID = newStudent.ID;
-	students[n - 1].fullName = newStudent.fullName;
-	students[n - 1].DoB = newStudent.DoB;
-	students[n - 1].gender = newStudent.gender;
-	students[n - 1].active = 1;
-
-	writeStudent(fout, "Students.txt", students, n);
-	fout.open("Students.txt", ios::app);
-	if(!fout.is_open()) {
-		cout << "Can not open Students.txt" << endl;
-		return;
+	loadStudent(fin, "Students.txt", students, n);
+	students1 = new Student[n + 1];
+	for (int i = 0; i < n; i++) {
+		students1[i] = students[i];
 	}
-	fout << endl;
-	fout << newStudent.ID << endl;
-	fout << newStudent.fullName << endl;
-	fout << newStudent.gender << endl;
-	fout << newStudent.DoB << endl;
-	fout << newStudent.classID << endl;
-	fout << ((newStudent.active == true) ? 1 : 0) << endl;
-	
-	fout.close();
-	createUserPassword(students, n);
+	students1[n] = newStudent;
+
+	writeStudent(fout, "Students.txt", students1, n + 1);
+
+	createUserPassword(students1, n + 1);
 
 	delete[] students;
 	n = 0;
@@ -331,7 +313,8 @@ void getListClass(int& n, string*& Class)
 	data >> n;
 	Class = new string[n];
 	data.ignore(1);
-	cout << "List of Classes:\n\n";
+	cout << "===================================\n";
+	cout << "List of Classes:\n";
 	// int i = -1;
 	// while (!data.eof())
 	// {
@@ -403,7 +386,7 @@ void getListStudents(string classID, Student*&Students, int &nStudents)
 		if (Students[i].active == 1) {
 			cout << "\nID: " << Students[i].ID << endl;
 			cout << "Full name: " << Students[i].fullName << endl;
-			cout << "Day of birth: " << Students[i].DoB << endl;
+			cout << "Date of birth: " << Students[i].DoB << endl;
 			cout << "Gender: " << Students[i].gender << endl;
 		}
 	}
@@ -467,7 +450,7 @@ void Changeclass(string origin, string des) {
 	getListStudents(origin, Students, nStudents);
 	
 	string ID;
-	cout << "Input ID want to change class :"; cin >> ID;
+	cout << "Input ID of student you want to change class :"; cin >> ID;
 	bool flag = true;
 	for (int i = 0; i < nStudents; i++) {
 		if (Students[i].ID == ID && Students[i].active == 1) {
@@ -489,8 +472,6 @@ void Changeclass(string origin, string des) {
 			out << Students[i].gender << endl;
 			out << 1 << endl << endl;
 			out.close();
-			cout << "Change class successfully.\n";
-			cout << "===================================\n";
 			break;
 		}
 	}
@@ -500,10 +481,40 @@ void Changeclass(string origin, string des) {
 	}
 	else
 	{
+		cout << "Change class successfully.\n";
+		cout << "===================================\n";
 		string inputPath = "";
 		string extension = "-Students.txt";
 		inputPath = origin + extension;
 		saveStudent(Students, nStudents, inputPath);
+		ifstream fin;
+		Student* S;
+		int n;
+		loadStudent(fin, "Students.txt", S, n);
+		for (int i = 0; i < n; i++) {
+			if (S[i].ID == ID) {
+				S[i].classID = des;
+				//break;
+			}
+		}
+		ofstream data;
+		data.open("Students.txt");
+		if (!data.is_open()) {
+			cout << "Can't open file " << "Students.txt";
+		}
+		else {
+			data << n << endl << endl;
+			for (int i = 0; i < n; i++) {
+				data << S[i].ID << endl;
+				data << S[i].fullName << endl;
+				data << S[i].DoB << endl;
+				data << S[i].classID << endl;
+				data << S[i].gender << endl;
+				data << S[i].active << endl << endl;
+			}
+		}
+		delete[] S;
+		data.close();
 	}
 }
 
@@ -518,12 +529,15 @@ CLASS1:
 	buffer -= 1;
 	if (buffer < 0 || buffer > n-1)
 		goto CLASS1;
+	cout << "===================================\n";
 	cout << "1. Delete a student.\n";
 	cout << "2. Change class a student.\n";
 	cout << "3. Back to menu.\n";
 OPTION:
 	cout << "Choose mode: ";
 	cin >> buffer2;
+	cin.ignore(1);
+	cout << "===================================\n";
 	if (buffer2 > 3)
 		goto OPTION;
 	
@@ -539,6 +553,7 @@ OPTION:
 			buffer3 -= 1;
 			if (buffer == buffer3 || buffer3<0 || buffer3 >n - 1)
 				goto CLASS;
+			cout << "===================================\n";
 			Changeclass(Class[buffer],Class[buffer3]);
 			break;
 		case 3:
@@ -692,336 +707,492 @@ OPTION:
 }
 
 //1. Edit academic years and semesters.
-// void createCourse(Course& course,string classID) {
-// 	cout << "Input course's ID: ";
-// 	cin >> course.ID;
+void createCourse(Course& course,string classID) {
+	cout << "Input course ID: ";
+	cin >> course.ID;
 
-// 	cout << "Input course's name: ";
-// 	cin >> course.name;
+	// cout << "Input course name: ";
+	// cin >> course.name;
 
-// 	course.classID=classID;
+	// course.classID=classID;
 
-// 	cout << "Input course's lecturer's account: ";
-// 	cin >> course.lecAccount;
+	// cout << "Input lecturer's account: ";
+	// cin >> course.lecAccount;
 
-// 	cout << "Input course's start day: ";
-// 	course.startDate.inputDay();
+	// cout << "Input course's start day: ";
+	// course.startDate.inputDay();
 
-// 	cout << "Input course's end day: ";
-// 	course.endDate.inputDay();
+	// cout << "Input course's end day: ";
+	// course.endDate.inputDay();
 
-// 	cout << "Input course's time: ";
-// 	course.courseTime.inputTime();
+	// cout << "Input course's time: ";
+	// course.courseTime.inputTime();
 
-// 	cout << "Input course's room: ";
-// 	cin >> course.room;
-// }
+	// cout << "Input course room: ";
+	// cin >> course.room;
+}
 
-// void createSemester(Semester& temp,string classID,string startYear, string endYear,string HK)
-// {
-// 	cout << "Input the number of courses: ";
-// 	cin >> temp.numberOfCourses;
-// 	temp.coursesArray = new Course[temp.numberOfCourses];
-// 	for (int i = 0; i < temp.numberOfCourses; i++)
-// 	{
-// 		createCourse(temp.coursesArray[i],classID);
-// 	}
-// 	string filename=classID+"-"+startYear+"-"+endYear+"-"+HK+".txt";
-// 	ofstream fout(filename);
-// 	if(!fout.is_open())
-// 	{
-// 		cout<<"Cant create "<<filename<<endl;
-// 		return;
-// 	}
+void createSemester(Semester& temp,string classID,string startYear, string endYear,string HK)
+{
+	cout << "Input the number of courses: ";
+	cin >> temp.numberOfCourses;
+	temp.coursesArray = new Course[temp.numberOfCourses];
+	for (int i = 0; i < temp.numberOfCourses; i++)
+	{
+		createCourse(temp.coursesArray[i],classID);
+	}
+	string filename=classID+"-"+startYear+"-"+endYear+"-"+HK+".txt";
+	ofstream fout(filename);
+	if(!fout.is_open())
+	{
+		cout<<"Cant create "<<filename<<endl;
+		return;
+	}
 
-// 	fout<<temp.numberOfCourses<<endl<<endl;
+	//fout<<temp.numberOfCourses<<endl<<endl;
 
-// 	for(int j=0;j<temp.numberOfCourses;j++)
-// 	{
-// 		fout<<temp.coursesArray[j].ID<<endl;
-// 		fout<<temp.coursesArray[j].name<<endl;
-// 		fout<<temp.coursesArray[j].classID<<endl;
-// 		fout<<temp.coursesArray[j].lecAccount<<endl;
-// 		fout<<temp.coursesArray[j].startDate.year<<"/"<< temp.coursesArray[j].startDate.month<<"/"<< temp.coursesArray[j].startDate.day<<endl;
-// 		fout<<temp.coursesArray[j].endDate.year<<"/"<< temp.coursesArray[j].endDate.month<<"/"<< temp.coursesArray[j].endDate.day<<endl;
-// 		fout<<temp.coursesArray[j].courseTime.dayOfWeek<<"\n"<< temp.coursesArray[j].courseTime.startHour<<":"<< temp.coursesArray[j].courseTime.startMin<<endl<< temp.coursesArray[j].courseTime.endMin<<":"<< temp.coursesArray[j].courseTime.endHour<<endl;
-// 		fout<<temp.coursesArray[j].room<<endl;
-// 		fout<<endl;
-// 	}
-// 	fout.close();
-// }
+	for(int j=0;j<temp.numberOfCourses;j++)
+	{
+		fout<<temp.coursesArray[j].ID<<endl;
+		fout<<temp.coursesArray[j].name<<endl;
+		fout<<temp.coursesArray[j].classID<<endl;
+		fout<<temp.coursesArray[j].lecAccount<<endl;
+		fout<<temp.coursesArray[j].startDate.year<<"-"<< temp.coursesArray[j].startDate.month<<"-"<< temp.coursesArray[j].startDate.day<<endl;
+		fout<<temp.coursesArray[j].endDate.year<<"-"<< temp.coursesArray[j].endDate.month<<"-"<< temp.coursesArray[j].endDate.day<<endl;
+		fout<<temp.coursesArray[j].courseTime.dayOfWeek<<"\n"<< temp.coursesArray[j].courseTime.startHour<<":"<< temp.coursesArray[j].courseTime.startMin<<endl<< temp.coursesArray[j].courseTime.endMin<<":"<< temp.coursesArray[j].courseTime.endHour<<endl;
+		fout<<temp.coursesArray[j].room<<endl;
+		fout<<endl;
+	}
+	fout.close();
+}
 
-// void createSemesterAlone()
-// {
-// 	Semester temp;
-// 	string classID,hk;
-// 	string number;
+void createSimpleSemester(Semester& temp,string classID,string startYear, string endYear,string HK)
+{
+	cout << "Input the number of courses: ";
+	cin >> temp.numberOfCourses;
+	temp.coursesArray = new Course[temp.numberOfCourses];
+	for (int i = 0; i < temp.numberOfCourses; i++)
+	{
+		createCourse(temp.coursesArray[i],classID);
+	}
+	string filename=classID+"-"+startYear+"-"+endYear+"-"+HK+".txt";
+	ofstream fout(filename);
+	if(!fout.is_open())
+	{
+		cout<<"Cant create "<<filename<<endl;
+		return;
+	}
 
-// 	cout<<"Input class ID: ";
-// 	cin>>classID;
+	//fout<<temp.numberOfCourses<<endl<<endl;
 
-// 	int intStartYear,intEndYear;
-// 	cout<<"Input start year: ";
-// 	cin>>intStartYear;
-// 	string startYear,endYear;
-// 	stringstream sstr;
-// 	sstr << intStartYear;
-// 	startYear = sstr.str();
-// 	sstr.str("");
-// 	sstr << intStartYear+1;
-// 	endYear = sstr.str();
+	for(int j=0;j<temp.numberOfCourses;j++)
+	{
+		fout<<temp.coursesArray[j].ID<<endl;
+	}
+	fout.close();
+}
 
-// 	cout<<"Input semester(1 to 3): ";
-// 	cin>>number;
-// 	hk = "HK" + number;
-// 	string filename=classID+"-"+startYear+"-"+endYear+"-"+hk+".txt";
+//void createSemesterAlone()
+//{
+//	Semester temp;
+//	string classID,hk;
+//	string number;
+//
+//	cout<<"Input class ID: ";
+//	cin>>classID;
+//
+//	int intStartYear,intEndYear;
+//	cout<<"Input start year: ";
+//	cin>>intStartYear;
+//	string startYear,endYear;
+//	stringstream sstr;
+//	sstr << intStartYear;
+//	startYear = sstr.str();
+//	sstr.str("");
+//	sstr << intStartYear+1;
+//	endYear = sstr.str();
+//
+//	cout<<"Input semester(1 to 3): ";
+//	cin>>number;
+//	hk = "HK" + number;
+//	string filename=classID+"-"+startYear+"-"+endYear+"-"+hk+".txt";
+//
+//	ofstream fout(filename);
+//	if(!fout.is_open())
+//	{
+//		cout<<"Cant create "<<filename<<endl;
+//		return;
+//	}
+//
+//	fout<<temp.numberOfCourses<<endl<<endl;
+//
+//	for(int j=0;j<temp.numberOfCourses;j++)
+//	{
+//		fout<<temp.coursesArray[j].ID<<endl;
+//		fout<<temp.coursesArray[j].name<<endl;
+//		fout<<temp.coursesArray[j].classID<<endl;
+//		fout<<temp.coursesArray[j].lecAccount<<endl;
+//		fout<<temp.coursesArray[j].startDate.year<<"-"<< temp.coursesArray[j].startDate.month<<"-"<< temp.coursesArray[j].startDate.day<<endl;
+//		fout<<temp.coursesArray[j].endDate.year<<"-"<< temp.coursesArray[j].endDate.month<<"-"<< temp.coursesArray[j].endDate.day<<endl;
+//		fout<<temp.coursesArray[j].courseTime.dayOfWeek<<"\n"<< temp.coursesArray[j].courseTime.startHour<<":"<< temp.coursesArray[j].courseTime.startMin<<endl<< temp.coursesArray[j].courseTime.endMin<<":"<< temp.coursesArray[j].courseTime.endHour<<endl;
+//		fout<<temp.coursesArray[j].room<<endl;
+//		fout<<endl;
+//	}
+//	fout.close();
+//}
 
-// 	ofstream fout(filename);
-// 	if(!fout.is_open())
-// 	{
-// 		cout<<"Cant create "<<filename<<endl;
-// 		return;
-// 	}
+void addCourseToSemester()
+{
+	{
+	string classID,hk;
+	string temp;
 
-// 	fout<<temp.numberOfCourses<<endl<<endl;
+	cout<<"Input class ID: ";
+	cin>>classID;
 
-// 	for(int j=0;j<temp.numberOfCourses;j++)
-// 	{
-// 		fout<<temp.coursesArray[j].ID<<endl;
-// 		fout<<temp.coursesArray[j].name<<endl;
-// 		fout<<temp.coursesArray[j].classID<<endl;
-// 		fout<<temp.coursesArray[j].lecAccount<<endl;
-// 		fout<<temp.coursesArray[j].startDate.year<<"-"<< temp.coursesArray[j].startDate.month<<"-"<< temp.coursesArray[j].startDate.day<<endl;
-// 		fout<<temp.coursesArray[j].endDate.year<<"-"<< temp.coursesArray[j].endDate.month<<"-"<< temp.coursesArray[j].endDate.day<<endl;
-// 		fout<<temp.coursesArray[j].courseTime.dayOfWeek<<"\n"<< temp.coursesArray[j].courseTime.startHour<<":"<< temp.coursesArray[j].courseTime.startMin<<endl<< temp.coursesArray[j].courseTime.endMin<<":"<< temp.coursesArray[j].courseTime.endHour<<endl;
-// 		fout<<temp.coursesArray[j].room<<endl;
-// 		fout<<endl;
-// 	}
-// 	fout.close();
-// }
+	int intStartYear,intEndYear;
+	cout<<"Input start year: ";
+	cin>>intStartYear;
+	string startYear,endYear;
+	stringstream sstr;
+	sstr << intStartYear;
+	startYear = sstr.str();
+	sstr.str("");
+	sstr << intStartYear+1;
+	endYear = sstr.str();
 
-// void createAcademicYear()
-// {
-// 	academicYear year;
-// 	string classID;
-// 	cout<<"Input class ID: ";
-// 	cin>>classID;
-// 	cout << "Input starting year: ";
-// 	cin >> year.startYear;
+	cout<<"Input semester(1 to 3): ";
+	cin>>temp;
+	hk = "HK" + temp;
+	string filename=classID+"-"+startYear+"-"+endYear+"-"+hk+".txt";
 
-// 	string startYear,endYear;
-// 	stringstream sstr;
-// 	sstr << year.startYear;
-// 	startYear = sstr.str();
-// 	sstr.str("");
+	ofstream out(filename,ios::app);
+	if (!out.is_open())
+	{
+		cout<<"Cant open "<<filename<<endl;
+		return;
+	}
+
+	string courseID;
+	cout<<"Input course ID: ";
+	cin>>courseID;
+	out<<courseID;
+
+	return;
+	}
+}
+
+void viewCourseSemester() {
+	{
+		string classID, hk;
+		string temp;
+
+		cout << "Input class ID: ";
+		cin >> classID;
+
+		int intStartYear, intEndYear;
+		cout << "Input start year: ";
+		cin >> intStartYear;
+		string startYear, endYear;
+		stringstream sstr;
+		sstr << intStartYear;
+		startYear = sstr.str();
+		sstr.str("");
+		sstr << intStartYear + 1;
+		endYear = sstr.str();
+
+		cout << "Input semester(1 to 3): ";
+		cin >> temp;
+		hk = "HK" + temp;
+		string filename = classID + "-" + startYear + "-" + endYear + "-" + hk + ".txt";
+
+		ifstream in(filename);
+		if (!in.is_open())
+		{
+			cout << "Cant open " << filename << endl;
+			return;
+		}
+		string buf;
+		while (!in.eof())
+		{
+			getline(in, buf, '\n');
+			cout << buf << endl;
+		}
+
+		return;
+	}
+}
+void createAcademicYear()
+{
+	academicYear year;
+	string classID;
+	cout<<"Input class ID: ";
+	cin>>classID;
+	cout << "Input starting year: ";
+	cin >> year.startYear;
+
+	string startYear,endYear;
+	stringstream sstr;
+	sstr << year.startYear;
+	startYear = sstr.str();
+	sstr.str("");
 	
-// 	sstr << year.startYear+1;
-// 	endYear = sstr.str();
+	sstr << year.startYear+1;
+	endYear = sstr.str();
 
-// 	string filename=classID+"-"+startYear+"-"+endYear+".txt";
-// 	ofstream fout(filename);
+	string filename=classID+"-"+startYear+"-"+endYear+".txt";
+	ofstream fout(filename);
 
-// 	string hk;
-// 	for (int i = 0; i < 3; i++)
-// 	{
-// 		cout <<endl<< "INPUT SEMESTER " << i+1 << " " << endl;
-// 		hk = "HK"+to_string(i+1);
-// 		createSemester(year.semesterArray[i],classID,startYear,endYear,hk);
-// 		hk="";
-// 	}
+	string hk;
+	for (int i = 0; i < 3; i++)
+	{
+		cout <<endl<< "INPUT SEMESTER " << i+1 << " " << endl;
+		hk = "HK"+to_string(i+1);
+		createSimpleSemester(year.semesterArray[i],classID,startYear,endYear,hk);
+		hk="";
+	}
 
-// 	for(int i=0;i<3;i++)
-// 	{
-// 		for(int j=0;j<year.semesterArray[i].numberOfCourses;j++)
-// 		{
-// 			fout<<year.semesterArray[i].numberOfCourses<<endl;
-// 			fout<<year.semesterArray[i].coursesArray[j].ID<<endl;
-// 			fout<<year.semesterArray[i].coursesArray[j].name<<endl;
-// 			fout<<year.semesterArray[i].coursesArray[j].classID<<endl;
-// 			fout<<year.semesterArray[i].coursesArray[j].lecAccount<<endl;
-// 			fout<<year.semesterArray[i].coursesArray[j].startDate.year<<"/"<<year.semesterArray[i].coursesArray[j].startDate.month<<"/"<<year.semesterArray[i].coursesArray[j].startDate.day<<endl;
-// 			fout<<year.semesterArray[i].coursesArray[j].endDate.year<<"/"<<year.semesterArray[i].coursesArray[j].endDate.month<<"/"<<year.semesterArray[i].coursesArray[j].endDate.day<<endl;
-// 			fout<<year.semesterArray[i].coursesArray[j].courseTime.dayOfWeek<<"\n"<<year.semesterArray[i].coursesArray[j].courseTime.startHour<<":"<<year.semesterArray[i].coursesArray[j].courseTime.startMin<<endl<<year.semesterArray[i].coursesArray[j].courseTime.endMin<<":"<<year.semesterArray[i].coursesArray[j].courseTime.endHour<<endl;
-// 			fout<<year.semesterArray[i].coursesArray[j].room<<endl;
-// 			fout<<endl;
-// 		}
-// 	}
-// }
+	for (int i = 0; i < 3; i++)
+	{
+		hk = "HK"+to_string(i+1);
+		fout<<classID+"-"+startYear+"-"+endYear+"-"+hk+".txt"<<endl;
+	}
+}
 
+void deleteCourses()
+{
+	string classID,hk;
+	string temp;
 
+	cout<<"Input class ID: ";
+	cin>>classID;
 
-// void deleteCourses()
-// {
-// 	string classID,hk;
-// 	string temp;
+	int intStartYear,intEndYear;
+	cout<<"Input start year: ";
+	cin>>intStartYear;
+	string startYear,endYear;
+	stringstream sstr;
+	sstr << intStartYear;
+	startYear = sstr.str();
+	sstr.str("");
+	sstr << intStartYear+1;
+	endYear = sstr.str();
 
-// 	cout<<"Input class ID: ";
-// 	cin>>classID;
+	cout<<"Input semester(1 to 3): ";
+	cin>>temp;
+	hk = "HK" + temp;
+	string filename=classID+"-"+startYear+"-"+endYear+"-"+hk+".txt";
 
-// 	int intStartYear,intEndYear;
-// 	cout<<"Input start year: ";
-// 	cin>>intStartYear;
-// 	string startYear,endYear;
-// 	stringstream sstr;
-// 	sstr << intStartYear;
-// 	startYear = sstr.str();
-// 	sstr.str("");
-// 	sstr << intStartYear+1;
-// 	endYear = sstr.str();
+	ofstream out(filename);
+	if (!out.is_open())
+	{
+		cout<<"Cant open "<<filename<<endl;
+		return;
+	}
 
-// 	cout<<"Input semester(1 to 3): ";
-// 	cin>>temp;
-// 	hk = "HK" + temp;
-// 	string filename=classID+"-"+startYear+"-"+endYear+"-"+hk+".txt";
+	string courseID;
+	cout<<"Input course ID: ";
+	cin>>courseID;
 
-// 	ofstream out(filename);
-// 	if (!out.is_open())
-// 	{
-// 		cout<<"Cant open "<<filename<<endl;
-// 		return;
-// 	}
+	return;
+}
 
-// 	string courseID;
-// 	cout<<"Input course ID: ";
-// 	cin>>courseID;
+void deleteSemester()
+{
+	string classID, hk;
+	string temp;
 
+	cout << "Input class ID: ";
+	cin >> classID;
 
+	int intStartYear, intEndYear;
+	cout << "Input start year: ";
+	cin >> intStartYear;
+	string startYear, endYear;
+	stringstream sstr;
+	sstr << intStartYear;
+	startYear = sstr.str();
+	sstr.str("");
+	sstr << intStartYear + 1;
+	endYear = sstr.str();
 
-// 	return;
-// }
+	cout << "Input semester(1 to 3): ";
+	cin >> temp;
+	hk = "HK" + temp;
+	string filename = classID + "-" + startYear + "-" + endYear + "-" + hk + ".txt";
 
-// void deleteSemester()
-// {
-// 	string classID, hk;
-// 	string temp;
+	if (remove(filename.c_str()) == 0)
+		cout << "Deteled " << filename;
+	else
+		cout << "Cant delete " << filename;
 
-// 	cout << "Input class ID: ";
-// 	cin >> classID;
+	return;
+}
 
-// 	int intStartYear, intEndYear;
-// 	cout << "Input start year: ";
-// 	cin >> intStartYear;
-// 	string startYear, endYear;
-// 	stringstream sstr;
-// 	sstr << intStartYear;
-// 	startYear = sstr.str();
-// 	sstr.str("");
-// 	sstr << intStartYear + 1;
-// 	endYear = sstr.str();
+void viewYear() {
+	academicYear year;
+	string classID;
+	cout << "Input classID: ";
+	cin >> classID;
+	cout << "Input starting year: ";
+	cin >> year.startYear;
 
-// 	cout << "Input semester(1 to 3): ";
-// 	cin >> temp;
-// 	hk = "HK" + temp;
-// 	string filename = classID + "-" + startYear + "-" + endYear + "-" + hk + ".txt";
+	string startYear, endYear;
+	stringstream sstr;
+	sstr << year.startYear;
+	startYear = sstr.str();
+	sstr.str("");
 
-// 	if (remove(filename.c_str()) == 0)
-// 		cout << "Deteled " << filename;
-// 	else
-// 		cout << "Cant delete " << filename;
+	sstr << year.startYear + 1;
+	endYear = sstr.str();
+	string filename = classID + "-" + startYear + "-" + endYear + ".txt";
 
-// 	return;
-// }
+	ifstream fin(filename);
+	if (!fin.is_open())
+	{
+		cout << "Cant open " << filename << endl;
+		return;
+	}
 
-// void deleteYear()
-// {
-// 	academicYear year;
-// 	cout << "Input starting year: ";
-// 	cin >> year.startYear;
+	string temp = "";
 
-// 	string startYear,endYear;
-// 	stringstream sstr;
-// 	sstr << year.startYear;
-// 	startYear = sstr.str();
-// 	sstr.str("");
+	while (!fin.eof())
+	{
+		temp = "";
+		getline(fin, temp, '\n');
+		cout <<temp<<endl;
+	}
+	return;
+}
+
+void deleteYear()
+{
+	academicYear year;
+	string classID;
+	cout<<"Input classID: ";
+	cin>>classID;
+	cout << "Input starting year: ";
+	cin >> year.startYear;
+
+	string startYear,endYear;
+	stringstream sstr;
+	sstr << year.startYear;
+	startYear = sstr.str();
+	sstr.str("");
 	
-// 	sstr << year.startYear+1;
-// 	endYear = sstr.str();
-// 	string filename=startYear+"-"+endYear+".txt";
+	sstr << year.startYear+1;
+	endYear = sstr.str();
+	string filename=classID+"-"+startYear+"-"+endYear+".txt";
 
-// 	if(remove(filename.c_str())==0)
-// 		cout<<"Deleted "<<filename<<endl;
-// 	else
-// 		cout<<"Cant delete "<<filename<<endl;
+	if(remove(filename.c_str())==0)
+		cout<<"Deleted "<<filename<<endl;
+	else
+		cout<<"Cant delete "<<filename<<endl;
 
-// 	string hk="";
-// 	for (int i = 0; i < 3; i++)
-// 	{
-// 		hk = "HK"+to_string(i+1);
-// 		filename=startYear+"-"+endYear+"-"+hk+".txt";
-// 		if(remove(filename.c_str())==0)
-// 			cout<<"Deleted "<<filename<<endl;
-// 		else
-// 			cout<<"Cant delete "<<filename<<endl;
-// 	}
+	string hk="";
+	for (int i = 0; i < 3; i++)
+	{
+		hk = "HK"+to_string(i+1);
+		filename=startYear+"-"+endYear+"-"+hk+".txt";
+		if(remove(filename.c_str())==0)
+			cout<<"Deleted "<<filename<<endl;
+		else
+			cout<<"Cant delete "<<filename<<endl;
+	}
 
-// 	return;
-// }
+	return;
+}
 
-// void updateAcademicYear()
-// {
-// 	academicYear year;
-// 	cout << "Input starting year: ";
-// 	cin >> year.startYear;
+void updateAcademicYear()
+{
+	academicYear year;
+	cout << "Input starting year: ";
+	cin >> year.startYear;
 
-// 	string startYear, endYear;
-// 	stringstream sstr;
-// 	sstr << year.startYear;
-// 	startYear = sstr.str();
-// 	sstr.str("");
+	string startYear, endYear;
+	stringstream sstr;
+	sstr << year.startYear;
+	startYear = sstr.str();
+	sstr.str("");
 
-// 	sstr << year.startYear + 1;
-// 	endYear = sstr.str();
-// 	string filename = startYear + "-" + endYear + ".txt";
-// }
+	sstr << year.startYear + 1;
+	endYear = sstr.str();
+	string filename = startYear + "-" + endYear + ".txt";
+}
 
-// void menuAcademicYear()
-// {
-// 	int option,option2;
-// 	cout << "1. Academic year." << endl;
-// 	cout << "2. Semester." << endl;
+void menuAcademicYear()
+{
+	int option,option2;
+	cout << "1. Academic year." << endl;
+	cout << "2. Semester." << endl;
 
-// 	cout<<"SELECT YOUR OPTION: "<<endl;
-// 	cin>>option;
-// 	if(option==1)
-// 	{
-// 		cout<<"ACADEMIC MENU: "<<endl;
-// 		cout<<"1. Add an academic year."<<endl;
-// 		cout<<"2. Edit an academic year."<<endl;
-// 		cout<<"3. View an academic year."<<endl;
-// 		cout<<"4. Delete an academic year."<<endl;
+	cout<<"SELECT YOUR OPTION: "<<endl;
+	cin>>option;
+	if(option==1)
+	{
+		cout<<"ACADEMIC MENU: "<<endl;
+		cout<<"1. Add an academic year."<<endl;
+		cout<<"2. Edit an academic year."<<endl;
+		cout<<"3. View an academic year."<<endl;
+		cout<<"4. Delete an academic year."<<endl;
+		cout << "0. Back." << endl;
+
+		cin>>option;
+		if(option==1)	createAcademicYear();
+		else if(option==2)
+		{
+			cout<<"Coming soon."<<endl;
+			return;
+		}
+		else if(option==3)
+		{
+			viewYear();
+			return;
+		}
+		else if(option==4)	deleteYear();
+		else if (option == 0) {
+			menuAcademicYear();
+		}
+		else{
+			cout<<"There is no option matched your option."<<endl;
+			return;
+		}
+		return;
+	}
+	else if(option==2)
+	{
+		cout<<"SEMESTER MENU: "<<endl;
+		cout<<"1. Add a course."<<endl;
+		cout<<"2. Edit a course."<<endl;
+		cout<<"3. View semester."<<endl;
+		cout<<"4. Delete semester."<<endl;
+		cout<<"0. Back." << endl;
 	
-// 		cin>>option;
-// 		if(option==1)	createAcademicYear();
-// 		else if(option==2)	;
-// 		else if(option==3)	;
-// 		else if(option==4)	deleteYear();
-// 		else{
-// 			cout<<"There is no option matched your option."<<endl;
-// 			return;
-// 		}
-// 		return;
-// 	}
-// 	else if(option==2)
-// 	{
-// 		cout<<"SEMESTER MENU: "<<endl;
-// 		cout<<"1. Add a course."<<endl;
-// 		cout<<"2. Edit a course."<<endl;
-// 		cout<<"3. View semester."<<endl;
-// 		cout<<"4. Delete semester."<<endl;
-	
-// 		cin>>option;
-// 		if(option==1)	createSemesterAlone();
-// 		else if(option==2)	;
-// 		else if(option==3)	;
-// 		else if(option==4)	deleteSemester();
-// 		else{
-// 			cout<<"There is no option matched your option."<<endl;
-// 			return;
-// 		}
-// 		return;
-// 	}
+		cin>>option;
+		if (option == 1)	
+		{
+			addCourseToSemester();
+		}
+		else if(option==2){
+			cout<<"Coming soon."<<endl;
+			return;
+		}
+		else if(option==3){
+			viewCourseSemester();
+			return;
+		}
+		else if(option==4)	deleteSemester();
+		else if (option ==0 ) {
+			menuAcademicYear();
+		}
+		else{
+			cout<<"There is no option matched your option."<<endl;
+			return;
+		}
+		return;
+	}
 
-// }
+}
 //2. Import courses from csv file to txt file.(14)
 void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 	ifstream fin;
@@ -1746,6 +1917,142 @@ void removeSpecificStudent()
 }
 
 //7. Add a specific student to a course.
+void writeFileStudentTXT(Student& newStudent) 
+{
+
+	// cin.ignore(1);
+	// cout << "> Enter student infomation: \n";
+	// cout << " Full name: "; getline(cin, newStudent.fullName, '\n');
+	// cout << " ID: "; getline(cin, newStudent.ID, '\n');
+	// cout << " Gender: "; getline(cin, newStudent.gender, '\n');
+	// cout << " Date of birth: "; getline(cin, newStudent.DoB, '\n');
+	// cout << " Class ID: "; getline(cin, newStudent.classID, '\n');
+	// newStudent.active = 1;
+
+	Student* students, * students1;
+	int n = 0;
+
+	ifstream fin;	
+	ofstream fout;
+
+	loadStudent(fin, "Students.txt", students, n);
+	for(int i=0;i<n;i++)
+	{
+		if(students[i].ID.compare(newStudent.ID)==0)
+		{
+			return;
+		}
+	}
+	students1 = new Student[n + 1];
+	for (int i = 0; i < n; i++) {
+		students1[i] = students[i];
+	}
+	students1[n] = newStudent;
+
+	writeStudent(fout, "Students.txt", students1, n + 1);
+}
+void writeStudentCaro(string filename,Student* newStudent )
+{
+	ifstream fin(filename);
+	if(!fin.is_open())
+	{
+		cout<<"Cant open "<<filename<<endl;
+		return;
+	}
+
+	string ignore="";
+	int nStudents=0;
+	while(!fin.eof())
+	{
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		nStudents++;
+		getline(fin,ignore,'\n');
+	}
+	nStudents++;
+	Student* aStudents=new Student[nStudents];
+	aStudents[nStudents - 1] = *newStudent;
+	fin.close();
+	fin.open(filename);
+	int a;
+	for(int i=0;i<nStudents;i++)
+	{
+		getline(fin, aStudents[i].ID,'\n');
+		getline(fin, aStudents[i].fullName,'\n');
+		getline(fin, aStudents[i].DoB, '\n');
+		getline(fin, aStudents[i].gender,'\n');
+		fin >> a;
+		aStudents[i].active = (bool)a;
+		fin.ignore();
+		fin.ignore();
+	}
+	fin.close();
+	ofstream fout(filename);
+	for (int i = 0; i < nStudents; i++)
+	{
+		fout << aStudents[i].ID<<'\n';
+		fout << aStudents[i].fullName << '\n';
+		fout << aStudents[i].DoB << '\n';
+		fout << aStudents[i].gender << '\n';
+		fout << aStudents[i].active << '\n';
+		fout << endl;
+	}
+	fout.close();
+}
+
+bool checkAppeared(string filename,Student* newStudent )
+{
+	ifstream fin(filename);
+	if(!fin.is_open())
+	{
+		cout<<"Cant open "<<filename<<endl;
+		return 0;
+	}
+
+	string ignore="";
+	int nStudents=0;
+	while(!fin.eof())  //count
+	{
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		nStudents++;
+		getline(fin,ignore,'\n');
+	}
+	nStudents++;
+	Student* aStudents=new Student[nStudents];
+	aStudents[nStudents - 1] = *newStudent;
+	fin.close();
+	fin.open(filename);
+	int a;
+	for(int i=0;i<nStudents;i++)
+	{
+		getline(fin, aStudents[i].ID,'\n');
+		getline(fin, aStudents[i].fullName,'\n');
+		getline(fin, aStudents[i].DoB, '\n');
+		getline(fin, aStudents[i].gender,'\n');
+		fin >> a;
+		aStudents[i].active = (bool)a;
+		fin.ignore();
+		fin.ignore();
+	}
+	fin.close();
+
+	for (int i = 0; i < nStudents; i++)
+	{
+		if (aStudents[i].ID.compare(newStudent->fullName) == 0)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
 void addStudentToCourse()
 {
 	string courseID;
@@ -1763,7 +2070,7 @@ void addStudentToCourse()
 
 	loadCoursesFromTXT("Courses.txt", aCourses, nCourses);
 
-	Course course;
+	Course course;  //course to find
 	course.ID = "";
 	for (int i = 0; i < nCourses; i++)
 	{
@@ -1781,7 +2088,7 @@ void addStudentToCourse()
 
 	Student newStudent;
 
-	cout << "> Enter student infomation: \n";
+	cout << "> Enter student information: \n";
 	cout << " Full name: "; getline(cin, newStudent.fullName);
 	getline(cin, newStudent.fullName);
 	cout << " ID: "; getline(cin, newStudent.ID);
@@ -1789,9 +2096,42 @@ void addStudentToCourse()
 	cout << " Date of birth: "; getline(cin, newStudent.DoB);
 	cout << " Class ID: "; getline(cin, newStudent.classID);
 	cout << " Active status(0:No, 1:Yes) : "; cin >> newStudent.active;
-
+ 
 	string filename = "";
+	//Students.txt
+	if (checkAppeared("Students.txt", &newStudent) == 0)
+	{
+		writeFileStudentTXT(newStudent);
+	}
+	//Class-Students.txt
+	if(newStudent.classID.compare(classID)!=0)
+	{
+		cout<<"YOU DONT HAVE PERMISSION TO JOIN ANOTHER CLASS."<<endl;
+	}
+	else
+	{
+		filename = newStudent.classID + "-Students.txt";
+		if (checkAppeared(filename, &newStudent) == 0)
+		{
+			writeStudentCaro(filename, &newStudent);
+		}
+	}
+
+
+	//Class-Course.txt
 	filename = classID + "-" + courseID + ".txt";
+	if (checkAppeared(filename, &newStudent) == 0)
+	{
+		writeStudentCaro(filename, &newStudent);
+	}
+
+	filename = classID + "-" + courseID + "-AttendanceList.txt";
+	if (checkAppeared(filename, &newStudent) == 0)
+	{
+		writeStudentCaro(filename, &newStudent);
+	}
+	/*{
+
 
 	Student* aStudents, * temp;
 	int nStudents;
@@ -1821,6 +2161,7 @@ void addStudentToCourse()
 		out << aStudents[i].active << endl;
 		out << endl;
 	}
+	}*/
 }
 
 //9. View list of students of a course.
