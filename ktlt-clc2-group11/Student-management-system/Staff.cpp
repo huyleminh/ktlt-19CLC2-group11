@@ -1880,6 +1880,58 @@ void removeSpecificStudent()
 }
 
 //7. Add a specific student to a course.
+void writeStudentCaro(string filename,Student* newStudent )
+{
+	ifstream fin(filename);
+	if(!fin.is_open())
+	{
+		cout<<"Cant open "<<filename<<endl;
+		return;
+	}
+
+	string ignore="";
+	int nStudents=0;
+	while(!fin.eof())
+	{
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		getline(fin,ignore,'\n');
+		nStudents++;
+		getline(fin,ignore,'\n');
+	}
+	nStudents++;
+	Student* aStudents=new Student[nStudents];
+	aStudents[nStudents - 1] = *newStudent;
+	fin.close();
+	fin.open(filename);
+	int a;
+	for(int i=0;i<nStudents;i++)
+	{
+		getline(fin, aStudents[i].ID,'\n');
+		getline(fin, aStudents[i].fullName,'\n');
+		getline(fin, aStudents[i].DoB, '\n');
+		getline(fin, aStudents[i].gender,'\n');
+		fin >> a;
+		aStudents[i].active = (bool)a;
+		fin.ignore();
+		fin.ignore();
+	}
+	fin.close();
+	ofstream fout(filename);
+	for (int i = 0; i < nStudents; i++)
+	{
+		fout << aStudents[i].ID<<'\n';
+		fout << aStudents[i].fullName << '\n';
+		fout << aStudents[i].DoB << '\n';
+		fout << aStudents[i].gender << '\n';
+		fout << aStudents[i].active << '\n';
+		fout << endl;
+	}
+	fout.close();
+}
+
 void addStudentToCourse()
 {
 	string courseID;
@@ -1897,7 +1949,7 @@ void addStudentToCourse()
 
 	loadCoursesFromTXT("Courses.txt", aCourses, nCourses);
 
-	Course course;
+	Course course;  //course to find
 	course.ID = "";
 	for (int i = 0; i < nCourses; i++)
 	{
@@ -1923,7 +1975,10 @@ void addStudentToCourse()
 	cout << " Date of birth: "; getline(cin, newStudent.DoB);
 	cout << " Class ID: "; getline(cin, newStudent.classID);
 	cout << " Active status(0:No, 1:Yes) : "; cin >> newStudent.active;
+ 
 
+
+	{
 	string filename = "";
 	filename = classID + "-" + courseID + ".txt";
 
@@ -1954,6 +2009,7 @@ void addStudentToCourse()
 		out << aStudents[i].gender << endl;
 		out << aStudents[i].active << endl;
 		out << endl;
+	}
 	}
 }
 
