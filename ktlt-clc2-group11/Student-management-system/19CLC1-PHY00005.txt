@@ -1,6 +1,12 @@
-19127150
-Nguyen Hua Hung
-2020-05-14
+19127157
+Le Minh Huy
+2020-05-12
+Male
+1
+
+19127181
+Bach Minh Khoi
+2020-05-13
 Male
 1
 
@@ -8,11 +14,11 @@ Male
 Phan Minh Hieu
 2020-05-15
 Male
-0
+1
 
-19127157
-Le Minh Huy
-2020-05-12
+19127181
+BMK
+2020-07-07
 Male
-0
+1
 

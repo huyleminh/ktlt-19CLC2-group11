@@ -23,7 +23,13 @@ int main() {
 	/*cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5" << endl;
 	menu();*/
 
-	menuAcademicYear();
+	Student student;
+	student.ID = "19127181";
+	student.fullName = "BMK";
+	student.gender = "Male";
+	student.DoB = "2020-07-07";
+	student.active = 1;
 
+	writeStudentCaro("19CLC1-PHY00005.txt", &student);
 	return 0;
 }
