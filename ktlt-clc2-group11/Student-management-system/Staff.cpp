@@ -2092,6 +2092,11 @@ void addStudentToCourse()
 		writeStudentCaro(filename, &newStudent);
 	}
 
+	filename = classID + "-" + courseID + "-AttendanceList.txt";
+	if (checkAppeared(filename, &newStudent) == 0)
+	{
+		writeStudentCaro(filename, &newStudent);
+	}
 	/*{
 
 
