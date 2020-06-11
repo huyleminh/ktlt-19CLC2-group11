@@ -1,24 +1,36 @@
 19127157
 Le Minh Huy
-2020-05-12
+2001-11-20
 Male
 1
 
 19127181
 Bach Minh Khoi
-2020-05-13
+2001-07-07
+Male
+1
+
+19127150
+Nguyen Hua Hung
+2001-06-21
 Male
 1
 
 19127141
 Phan Minh Hieu
-2020-05-15
+2001-01-18
 Male
 1
 
-10000
-no name
-2020
-male
+19127329
+Le Hoang Anh
+2001-07-05
+Male
+1
+
+19127345
+Lam Quoc Cuong
+2001-09-10
+Male
 1
 

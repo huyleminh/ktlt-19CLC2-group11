@@ -714,6 +714,7 @@ OPTION:
 void createCourse(Course& course,string classID) {
 	cout << "Input course ID: ";
 	cin >> course.ID;
+	convertToUpper(course.ID);
 
 	// cout << "Input course name: ";
 	// cin >> course.name;
@@ -791,7 +792,8 @@ void createSimpleSemester(Semester& temp,string classID,string startYear, string
 
 	for(int j=0;j<temp.numberOfCourses;j++)
 	{
-		fout<<temp.coursesArray[j].ID<<endl;
+		string buff = classID + "-" + temp.coursesArray[j].ID + ".txt";
+		fout<<buff<<endl;
 	}
 	fout.close();
 }
@@ -853,7 +855,7 @@ void addCourseToSemester()
 
 	cout<<"Input class ID: ";
 	cin>>classID;
-
+	convertToUpper(classID);
 	int intStartYear,intEndYear;
 	cout<<"Input start year: ";
 	cin>>intStartYear;
@@ -880,6 +882,7 @@ void addCourseToSemester()
 	string courseID;
 	cout<<"Input course ID: ";
 	cin>>courseID;
+	convertToUpper(courseID);
 	out<<courseID;
 
 	return;
@@ -893,6 +896,7 @@ void viewCourseSemester() {
 
 		cout << "Input class ID: ";
 		cin >> classID;
+		convertToUpper(classID);
 
 		int intStartYear, intEndYear;
 		cout << "Input start year: ";
@@ -932,6 +936,7 @@ void createAcademicYear()
 	string classID;
 	cout<<"Input class ID: ";
 	cin>>classID;
+	convertToUpper(classID);
 	cout << "Input starting year: ";
 	cin >> year.startYear;
 
@@ -1008,6 +1013,7 @@ void deleteSemester()
 
 	cout << "Input class ID: ";
 	cin >> classID;
+	convertToUpper(classID);
 
 	int intStartYear, intEndYear;
 	cout << "Input start year: ";
@@ -1038,6 +1044,7 @@ void viewYear() {
 	string classID;
 	cout << "Input classID: ";
 	cin >> classID;
+	convertToUpper(classID);
 	cout << "Input starting year: ";
 	cin >> year.startYear;
 
@@ -1075,6 +1082,7 @@ void deleteYear()
 	string classID;
 	cout<<"Input classID: ";
 	cin>>classID;
+	convertToUpper(classID);
 	cout << "Input starting year: ";
 	cin >> year.startYear;
 
@@ -1097,7 +1105,7 @@ void deleteYear()
 	for (int i = 0; i < 3; i++)
 	{
 		hk = "HK"+to_string(i+1);
-		filename=startYear+"-"+endYear+"-"+hk+".txt";
+		filename= classID + "-" + startYear + "-" + endYear + "-" + hk + ".txt";
 		if(remove(filename.c_str())==0)
 			cout<<"Deleted "<<filename<<endl;
 		else
@@ -1290,18 +1298,19 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 void createClassCourse(Course*& courses, const int nCourse) {
 	ofstream f;
 	f.open("ListCourses.txt");
-	if(!f.is_open()){
+	if (!f.is_open()) {
 		cout << "Can not open ListCourses.txt.\n";
 		return;
 	}
-	
-	string filename = "";
+
+	string filename = "", filenameHk = "";
 	convertToUpper(courses[0].classID);
 	convertToUpper(courses[0].ID);
 	filename += courses[0].classID + "-" + courses[0].ID + ".txt";
-	
-	f << filename << endl;  
-	//19CLC2-2019-2020-HK2.txt
+	filenameHk += courses[0].classID + "-" + courses[0].acaYear + "-HK" + courses[0].sem + ".txt";
+
+	f << filename << endl;
+
 	ofstream fout;
 	fout.open(filename);
 	if (!fout.is_open()) {
@@ -1310,13 +1319,25 @@ void createClassCourse(Course*& courses, const int nCourse) {
 	}
 	fout.close();
 
+	ofstream fout1;
+	fout1.open(filenameHk);
+	if (!fout1.is_open()) {
+		cout << "Can not open " << filenameHk << endl;
+		return;
+	}
+	fout1 << filename << endl;
+	fout1.close();
+
+
 	for (int i = 1; i < nCourse; i++) {
 		if (courses[i].classID == courses[i - 1].classID && courses[i].ID == courses[i - 1].ID)
 			continue;
 		filename = "";
+		filenameHk = "";
 		convertToUpper(courses[i].classID);
 		convertToUpper(courses[i].ID);
 		filename += courses[i].classID + "-" + courses[i].ID + ".txt";
+		filenameHk += courses[i].classID + "-" + courses[i].acaYear + "-HK" + courses[i].sem + ".txt";
 
 		f << filename << endl;
 
@@ -1327,6 +1348,15 @@ void createClassCourse(Course*& courses, const int nCourse) {
 			return;
 		}
 		fout.close();
+
+		ofstream fout1;
+		fout1.open(filenameHk);
+		if (!fout1.is_open()) {
+			cout << "Can not open " << filenameHk << endl;
+			return;
+		}
+		fout1 << filename << endl;
+		fout1.close();
 	}
 
 	f.close();
@@ -2084,6 +2114,7 @@ void addStudentToCourse()
 		if (aCourses[i].ID.compare(courseID) == 0 || aCourses[i].classID.compare(classID) == 0)
 		{
 			course = aCourses[i];
+			convertToUpper(course.ID);
 			break;
 		}
 	}
@@ -2100,7 +2131,7 @@ void addStudentToCourse()
 	getline(cin, newStudent.fullName);
 	cout << " ID: "; getline(cin, newStudent.ID);
 	cout << " Gender: "; getline(cin, newStudent.gender);
-	cout << " Date of birth: "; getline(cin, newStudent.DoB);
+	cout << " Date of birth: "; getline(cin, newStudent.DoB); //bug
 	cout << " Class ID: "; getline(cin, newStudent.classID);
 	cout << " Active status(0:No, 1:Yes) : "; cin >> newStudent.active;
  

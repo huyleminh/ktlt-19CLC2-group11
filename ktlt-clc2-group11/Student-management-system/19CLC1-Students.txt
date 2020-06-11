@@ -1,49 +1,24 @@
-19127150
-Nguyen Hua Hung
-2020-05-14
+19127186
+Le Thanh Khoi
+2001-04-13
 Male
 1
 
-19127141
-Phan Minh Hieu
-2020-05-15
+19127012
+Vu Nguyen Thai Binh
+2001-06-18
 Male
-0
+1
 
 19127226
 Hoang Van Nguyen
 2001-05-12
 Male
-0
+1
 
-19127157
-Le Minh Huy
-2020-05-12
+19127348
+Bui Cong Danh
+2001-04-03
 Male
-1
-
-19127181
-mifa
-2020
-make
-1
-
-123
-new
-2010
-male
-1
-0
-
-19127181
-CUC CUNG
-2020-03-05
-male
-1
-
-191324546456
-another
-2020-2020
-male
 1
 
