@@ -2100,7 +2100,8 @@ void writeStudentCaro(string filename, Student* newStudent)
 	}
 	fout.close();
 }
-/* checkAppearedTXT(string filename, Student* newStudent)
+
+/*bool checkAppearedTXT(string filename, Student* newStudent)
 {
 	ifstream fin;
 	fin.open(filename);
