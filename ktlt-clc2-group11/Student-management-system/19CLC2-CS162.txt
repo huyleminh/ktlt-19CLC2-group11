@@ -14,7 +14,7 @@ Male
 Nguyen Hua Hung
 2001-06-21
 Male
-1
+0
 
 19127141
 Phan Minh Hieu
@@ -32,5 +32,5 @@ Male
 Lam Quoc Cuong
 2001-09-10
 Male
-1
+0
 

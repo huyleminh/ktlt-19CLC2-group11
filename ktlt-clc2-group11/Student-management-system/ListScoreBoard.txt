@@ -1,0 +1,6 @@
+19CLC2-CS162-Scoreboard.txt
+19CLC2-PHY00005-Scoreboard.txt
+19CLC1-MTH00003-Scoreboard.txt
+19CLC4-CS162-Scoreboard.txt
+19CLC2-CTT003-Scoreboard.txt
+19CLC3-CTT006-Scoreboard.txt

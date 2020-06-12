@@ -30,6 +30,9 @@
     <ClCompile Include="Student.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Header.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllRole.h">
@@ -47,11 +50,5 @@
     <ClInclude Include="Student.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Classes.txt" />
-    <Text Include="19CLC1-PHY00005.txt" />
-    <Text Include="19CLC1-Students.txt" />
-    <Text Include="Students.txt" />
   </ItemGroup>
 </Project>

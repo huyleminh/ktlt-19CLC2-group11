@@ -22,3 +22,15 @@ Bui Cong Danh
 Male
 1
 
+19127100
+Nguyen Van A
+2001-01-01
+Male
+0
+
+19127345
+Lam Quoc Cuong
+2001-09-10
+Male
+1
+

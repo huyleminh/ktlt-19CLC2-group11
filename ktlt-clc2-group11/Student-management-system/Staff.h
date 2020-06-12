@@ -61,6 +61,7 @@ void addStudentIntoCourse(const int n);
 //3. Manually add a new course.
 void addNewCourse();
 //4. Edit an existing course.
+void loadListCourse(string*& list, int& n);
 void editCourse();
 //5. Remove a course.
 void loadCoursesFromTXT(string filename, Course*& courses, int& n);
@@ -108,7 +109,7 @@ void attendanceListMode();
 void viewAttendanceList();
 //2. Export a attendance list to a csv file.
 void exportAttendanceListToCSV();
-void exportAttendanceListToTXT();
+//void exportAttendanceListToTXT();
 //3. Back to staff menu.
 
 //**5. Change staff password.

@@ -1,7 +1,7 @@
-4
+6
 
 CS162
-Ky thuat lap trinh 
+Ky thuat lap trinh
 19CLC2
 nmhuy
 2020-3-14
@@ -31,15 +31,37 @@ nttvan
 Saturday
 13:30
 17:00
-C23,2,2019-2020
+C23
 
 CS162
 Ky thuat lap trinh
-19CLC1
+19CLC4
 htthanh
 2020-3-13
 2020-6-25
 Thursday
 7:30
 11:30
-I23,2,2019-2020
+I23
+
+CTT003
+Nhap mon lap trinh
+19CLC2
+vcnam
+2019-10-4
+2020-1-1
+Monday
+7:30
+11:30
+I41
+
+CTT006
+Lap trinh huong doi tuong
+19CLC3
+nmhuy
+2020-6-26
+2020-9-26
+Friday
+13:30
+17:30
+I33

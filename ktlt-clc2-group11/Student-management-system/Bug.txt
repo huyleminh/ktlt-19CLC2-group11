@@ -1,0 +1,10 @@
+1. edit remove old file cs190->cs191
+//2. remove filename in listcourses.txt
+//3. input date of birth split to input day, month, year
+4. run all attendance list before run another feature
+5.test lai scroeboard staff
+6.fix attend, checkapper cua caro
+7.scroboard luong lecturer
+8.edit course
+9.sai cousre sau khi edit course ID
+10.
