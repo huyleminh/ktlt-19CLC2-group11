@@ -1,0 +1,32 @@
+CS162
+Ky thuat lap trinh
+19CLC2
+nmhuy
+2020-3-14
+2020-6-26
+Friday
+13:00
+17:00
+I42
+
+PHY00005
+Vat ly dai cuong
+19CLC2
+nkquang
+2020-3-10
+2020-6-15
+Monday
+7:30
+11:30
+I33
+
+CTT003
+Nhap mon lap trinh
+19CLC2
+vcnam
+2019-10-4
+2020-1-1
+Monday
+7:30
+11:30
+I41

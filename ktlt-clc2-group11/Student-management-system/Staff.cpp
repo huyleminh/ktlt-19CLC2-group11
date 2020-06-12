@@ -4,7 +4,7 @@
 /*Main staff menu*/
 
 void showStaffMenu(User& user) {
-	cout << "\t\t\t\t**********STAFF MENU**********" << endl;
+	cout << "**********STAFF MENU**********" << endl;
 	cout << "> 1. Class and student.\n";
 	cout << "> 2. Course.\n";
 	cout << "> 3. Scoreboard.\n";
@@ -268,9 +268,9 @@ void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
 		getline(fin, ignore, '\n');
 		getline(fin, students[i].ID, '\n');
 		getline(fin, students[i].fullName, '\n');
-		getline(fin, students[i].gender, '\n');
 		getline(fin, students[i].DoB, '\n');
 		getline(fin, students[i].classID, '\n');
+		getline(fin, students[i].gender, '\n');
 		getline(fin, ignore, '\n');
 		students[i].active = stoi(ignore);
 	}
@@ -883,7 +883,7 @@ void addCourseToSemester()
 		cout << "Input course ID: ";
 		cin >> courseID;
 		convertToUpper(courseID);
-		out << courseID;
+		out << classID + courseID + ".txt";
 
 		return;
 	}
@@ -1223,7 +1223,7 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 		getline(fin, ignore, '\n');
 		nCourse++;
 	}
-	nCourse -= 1;
+	
 	fin.close();
 
 	if (isFileOpen(fin, "Courses.csv") == false)
@@ -2312,13 +2312,17 @@ void viewListStudentsOfCourse()
 {
 	ifstream data;
 	string classID, course;
-	cout << "Input course:"; cin >> classID;
-	cout << "Input class:"; cin >> course;
+	cout << "Input class:"; 
+	cin >> classID;
+
+	cout << "Input course:"; 
+	cin >> course;
+
 	string inputPath = "";
 
 	convertToUpper(classID);
 	convertToUpper(course);
-	inputPath = course + "-" + classID + ".txt";
+	inputPath = classID + "-" + course + ".txt";
 
 	data.open(inputPath);
 
@@ -2848,23 +2852,35 @@ OPTION:
 
 	createListOfScoreBoard();
 
-	cout << "> Enter class ID: ";
-	getline(cin, classID, '\n');
-	convertToUpper(classID);
-
-	cout << "> Enter course ID: ";
-	getline(cin, courseID, '\n');
-	convertToUpper(courseID);
-	sourceTXT = classID + '-' + courseID + "-Scoreboard.txt";
-
-	getDestinationTXT(sourceTXT, destinationCSV);
+	
 
 	switch (option) {
 	case 1:
+		cout << "> Enter class ID: ";
+		getline(cin, classID, '\n');
+		convertToUpper(classID);
+
+		cout << "> Enter course ID: ";
+		getline(cin, courseID, '\n');
+		convertToUpper(courseID);
+
+		sourceTXT = classID + '-' + courseID + "-Scoreboard.txt";
+
+		getDestinationTXT(sourceTXT, destinationCSV);
 		viewScoreBoard(sourceTXT);
 		cout << "===================================\n";
 		break;
 	case 2:
+		cout << "> Enter class ID: ";
+		getline(cin, classID, '\n');
+		convertToUpper(classID);
+
+		cout << "> Enter course ID: ";
+		getline(cin, courseID, '\n');
+		convertToUpper(courseID);
+		sourceTXT = classID + '-' + courseID + "-Scoreboard.txt";
+
+		getDestinationTXT(sourceTXT, destinationCSV);
 		export_A_ScoreboardToCsv(sourceTXT, destinationCSV);
 		cout << "===================================\n";
 		break;
@@ -3022,7 +3038,7 @@ void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV) {
 
 	delete[] scores;
 
-	cout << "Export " << sourceTXT << " to " << destinationCSV << " successfully.\n";
+	cout << "Export [" << sourceTXT << "] to [" << destinationCSV << "] successfully.\n";
 }
 
 //3. Export all scoreboard to csv files.

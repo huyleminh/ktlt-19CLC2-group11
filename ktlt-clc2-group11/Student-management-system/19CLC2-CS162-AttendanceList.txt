@@ -10,12 +10,6 @@ Bach Minh Khoi
 Male
 1
 
-19127150
-Nguyen Hua Hung
-2001-06-21
-Male
-1
-
 19127141
 Phan Minh Hieu
 2001-01-18
@@ -27,10 +21,4 @@ Le Hoang Anh
 2001-07-05
 Male
 1
-
-19127345
-Lam Quoc Cuong
-2001-09-10
-Male
-0
 
