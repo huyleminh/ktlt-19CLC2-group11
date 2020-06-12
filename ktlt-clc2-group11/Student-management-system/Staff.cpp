@@ -2074,13 +2074,13 @@ void writeStudentCaro(string filename, Student* newStudent)
 		nStudents++;
 		getline(fin, ignore, '\n');
 	}
-	nStudents++;
-	Student* aStudents = new Student[nStudents];
-	aStudents[nStudents - 1] = *newStudent;
+
+	Student* aStudents = new Student[nStudents+1];
+	aStudents[nStudents] = *newStudent;
 	fin.close();
 	fin.open(filename);
 	int a;
-	for (int i = 0; i < nStudents; i++)
+	for (int i = 0; i < nStudents+1; i++)
 	{
 		getline(fin, aStudents[i].ID, '\n');
 		getline(fin, aStudents[i].fullName, '\n');
@@ -2089,11 +2089,12 @@ void writeStudentCaro(string filename, Student* newStudent)
 		fin >> a;
 		aStudents[i].active = (bool)a;
 		fin.ignore();
-		getline(fin, ignore, '\n');
+		fin.ignore();
+		//getline(fin, ignore, '\n');
 	}
 	fin.close();
 	ofstream fout(filename);
-	for (int i = 0; i < nStudents; i++)
+	for (int i = 0; i < nStudents+1; i++)
 	{
 		fout << aStudents[i].ID << '\n';
 		fout << aStudents[i].fullName << '\n';
@@ -2104,46 +2105,6 @@ void writeStudentCaro(string filename, Student* newStudent)
 	}
 	fout.close();
 }
-/* checkAppearedTXT(string filename, Student* newStudent)
-{
-	ifstream fin;
-	fin.open(filename);
-	int nStudents;
-
-	fin >> nStudents;
-	fin.ignore();
-	nStudents++;
-	Student* aStudents = new Student[nStudents];
-	aStudents[nStudents - 1] = *newStudent;
-	fin.open(filename);
-	int a;
-	string ignore;
-	for (int i = 0; i < nStudents; i++)
-	{
-		getline(fin, aStudents[i].ID, '\n');
-		getline(fin, aStudents[i].fullName, '\n');
-		getline(fin, aStudents[i].DoB, '\n');
-		getline(fin, aStudents[i].gender, '\n');
-		//fin >> a;
-		getline(fin, ignore, '\n');
-		aStudents[i].active = ((ignore == "1") ? 1 : 0);
-		//fin.ignore();
-		//fin.ignore();
-		//getline(fin, ignore, '\n');
-		getline(fin, ignore, '\n');
-	}
-	fin.close();
-
-	for (int i = 0; i < nStudents; i++)
-	{
-		if (aStudents[i].ID.compare(newStudent->ID) == 0)
-		{
-			return 1;
-		}
-	}
-	return 0;
-}*/
-
 
 bool checkAppeared(string filename, Student* newStudent)
 {
@@ -2158,11 +2119,10 @@ bool checkAppeared(string filename, Student* newStudent)
 	while(!fin.eof())  //count
 	{
 		getline(fin,ignore,'\n');
-		if (ignore == newStudent->ID) {
+		if (ignore.compare(newStudent->ID)==0) {
 			fin.close();
 			return 1;
 		}
-			
 	}
 	fin.close();
 	return 0;
@@ -2211,7 +2171,10 @@ void addStudentToCourse()
 	cout << " Gender: "; getline(cin, newStudent.gender);
 	cout << " Date of birth: "; getline(cin, newStudent.DoB); //bug
 	cout << " Class ID: "; getline(cin, newStudent.classID);
-	cout << " Active status(0:No, 1:Yes) : "; cin >> newStudent.active;
+	cout << " Active status(0:No, 1:Yes) : ";
+	string temp;
+	getline(cin, temp, '\n');
+	newStudent.active=((temp=="1")?1:0);
 	convertToUpper(newStudent.classID);
 	string filename = "";
 	
@@ -2223,20 +2186,20 @@ void addStudentToCourse()
 
 	//Students.txt
 	writeFileStudentTXT(newStudent);
-	//Class-Students.txt 	
-	filename = newStudent.classID + "-Students.txt";
-	if (checkAppeared(filename, &newStudent) == 0)
-		{
-			writeStudentCaro(filename, &newStudent);
-		}
+	////Class-Students.txt 	
+	//filename = newStudent.classID + "-Students.txt";
+	//if (checkAppeared(filename, &newStudent) == 0)
+	//	{
+	//		writeStudentCaro(filename, &newStudent);
+	//	}
 
 
-	//Class-Course.txt
-	filename = classID + "-" + courseID + ".txt";
-	if (checkAppeared(filename, &newStudent) == 0)
-	{
-		writeStudentCaro(filename, &newStudent);
-	}
+	////Class-Course.txt
+	//filename = classID + "-" + courseID + ".txt";
+	//if (checkAppeared(filename, &newStudent) == 0)
+	//{
+	//	writeStudentCaro(filename, &newStudent);
+	//}
 
 	filename = classID + "-" + courseID + "-AttendanceList.txt";
 	if (checkAppeared(filename, &newStudent) == 0)
@@ -3116,9 +3079,10 @@ void exportAttendanceListToCSV()
 
 	for (int i = 0; i < nStudents; i++)
 	{
-		if (aStudents[i].active == 1) {
+		if (aStudents[i].active == 1)
+		{
 			fout << aStudents[i].ID << "," << aStudents[i].fullName << "," << aStudents[i].DoB << "," << aStudents[i].gender << "," << endl;
-1		}
+		}
 	}
 
 	cout << "Export " << filenameTXT << " to " << filenameCSV << " successfully.\n";

@@ -22,5 +22,7 @@
 int main() {
 	cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5.1" << endl;
 	menu();
+	
+
 	return 0;
 }
