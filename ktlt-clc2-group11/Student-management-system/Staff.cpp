@@ -4,7 +4,7 @@
 /*Main staff menu*/
 
 void showStaffMenu(User& user) {
-	cout << "**********STAFF MENU**********" << endl;
+	cout << "\t\t\t\t**********STAFF MENU**********" << endl;
 	cout << "> 1. Class and student.\n";
 	cout << "> 2. Course.\n";
 	cout << "> 3. Scoreboard.\n";
