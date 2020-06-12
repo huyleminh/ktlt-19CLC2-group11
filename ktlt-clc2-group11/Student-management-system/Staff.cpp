@@ -1546,6 +1546,7 @@ void loadListCourse(string*& list, int& n)
 			count++;
 	}
 	f.close();
+
 	f.open("ListCourses.txt", ios::in);
 	list = new string[count];
 
@@ -1755,7 +1756,8 @@ void editCourse()
 
 	fout.close();
 
-	if (flagID == true) {
+	if (flagID == true)
+	{
 		string newFilename = courses[index].classID + "-" + courses[index].ID + ".txt";
 
 		copyFile(courseIDTemp, newFilename);
@@ -1771,8 +1773,10 @@ void editCourse()
 		for (int i = 0; i < n; i++)
 		{
 			if (list[i] == courseIDTemp)
+			{
 				list[i] = newFilename;
-			break;
+				break;
+			}
 		}
 
 		fstream f;
@@ -1785,11 +1789,12 @@ void editCourse()
 		f << endl;
 
 		f.close();
+		delete[] list;
 	}
 
 	delete[] courses;
 
-	cout << "\nSaved successfully.\n";
+	cout << "Saved successfully.\n";
 }
 //5. Remove a course.
 void loadCoursesFromTXT(string filename, Course*& courses, int& n) {

@@ -490,7 +490,7 @@ void viewScore(User u)
 	int nCourses;
 
 	loadClassSchedule(classID, nCourses, c);
-
+	bool flag = false;
 	int index = 0;
 	cout << "==========Your_Courses==========\n";
 	for (int i = 0; i < nCourses; i++)
@@ -499,11 +499,19 @@ void viewScore(User u)
 		cout << "Course ID         : " << c[i].ID << endl;
 		cout << "Course Name       : " << c[i].name << endl;
 		cout << endl;
+		flag = true;
 	}
+	if (flag == false)
+		cout << "No Data.\n";
 	cout << "================================\n\n";
-	cout << "Enter course you want to view scores (by number): ";
+OPTION:
+	if (flag == true)
+		cout << "Enter course you want to view scores (by number): ";
+	else
+		return;
 	cin >> index;
-
+	if ((index < 1) || (index > nCourses - 1))
+		goto OPTION;
 	index--;
 
 	string fileScore = classID + "-" + c[index].ID + "-" + "Scoreboard.txt";

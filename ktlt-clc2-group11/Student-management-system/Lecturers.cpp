@@ -413,11 +413,14 @@ void viewaScoreboard(User user) {
 	if (flag)
 		cout << "NO Data.\n";
 	cout << "================================\n\n";
+OPTION:
 	if (!flag)
-		cout << "Enter course you want to check in (by number): ";
+		cout << "Enter course you want to view (by number): ";
 	else
 		return;
 	cin >> index;
+	if ((index < 1) || (index > nCourses - 1))
+		goto OPTION;
 
 	index--;
 	courseID = c[index].ID;
