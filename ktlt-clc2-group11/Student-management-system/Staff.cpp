@@ -1,5 +1,6 @@
 #include "Staff.h"
 #include "AllRole.h"
+#include "Student.h"
 
 /*Main staff menu*/
 
@@ -669,6 +670,7 @@ OPTION:
 		break;
 	case 2:
 		importCoursesFromCsvFile(courses, nCourse);
+		createScheduleFile();
 		cout << "Import successfully.\n";
 		cout << "===================================\n";
 		break;

@@ -335,7 +335,7 @@ void createScheduleFile()
 
 void viewSchedule(User u)
 {
-	createScheduleFile();
+	//createScheduleFile();
 
 	ifstream fin;
 	Student* s;
