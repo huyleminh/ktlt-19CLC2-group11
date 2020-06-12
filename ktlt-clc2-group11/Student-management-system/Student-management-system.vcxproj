@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AllRole.cpp" />
+    <ClCompile Include="Header.cpp" />
     <ClCompile Include="Lecturers.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Staff.cpp" />

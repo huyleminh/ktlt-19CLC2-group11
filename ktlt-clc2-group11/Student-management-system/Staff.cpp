@@ -291,9 +291,9 @@ void writeStudent(ofstream& fout, string filename, const Student* students, cons
 		fout << endl;
 		fout << students[i].ID << endl;
 		fout << students[i].fullName << endl;
-		fout << students[i].gender << endl;
 		fout << students[i].DoB << endl;
 		fout << students[i].classID << endl;
+		fout << students[i].gender << endl;
 		fout << ((students[i].active == true) ? 1 : 0) << endl;
 	}
 
