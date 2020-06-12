@@ -144,7 +144,12 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 		getline(fin, ignore, '\n');
 
 		//getline(fin, ignore, '\n');
-		fout << endl << students[i].ID << endl << students[i].fullName << endl << students[i].gender << endl << students[i].DoB << endl << students[i].classID << endl << students[i].active << endl;
+		fout << endl << students[i].ID << endl;
+		fout << students[i].fullName << endl;
+		fout << students[i].DoB << endl;
+		fout << students[i].classID << endl;
+		fout << students[i].gender << endl;
+		fout << students[i].active << endl;
 		i++;
 	}
 	fin.close();

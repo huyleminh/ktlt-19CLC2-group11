@@ -32,5 +32,11 @@ Male
 Lam Quoc Cuong
 2001-09-10
 Male
-0
+1
+
+19127102
+Nguyen A
+2001-01-01
+Male
+1
 

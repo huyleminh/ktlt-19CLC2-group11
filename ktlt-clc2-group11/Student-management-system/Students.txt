@@ -38,7 +38,7 @@ Male
 19127345
 Lam Quoc Cuong
 2001-09-10
-19CLC1
+19CLC2
 Male
 1
 
@@ -119,10 +119,9 @@ Le Hoang Thinh Phuoc
 Male
 1
 
-19127100
-Nguyen Van A
+19127102
+Nguyen A
 2001-01-01
-19CLC1
+19clc2
 Male
 1
-
