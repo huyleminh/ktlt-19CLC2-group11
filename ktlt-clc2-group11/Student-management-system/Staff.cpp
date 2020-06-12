@@ -1954,13 +1954,13 @@ void writeStudentCaro(string filename,Student* newStudent )
 		fin >> a;
 		aStudents[i].active = (bool)a;
 		fin.ignore();
-		fin.ignore();
+		getline(fin, ignore, '\n');
 	}
 	fin.close();
 	ofstream fout(filename);
 	for (int i = 0; i < nStudents; i++)
 	{
-		fout << aStudents[i].ID<<'\n';
+		fout << aStudents[i].ID << '\n';
 		fout << aStudents[i].fullName << '\n';
 		fout << aStudents[i].DoB << '\n';
 		fout << aStudents[i].gender << '\n';
@@ -2014,7 +2014,7 @@ void addStudentToCourse()
 	course.ID = "";
 	for (int i = 0; i < nCourses; i++)
 	{
-		if (aCourses[i].ID.compare(courseID) == 0 || aCourses[i].classID.compare(classID) == 0)
+		if (aCourses[i].ID.compare(courseID) == 0 && aCourses[i].classID.compare(classID) == 0)
 		{
 			course = aCourses[i];
 			break;
@@ -2038,22 +2038,21 @@ void addStudentToCourse()
 	cout << " Active status(0:No, 1:Yes) : "; cin >> newStudent.active;
 	convertToUpper(newStudent.classID);
 	string filename = "";
-	//Students.txt
-	writeFileStudentTXT(newStudent);
-	//Class-Students.txt
-	if(newStudent.classID.compare(classID)!=0)
+	
+	if (newStudent.classID.compare(classID) != 0)
 	{
-		cout<<"YOU DONT HAVE PERMISSION TO JOIN ANOTHER CLASS."<<endl;
+		cout << "YOU DONT HAVE PERMISSION TO JOIN ANOTHER CLASS." << endl;
 		return;
 	}
-	else
-	{
-		filename = newStudent.classID + "-Students.txt";
-		if (checkAppeared(filename, &newStudent) == 0)
+
+	//Students.txt
+	writeFileStudentTXT(newStudent);
+	//Class-Students.txt 	
+	filename = newStudent.classID + "-Students.txt";
+	if (checkAppeared(filename, &newStudent) == 0)
 		{
 			writeStudentCaro(filename, &newStudent);
 		}
-	}
 
 
 	//Class-Course.txt
@@ -2068,38 +2067,6 @@ void addStudentToCourse()
 	{
 		writeStudentCaro(filename, &newStudent);
 	}
-	/*{
-
-
-	Student* aStudents, * temp;
-	int nStudents;
-
-	loadDataCourse(filename, temp, nStudents);
-
-	aStudents = new Student[nStudents + 1];
-	for (int i = 0; i < nStudents; i++)
-	{
-		aStudents[i] = temp[i];
-	}
-	aStudents[nStudents - 1] = newStudent;
-
-	ofstream out(filename);
-	if (!out.is_open())
-	{
-		cout << "Cant open course file";
-		return;
-	}
-
-	for (int i = 0; i < nStudents; i++)
-	{
-		out << aStudents[i].ID << endl;
-		out << aStudents[i].fullName << endl;
-		out << aStudents[i].DoB << endl;
-		out << aStudents[i].gender << endl;
-		out << aStudents[i].active << endl;
-		out << endl;
-	}
-	}*/
 }
 
 //9. View list of students of a course.
