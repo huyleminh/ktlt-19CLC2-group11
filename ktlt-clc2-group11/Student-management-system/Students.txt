@@ -1,4 +1,4 @@
-10
+17
 
 19127157
 Le Minh Huy
@@ -10,21 +10,21 @@ Male
 19127181
 Bach Minh Khoi
 Male
-2001-01-01
+2001-07-07
 19CLC2
 1
 
 19127150
 Nguyen Hua Hung
 Male
-2001-02-25
+2001-06-21
 19CLC2
 1
 
 19127141
 Phan Minh Hieu
 Male
-2001-10-12
+2001-01-18
 19CLC2
 1
 
@@ -68,4 +68,53 @@ Bui Cong Danh
 Male
 2001-04-03
 19CLC1
+1
+
+19127354
+Le Thanh Dat
+Male
+2001-02-15
+19CLC3
+1
+
+19127377
+Nguyen Huynh Khanh Duy
+Male
+2001-05-12
+19CLC3
+1
+
+19127436
+Tang Tuong Khang
+Male
+2001-04-17
+19CLC3
+1
+
+19127466
+Dinh Hoa Lu
+Male
+2001-10-10
+19CLC3
+1
+
+19127409
+Phan Huy Hoang
+Male
+2001-11-11
+19CLC4
+1
+
+19127428
+Nguyen Minh Kha
+Male
+2001-12-12
+19CLC4
+1
+
+19127518
+Le Hoang Thinh Phuoc
+Male
+2001-12-17
+19CLC4
 1

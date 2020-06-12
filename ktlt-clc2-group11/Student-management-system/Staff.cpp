@@ -1,10 +1,10 @@
 #include "Staff.h"
 #include "AllRole.h"
 
-/*Main staff menu*/  
+/*Main staff menu*/
 
 void showStaffMenu(User& user) {
-	cout << "**********STAFF MENU**********" << endl;
+	cout << "\t\t\t\t**********STAFF MENU**********" << endl;
 	cout << "> 1. Class and student.\n";
 	cout << "> 2. Course.\n";
 	cout << "> 3. Scoreboard.\n";
@@ -14,9 +14,9 @@ void showStaffMenu(User& user) {
 	cout << "> 7. Logout.\n";
 	cout << "> 8. Exit app.\n";
 
-OPTION: 
+OPTION:
 	cout << "> Which mode do you want to access ?\n";
-	
+
 	int option = 0;
 	cin >> option;
 	if (option < 1 || option > 8)
@@ -24,31 +24,31 @@ OPTION:
 
 	switch (option)
 	{
-		case 1: 
-			classAndStudentMode();
-			break;
-		case 2:
-			courseMode();
-			break;
-		case 3:
-			scoreBoardMode();
-			break;
-		case 4: 
-			attendanceListMode();
-			break;
-		case 5:
-			changeStaffPassword(user);
-			cout << "Change password successfully.\n";
-			cout << "===================================\n";
-			break;
-		case 6:
-			viewProfile(user);
-			cout << "===================================\n";
-			break;
-		case 7: 
-			return;
-		case 8: 
-			exit(0);
+	case 1:
+		classAndStudentMode();
+		break;
+	case 2:
+		courseMode();
+		break;
+	case 3:
+		scoreBoardMode();
+		break;
+	case 4:
+		attendanceListMode();
+		break;
+	case 5:
+		changeStaffPassword(user);
+		cout << "Change password successfully.\n";
+		cout << "===================================\n";
+		break;
+	case 6:
+		viewProfile(user);
+		cout << "===================================\n";
+		break;
+	case 7:
+		return;
+	case 8:
+		exit(0);
 	}
 	showStaffMenu(user);
 }
@@ -67,7 +67,7 @@ OPTION:
 	cin >> option;
 	if (option < 1 || option > 6)
 		goto OPTION;
-	
+
 	int nClass = 0;
 	string* Class;
 	string classID = ""; //case 5
@@ -85,14 +85,14 @@ OPTION:
 		cout << "===================================\n";
 		break;
 	case 3:
-		Edit(); 
+		Edit();
 		break;
 	case 4:
 		getListClass(nClass, Class);
 		cout << "===================================\n";
 		delete[] Class;
 		break;
-	case 5: 
+	case 5:
 		cin.ignore(1);
 		cout << "\nEnter class ID you want to view its students: ";
 		getline(cin, classID, '\n');
@@ -124,16 +124,16 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 		++nStudent;
 	}
 	students = new Student[nStudent];
-	
+
 	fin.seekg(0, fin.beg);
 	ignore = "";
 	int i = 0;
-	
+
 	fout << nStudent << endl;
 	fin.ignore();
 	while (!fin.eof()) {
 		//Read each line in csv 
-		
+
 		getline(fin, ignore, ',');
 		getline(fin, students[i].ID, ',');
 		getline(fin, students[i].fullName, ',');
@@ -142,9 +142,9 @@ void importStudentsFromCSV(Student*& students, int& nStudent) {
 		getline(fin, students[i].classID, ',');
 		fin >> students[i].active;
 		getline(fin, ignore, '\n');
-		
+
 		//getline(fin, ignore, '\n');
-		fout << endl << students[i].ID << endl << students[i].fullName << endl << students[i].gender << endl << students[i].DoB << endl << students[i].classID<<endl<<students[i].active << endl;
+		fout << endl << students[i].ID << endl << students[i].fullName << endl << students[i].gender << endl << students[i].DoB << endl << students[i].classID << endl << students[i].active << endl;
 		i++;
 	}
 	fin.close();
@@ -159,7 +159,7 @@ void filterStudentToClass(string filename)
 	int nStudents;
 	importStudentsFromCSV(a, nStudents);
 	ifstream in(filename);
-	
+
 	if (!in.is_open())
 	{
 		cout << "Cant open " << filename << endl;
@@ -201,7 +201,7 @@ void createUserPassword(Student* students, const int nStudent) {
 
 string formatPassword(string password) {
 	string format = "";
-	for (int i = 0; i < password.length(); i++) 
+	for (int i = 0; i < password.length(); i++)
 		if (password[i] != '-')
 			format += password[i];
 	return format;
@@ -223,7 +223,7 @@ void addStudentToClass() {
 	Student* students, * students1;
 	int n = 0;
 
-	ifstream fin;	
+	ifstream fin;
 	ofstream fout;
 
 	loadStudent(fin, "Students.txt", students, n);
@@ -243,7 +243,7 @@ void addStudentToClass() {
 	string path = newStudent.classID;
 	convertToUpper(path);
 	path += "-Students.txt";
-	
+
 	fout.open(path, ios::app);
 
 	fout << newStudent.ID << endl;
@@ -256,7 +256,7 @@ void addStudentToClass() {
 }
 
 void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
-	if(isFileOpen(fin, filename) == false) 
+	if (isFileOpen(fin, filename) == false)
 		return;
 
 	fin >> n;
@@ -266,11 +266,11 @@ void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
 
 	for (int i = 0; i < n; i++) {
 		getline(fin, ignore, '\n');
-		getline(fin, students[i].ID,'\n');
-		getline(fin, students[i].fullName,'\n');
-		getline(fin, students[i].gender,'\n');
-		getline(fin, students[i].DoB,'\n');
-		getline(fin, students[i].classID,'\n');
+		getline(fin, students[i].ID, '\n');
+		getline(fin, students[i].fullName, '\n');
+		getline(fin, students[i].gender, '\n');
+		getline(fin, students[i].DoB, '\n');
+		getline(fin, students[i].classID, '\n');
 		getline(fin, ignore, '\n');
 		students[i].active = stoi(ignore);
 	}
@@ -280,7 +280,7 @@ void loadStudent(ifstream& fin, string filename, Student*& students, int& n) {
 
 void writeStudent(ofstream& fout, string filename, const Student* students, const int n) {
 	fout.open(filename);
-	if(!fout.is_open()) {
+	if (!fout.is_open()) {
 		cout << "Can not open " << filename << " .\n";
 		return;
 	}
@@ -329,14 +329,14 @@ void getListClass(int& n, string*& Class)
 	data.close();
 }
 
-void getListStudents(string classID, Student*&Students, int &nStudents)
+void getListStudents(string classID, Student*& Students, int& nStudents)
 {
 	ifstream data;
 	string inputPath = "";
 	string extension = "-Students.txt";
 	convertToUpper(classID);
 	inputPath = classID + extension;
-	
+
 	data.open(inputPath);
 
 	if (!data.is_open()) {
@@ -348,7 +348,7 @@ void getListStudents(string classID, Student*&Students, int &nStudents)
 	nStudents = 0;
 	while (!data.eof()) {
 		getline(data, buff, '\n');
-		if(buff == "")
+		if (buff == "")
 			nStudents++;
 	}
 	data.close();
@@ -368,16 +368,16 @@ void getListStudents(string classID, Student*&Students, int &nStudents)
 	for (int i = 0; i < nStudents; i++) {
 		getline(data, buff, '\n');
 		Students[i].ID = buff;
-		
+
 		getline(data, buff, '\n');
 		Students[i].fullName = buff;
-		
+
 		getline(data, buff, '\n');
 		Students[i].DoB = buff;
-		
+
 		getline(data, buff, '\n');
 		Students[i].gender = buff;
-		
+
 		getline(data, buff, '\n');
 		Students[i].active = ((buff == "1") ? 1 : 0);
 
@@ -402,7 +402,7 @@ void saveStudent(Student* Students, int nStudent, string fclass) {
 	}
 	else {
 		for (int i = 0; i < nStudent; i++) {
-			data << Students[i].ID << endl; 
+			data << Students[i].ID << endl;
 			data << Students[i].fullName << endl;
 			data << Students[i].DoB << endl;
 			data << Students[i].gender << endl;
@@ -446,9 +446,9 @@ void deleteStudent(string Aclass) {
 void Changeclass(string origin, string des) {
 	Student* Students, * Students2;
 	int nStudents, nStudents2;
-	
+
 	getListStudents(origin, Students, nStudents);
-	
+
 	string ID;
 	cout << "Input ID of student you want to change class :"; cin >> ID;
 	bool flag = true;
@@ -522,12 +522,12 @@ void Edit() {
 	string* Class;
 	int n;
 	getListClass(n, Class);
-	int buffer,buffer2,buffer3;
+	int buffer, buffer2, buffer3;
 CLASS1:
 	cout << "Choose your class you want to edit: ";
 	cin >> buffer;
 	buffer -= 1;
-	if (buffer < 0 || buffer > n-1)
+	if (buffer < 0 || buffer > n - 1)
 		goto CLASS1;
 	cout << "===================================\n";
 	cout << "1. Delete a student.\n";
@@ -540,24 +540,24 @@ OPTION:
 	cout << "===================================\n";
 	if (buffer2 > 3)
 		goto OPTION;
-	
+
 	switch (buffer2) {
-		case 1: 
-			deleteStudent(Class[buffer]);
-			break;
-		case 2:
-			for (int i=0;i<n;i++)
-			 cout << i + 1 << ". " << Class[i] << endl;
-		CLASS:
-			cout << "Choose class destination: "; cin >> buffer3;
-			buffer3 -= 1;
-			if (buffer == buffer3 || buffer3<0 || buffer3 >n - 1)
-				goto CLASS;
-			cout << "===================================\n";
-			Changeclass(Class[buffer],Class[buffer3]);
-			break;
-		case 3:
-			break;
+	case 1:
+		deleteStudent(Class[buffer]);
+		break;
+	case 2:
+		for (int i = 0; i < n; i++)
+			cout << i + 1 << ". " << Class[i] << endl;
+	CLASS:
+		cout << "Choose class destination: "; cin >> buffer3;
+		buffer3 -= 1;
+		if (buffer == buffer3 || buffer3<0 || buffer3 >n - 1)
+			goto CLASS;
+		cout << "===================================\n";
+		Changeclass(Class[buffer], Class[buffer3]);
+		break;
+	case 3:
+		break;
 	}
 	delete[] Class;
 }
@@ -569,7 +569,7 @@ void viewListStudents(string classID)
 	ifstream data;
 	string inputPath = "";
 	string extension = "-Students.txt";
-	
+
 	convertToUpper(classID);
 	inputPath = classID + extension;
 
@@ -587,23 +587,23 @@ void viewListStudents(string classID)
 
 	while (!data.eof()) {
 		getline(data, buff, '\n');
-		if(buff == "" && buff1 == "")
+		if (buff == "" && buff1 == "")
 			break;
 		student.ID = buff;
-		
+
 		getline(data, buff, '\n');
 		student.fullName = buff;
-		
+
 		getline(data, buff, '\n');
 		student.DoB = buff;
-		
+
 		getline(data, buff, '\n');
 		student.gender = buff;
-		
+
 		getline(data, buff, '\n');
 		student.active = ((buff == "1") ? 1 : 0);
 		getline(data, buff1, '\n');
-		
+
 		if (student.active == 1) {
 			cout << "\nID: " << student.ID << endl;
 			cout << "Full name: " << student.fullName << endl;
@@ -640,7 +640,7 @@ void courseMode() {
 	cout << "> 6. Remove a specific student from a course.\n";
 	cout << "> 7. Add a specific student to a course.\n";
 	cout << "> 8. View list of courses in the current semester.\n";
- 	cout << "> 9. View list of students of a course.\n";
+	cout << "> 9. View list of students of a course.\n";
 	cout << "> 10. View attendance list of a course.\n";
 	cout << "> 11. Create / update / delete / view all lecturers.\n";
 	cout << "> 12. Back to staff menu.\n";
@@ -653,12 +653,14 @@ OPTION:
 	if (option < 1 || option > 12)
 		goto OPTION;
 
-	Course *courses;
+	Course* courses;
 	int nCourse = 0;
 
 	switch (option)
 	{
 	case 1:
+		menuAcademicYear();
+		cout << "===================================\n";
 		break;
 	case 2:
 		importCoursesFromCsvFile(courses, nCourse);
@@ -673,7 +675,7 @@ OPTION:
 		editCourse();
 		cout << "===================================\n";
 		break;
-	case 5: 
+	case 5:
 		removeCourse();
 		cout << "===================================\n";
 		break;
@@ -681,12 +683,14 @@ OPTION:
 		removeSpecificStudent();
 		cout << "===================================\n";
 		break;
-	case 7:	
+	case 7:
 		addStudentToCourse();
 		cout << "===================================\n";
 		break;
-	case 8: 
+	case 8:
 		//View list of courses in the current semester.
+		viewCourseSemester();
+		cout << "===================================\n";
 		break;
 	case 9:
 		viewListStudentsOfCourse();
@@ -707,9 +711,10 @@ OPTION:
 }
 
 //1. Edit academic years and semesters.
-void createCourse(Course& course,string classID) {
+void createCourse(Course& course, string classID) {
 	cout << "Input course ID: ";
 	cin >> course.ID;
+	convertToUpper(course.ID);
 
 	// cout << "Input course name: ";
 	// cin >> course.name;
@@ -732,62 +737,63 @@ void createCourse(Course& course,string classID) {
 	// cin >> course.room;
 }
 
-void createSemester(Semester& temp,string classID,string startYear, string endYear,string HK)
+void createSemester(Semester& temp, string classID, string startYear, string endYear, string HK)
 {
 	cout << "Input the number of courses: ";
 	cin >> temp.numberOfCourses;
 	temp.coursesArray = new Course[temp.numberOfCourses];
 	for (int i = 0; i < temp.numberOfCourses; i++)
 	{
-		createCourse(temp.coursesArray[i],classID);
+		createCourse(temp.coursesArray[i], classID);
 	}
-	string filename=classID+"-"+startYear+"-"+endYear+"-"+HK+".txt";
+	string filename = classID + "-" + startYear + "-" + endYear + "-" + HK + ".txt";
 	ofstream fout(filename);
-	if(!fout.is_open())
+	if (!fout.is_open())
 	{
-		cout<<"Cant create "<<filename<<endl;
+		cout << "Cant create " << filename << endl;
 		return;
 	}
 
 	//fout<<temp.numberOfCourses<<endl<<endl;
 
-	for(int j=0;j<temp.numberOfCourses;j++)
+	for (int j = 0; j < temp.numberOfCourses; j++)
 	{
-		fout<<temp.coursesArray[j].ID<<endl;
-		fout<<temp.coursesArray[j].name<<endl;
-		fout<<temp.coursesArray[j].classID<<endl;
-		fout<<temp.coursesArray[j].lecAccount<<endl;
-		fout<<temp.coursesArray[j].startDate.year<<"-"<< temp.coursesArray[j].startDate.month<<"-"<< temp.coursesArray[j].startDate.day<<endl;
-		fout<<temp.coursesArray[j].endDate.year<<"-"<< temp.coursesArray[j].endDate.month<<"-"<< temp.coursesArray[j].endDate.day<<endl;
-		fout<<temp.coursesArray[j].courseTime.dayOfWeek<<"\n"<< temp.coursesArray[j].courseTime.startHour<<":"<< temp.coursesArray[j].courseTime.startMin<<endl<< temp.coursesArray[j].courseTime.endMin<<":"<< temp.coursesArray[j].courseTime.endHour<<endl;
-		fout<<temp.coursesArray[j].room<<endl;
-		fout<<endl;
+		fout << temp.coursesArray[j].ID << endl;
+		fout << temp.coursesArray[j].name << endl;
+		fout << temp.coursesArray[j].classID << endl;
+		fout << temp.coursesArray[j].lecAccount << endl;
+		fout << temp.coursesArray[j].startDate.year << "-" << temp.coursesArray[j].startDate.month << "-" << temp.coursesArray[j].startDate.day << endl;
+		fout << temp.coursesArray[j].endDate.year << "-" << temp.coursesArray[j].endDate.month << "-" << temp.coursesArray[j].endDate.day << endl;
+		fout << temp.coursesArray[j].courseTime.dayOfWeek << "\n" << temp.coursesArray[j].courseTime.startHour << ":" << temp.coursesArray[j].courseTime.startMin << endl << temp.coursesArray[j].courseTime.endMin << ":" << temp.coursesArray[j].courseTime.endHour << endl;
+		fout << temp.coursesArray[j].room << endl;
+		fout << endl;
 	}
 	fout.close();
 }
 
-void createSimpleSemester(Semester& temp,string classID,string startYear, string endYear,string HK)
+void createSimpleSemester(Semester& temp, string classID, string startYear, string endYear, string HK)
 {
 	cout << "Input the number of courses: ";
 	cin >> temp.numberOfCourses;
 	temp.coursesArray = new Course[temp.numberOfCourses];
 	for (int i = 0; i < temp.numberOfCourses; i++)
 	{
-		createCourse(temp.coursesArray[i],classID);
+		createCourse(temp.coursesArray[i], classID);
 	}
-	string filename=classID+"-"+startYear+"-"+endYear+"-"+HK+".txt";
+	string filename = classID + "-" + startYear + "-" + endYear + "-" + HK + ".txt";
 	ofstream fout(filename);
-	if(!fout.is_open())
+	if (!fout.is_open())
 	{
-		cout<<"Cant create "<<filename<<endl;
+		cout << "Cant create " << filename << endl;
 		return;
 	}
 
 	//fout<<temp.numberOfCourses<<endl<<endl;
 
-	for(int j=0;j<temp.numberOfCourses;j++)
+	for (int j = 0; j < temp.numberOfCourses; j++)
 	{
-		fout<<temp.coursesArray[j].ID<<endl;
+		string buff = classID + "-" + temp.coursesArray[j].ID + ".txt";
+		fout << buff << endl;
 	}
 	fout.close();
 }
@@ -844,41 +850,42 @@ void createSimpleSemester(Semester& temp,string classID,string startYear, string
 void addCourseToSemester()
 {
 	{
-	string classID,hk;
-	string temp;
+		string classID, hk;
+		string temp;
 
-	cout<<"Input class ID: ";
-	cin>>classID;
+		cout << "Input class ID: ";
+		cin >> classID;
+		convertToUpper(classID);
+		int intStartYear, intEndYear;
+		cout << "Input start year: ";
+		cin >> intStartYear;
+		string startYear, endYear;
+		stringstream sstr;
+		sstr << intStartYear;
+		startYear = sstr.str();
+		sstr.str("");
+		sstr << intStartYear + 1;
+		endYear = sstr.str();
 
-	int intStartYear,intEndYear;
-	cout<<"Input start year: ";
-	cin>>intStartYear;
-	string startYear,endYear;
-	stringstream sstr;
-	sstr << intStartYear;
-	startYear = sstr.str();
-	sstr.str("");
-	sstr << intStartYear+1;
-	endYear = sstr.str();
+		cout << "Input semester(1 to 3): ";
+		cin >> temp;
+		hk = "HK" + temp;
+		string filename = classID + "-" + startYear + "-" + endYear + "-" + hk + ".txt";
 
-	cout<<"Input semester(1 to 3): ";
-	cin>>temp;
-	hk = "HK" + temp;
-	string filename=classID+"-"+startYear+"-"+endYear+"-"+hk+".txt";
+		ofstream out(filename, ios::app);
+		if (!out.is_open())
+		{
+			cout << "Cant open " << filename << endl;
+			return;
+		}
 
-	ofstream out(filename,ios::app);
-	if (!out.is_open())
-	{
-		cout<<"Cant open "<<filename<<endl;
+		string courseID;
+		cout << "Input course ID: ";
+		cin >> courseID;
+		convertToUpper(courseID);
+		out << courseID;
+
 		return;
-	}
-
-	string courseID;
-	cout<<"Input course ID: ";
-	cin>>courseID;
-	out<<courseID;
-
-	return;
 	}
 }
 
@@ -889,6 +896,7 @@ void viewCourseSemester() {
 
 		cout << "Input class ID: ";
 		cin >> classID;
+		convertToUpper(classID);
 
 		int intStartYear, intEndYear;
 		cout << "Input start year: ";
@@ -926,73 +934,74 @@ void createAcademicYear()
 {
 	academicYear year;
 	string classID;
-	cout<<"Input class ID: ";
-	cin>>classID;
+	cout << "Input class ID: ";
+	cin >> classID;
+	convertToUpper(classID);
 	cout << "Input starting year: ";
 	cin >> year.startYear;
 
-	string startYear,endYear;
+	string startYear, endYear;
 	stringstream sstr;
 	sstr << year.startYear;
 	startYear = sstr.str();
 	sstr.str("");
-	
-	sstr << year.startYear+1;
+
+	sstr << year.startYear + 1;
 	endYear = sstr.str();
 
-	string filename=classID+"-"+startYear+"-"+endYear+".txt";
+	string filename = classID + "-" + startYear + "-" + endYear + ".txt";
 	ofstream fout(filename);
 
 	string hk;
 	for (int i = 0; i < 3; i++)
 	{
-		cout <<endl<< "INPUT SEMESTER " << i+1 << " " << endl;
-		hk = "HK"+to_string(i+1);
-		createSimpleSemester(year.semesterArray[i],classID,startYear,endYear,hk);
-		hk="";
+		cout << endl << "INPUT SEMESTER " << i + 1 << " " << endl;
+		hk = "HK" + to_string(i + 1);
+		createSimpleSemester(year.semesterArray[i], classID, startYear, endYear, hk);
+		hk = "";
 	}
 
 	for (int i = 0; i < 3; i++)
 	{
-		hk = "HK"+to_string(i+1);
-		fout<<classID+"-"+startYear+"-"+endYear+"-"+hk+".txt"<<endl;
+		hk = "HK" + to_string(i + 1);
+		fout << classID + "-" + startYear + "-" + endYear + "-" + hk + ".txt" << endl;
 	}
 }
 
 void deleteCourses()
 {
-	string classID,hk;
+	string classID, hk;
 	string temp;
 
-	cout<<"Input class ID: ";
-	cin>>classID;
+	cout << "Input class ID: ";
+	cin >> classID;
 
-	int intStartYear,intEndYear;
-	cout<<"Input start year: ";
-	cin>>intStartYear;
-	string startYear,endYear;
+	int intStartYear, intEndYear;
+	cout << "Input start year: ";
+	cin >> intStartYear;
+	string startYear, endYear;
 	stringstream sstr;
 	sstr << intStartYear;
 	startYear = sstr.str();
 	sstr.str("");
-	sstr << intStartYear+1;
+	sstr << intStartYear + 1;
 	endYear = sstr.str();
 
-	cout<<"Input semester(1 to 3): ";
-	cin>>temp;
+	cout << "Input semester(1 to 3): ";
+	cin >> temp;
 	hk = "HK" + temp;
-	string filename=classID+"-"+startYear+"-"+endYear+"-"+hk+".txt";
+	string filename = classID + "-" + startYear + "-" + endYear + "-" + hk + ".txt";
 
 	ofstream out(filename);
 	if (!out.is_open())
 	{
-		cout<<"Cant open "<<filename<<endl;
+		cout << "Cant open " << filename << endl;
 		return;
 	}
 
 	string courseID;
-	cout<<"Input course ID: ";
-	cin>>courseID;
+	cout << "Input course ID: ";
+	cin >> courseID;
 
 	return;
 }
@@ -1004,6 +1013,7 @@ void deleteSemester()
 
 	cout << "Input class ID: ";
 	cin >> classID;
+	convertToUpper(classID);
 
 	int intStartYear, intEndYear;
 	cout << "Input start year: ";
@@ -1034,6 +1044,7 @@ void viewYear() {
 	string classID;
 	cout << "Input classID: ";
 	cin >> classID;
+	convertToUpper(classID);
 	cout << "Input starting year: ";
 	cin >> year.startYear;
 
@@ -1060,7 +1071,7 @@ void viewYear() {
 	{
 		temp = "";
 		getline(fin, temp, '\n');
-		cout <<temp<<endl;
+		cout << temp << endl;
 	}
 	return;
 }
@@ -1069,35 +1080,36 @@ void deleteYear()
 {
 	academicYear year;
 	string classID;
-	cout<<"Input classID: ";
-	cin>>classID;
+	cout << "Input classID: ";
+	cin >> classID;
+	convertToUpper(classID);
 	cout << "Input starting year: ";
 	cin >> year.startYear;
 
-	string startYear,endYear;
+	string startYear, endYear;
 	stringstream sstr;
 	sstr << year.startYear;
 	startYear = sstr.str();
 	sstr.str("");
-	
-	sstr << year.startYear+1;
+
+	sstr << year.startYear + 1;
 	endYear = sstr.str();
-	string filename=classID+"-"+startYear+"-"+endYear+".txt";
+	string filename = classID + "-" + startYear + "-" + endYear + ".txt";
 
-	if(remove(filename.c_str())==0)
-		cout<<"Deleted "<<filename<<endl;
+	if (remove(filename.c_str()) == 0)
+		cout << "Deleted " << filename << endl;
 	else
-		cout<<"Cant delete "<<filename<<endl;
+		cout << "Cant delete " << filename << endl;
 
-	string hk="";
+	string hk = "";
 	for (int i = 0; i < 3; i++)
 	{
-		hk = "HK"+to_string(i+1);
-		filename=startYear+"-"+endYear+"-"+hk+".txt";
-		if(remove(filename.c_str())==0)
-			cout<<"Deleted "<<filename<<endl;
+		hk = "HK" + to_string(i + 1);
+		filename = classID + "-" + startYear + "-" + endYear + "-" + hk + ".txt";
+		if (remove(filename.c_str()) == 0)
+			cout << "Deleted " << filename << endl;
 		else
-			cout<<"Cant delete "<<filename<<endl;
+			cout << "Cant delete " << filename << endl;
 	}
 
 	return;
@@ -1122,71 +1134,71 @@ void updateAcademicYear()
 
 void menuAcademicYear()
 {
-	int option,option2;
+	int option, option2;
 	cout << "1. Academic year." << endl;
 	cout << "2. Semester." << endl;
 
-	cout<<"SELECT YOUR OPTION: "<<endl;
-	cin>>option;
-	if(option==1)
+	cout << "SELECT YOUR OPTION: " << endl;
+	cin >> option;
+	if (option == 1)
 	{
-		cout<<"ACADEMIC MENU: "<<endl;
-		cout<<"1. Add an academic year."<<endl;
-		cout<<"2. Edit an academic year."<<endl;
-		cout<<"3. View an academic year."<<endl;
-		cout<<"4. Delete an academic year."<<endl;
+		cout << "ACADEMIC MENU: " << endl;
+		cout << "1. Add an academic year." << endl;
+		cout << "2. Edit an academic year." << endl;
+		cout << "3. View an academic year." << endl;
+		cout << "4. Delete an academic year." << endl;
 		cout << "0. Back." << endl;
 
-		cin>>option;
-		if(option==1)	createAcademicYear();
-		else if(option==2)
+		cin >> option;
+		if (option == 1)	createAcademicYear();
+		else if (option == 2)
 		{
-			cout<<"Coming soon."<<endl;
+			cout << "Coming soon." << endl;
 			return;
 		}
-		else if(option==3)
+		else if (option == 3)
 		{
 			viewYear();
 			return;
 		}
-		else if(option==4)	deleteYear();
+		else if (option == 4)	deleteYear();
 		else if (option == 0) {
 			menuAcademicYear();
 		}
-		else{
-			cout<<"There is no option matched your option."<<endl;
+		else {
+			cout << "There is no option matched your option." << endl;
 			return;
 		}
 		return;
 	}
-	else if(option==2)
+	else if (option == 2)
 	{
-		cout<<"SEMESTER MENU: "<<endl;
-		cout<<"1. Add a course."<<endl;
-		cout<<"2. Edit a course."<<endl;
-		cout<<"3. View semester."<<endl;
-		cout<<"4. Delete semester."<<endl;
-		cout<<"0. Back." << endl;
-	
-		cin>>option;
-		if (option == 1)	
+		cout << "SEMESTER MENU: " << endl;
+		cout << "1. Add a course." << endl;
+		cout << "2. Edit a course." << endl;
+		cout << "3. View semester." << endl;
+		cout << "4. Delete semester." << endl;
+		cout << "0. Back." << endl;
+
+		cin >> option;
+		if (option == 1)
 		{
 			addCourseToSemester();
 		}
-		else if(option==2){
-			cout<<"Coming soon."<<endl;
+		else if (option == 2) {
+			cout << "Coming soon." << endl;
 			return;
 		}
-		else if(option==3){
+		else if (option == 3) {
 			viewCourseSemester();
 			return;
 		}
-		else if(option==4)	deleteSemester();
-		else if (option ==0 ) {
+		else if (option == 4)	deleteSemester();
+		else if (option == 0) {
 			menuAcademicYear();
 		}
-		else{
-			cout<<"There is no option matched your option."<<endl;
+		else {
+			cout << "There is no option matched your option." << endl;
 			return;
 		}
 		return;
@@ -1216,7 +1228,7 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 
 	if (isFileOpen(fin, "Courses.csv") == false)
 		return;
-	
+
 	courses = new Course[nCourse];
 	fout << nCourse << endl;
 
@@ -1286,18 +1298,17 @@ void importCoursesFromCsvFile(Course*& courses, int& nCourse) {
 void createClassCourse(Course*& courses, const int nCourse) {
 	ofstream f;
 	f.open("ListCourses.txt");
-	if(!f.is_open()){
+	if (!f.is_open()) {
 		cout << "Can not open ListCourses.txt.\n";
 		return;
 	}
-	
 	string filename = "", filenameHk = "";
 	convertToUpper(courses[0].classID);
 	convertToUpper(courses[0].ID);
 	filename += courses[0].classID + "-" + courses[0].ID + ".txt";
 	filenameHk += courses[0].classID + "-" + courses[0].acaYear + "-HK" + courses[0].sem + ".txt";
 
-	f << filename << endl;  
+	f << filename << endl;
 
 	ofstream fout;
 	fout.open(filename);
@@ -1352,7 +1363,7 @@ void createClassCourse(Course*& courses, const int nCourse) {
 //add student into file course
 void splitClassID(string& str) {
 	string classId = "";
-	for(int i = 0; str[i] != '-'; i++) {
+	for (int i = 0; str[i] != '-'; i++) {
 		classId += str[i];
 	}
 	str = classId;
@@ -1363,7 +1374,7 @@ void addStudentIntoCourse(const int n) {
 	string source = "";
 
 	ifstream finCourse;
-	if(isFileOpen(finCourse, "ListCourses.txt") == false) 
+	if (isFileOpen(finCourse, "ListCourses.txt") == false)
 		return;
 
 	for (int i = 0; i < n; i++) {
@@ -1518,6 +1529,32 @@ void addNewCourse()
 }
 
 //4. Edit an existing course.
+void loadListCourse(string*& list, int& n)
+{
+	fstream f;
+
+	f.open("ListCourses.txt", ios::in);
+
+	string buff = "";
+	int count = 0;
+
+	while (!f.eof())
+	{
+		getline(f, buff, '\n');
+		if (buff != "")
+			count++;
+	}
+	f.close();
+
+	f.open("ListCourses.txt", ios::in);
+	list = new string[count];
+
+	for (int i = 0; i < count; i++)
+		getline(f, list[i], '\n');
+
+	n = count;
+	f.close();
+}
 void editCourse()
 {
 	cin.ignore(1);
@@ -1567,6 +1604,8 @@ void editCourse()
 
 	int mode = -1;
 	bool flag = false;
+	bool flagID = false;
+	string courseIDTemp = classID + "-" + courses[index].ID + ".txt";
 
 	while (mode != 10)
 	{
@@ -1608,6 +1647,7 @@ void editCourse()
 			getline(cin, buffer);
 			convertToUpper(buffer);
 			courses[index].ID = buffer;
+			flagID = true;
 		}
 		if (mode == 2)
 		{
@@ -1714,9 +1754,46 @@ void editCourse()
 	}
 
 	fout.close();
+
+	if (flagID == true)
+	{
+		string newFilename = courses[index].classID + "-" + courses[index].ID + ".txt";
+
+		copyFile(courseIDTemp, newFilename);
+
+		if (remove(courseIDTemp.c_str()) != 0)
+			cout << "\nDelete Error.";
+
+		string* list;
+		int n;
+
+		loadListCourse(list, n);
+
+		for (int i = 0; i < n; i++)
+		{
+			if (list[i] == courseIDTemp)
+			{
+				list[i] = newFilename;
+				break;
+			}
+		}
+
+		fstream f;
+
+		f.open("ListCourses.txt", ios::out);
+
+		for (int i = 0; i < n; i++)
+			f << list[i] << endl;
+
+		f << endl;
+
+		f.close();
+		delete[] list;
+	}
+
 	delete[] courses;
 
-	cout << "\nSaved successfully.\n";
+	cout << "Saved successfully.\n";
 }
 //5. Remove a course.
 void loadCoursesFromTXT(string filename, Course*& courses, int& n) {
@@ -1770,7 +1847,7 @@ void loadCoursesFromTXT(string filename, Course*& courses, int& n) {
 void removeCourse() {
 	Course course;
 
-	cout << "> Enter course ID: "; 
+	cout << "> Enter course ID: ";
 	cin >> course.ID;
 	convertToUpper(course.ID);
 	cout << "> Enter course class ID: ";
@@ -1782,16 +1859,16 @@ void removeCourse() {
 
 	loadCoursesFromTXT("Courses.txt", courses, n);
 
-	for(int i = 0; i < n; i++) {
-	 	if(courses[i].ID == course.ID && courses[i].classID == course.classID) {
+	for (int i = 0; i < n; i++) {
+		if (courses[i].ID == course.ID && courses[i].classID == course.classID) {
 			courses[i].active == 0;
-	 		break;
-	 	}
+			break;
+		}
 	}
 
 	ofstream fout;
 	fout.open("Courses.txt", ios::out);
-	if(!fout.is_open()) {
+	if (!fout.is_open()) {
 		cout << "Can not open Courses.txt.\n";
 		return;
 	}
@@ -1800,7 +1877,7 @@ void removeCourse() {
 
 	fout << temp << endl;
 
-	for(int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		if (courses[i].ID == course.ID && courses[i].classID == course.classID)
 			continue;
 		else {
@@ -1890,7 +1967,7 @@ void removeSpecificStudent()
 		getline(fin, active, '\n');
 		if (active == "0")
 			s[i].active = 0;
-		else 
+		else
 			s[i].active = 1;
 		s[i].classID = classID;
 		getline(fin, ignore, '\n');
@@ -1923,7 +2000,7 @@ void removeSpecificStudent()
 		fin << s[i].gender << endl;
 		if (s[i].active == 1)
 			fin << "1";
-		else 
+		else
 			fin << "0";
 		if (i != nStudents - 1)
 			fin << endl << endl;
@@ -1935,14 +2012,14 @@ void removeSpecificStudent()
 
 	if (flag == true)
 		cout << "Remove student with ID [" << ID << "][" << classID << "] successfully.\n";
-	else 
+	else
 		cout << "Cannot find student with [" << ID << "][" << classID << "] in course.\n";
 
 	return;
 }
 
 //7. Add a specific student to a course.
-void writeFileStudentTXT(Student& newStudent) 
+void writeFileStudentTXT(Student& newStudent)
 {
 
 	// cin.ignore(1);
@@ -1957,13 +2034,13 @@ void writeFileStudentTXT(Student& newStudent)
 	Student* students, * students1;
 	int n = 0;
 
-	ifstream fin;	
+	ifstream fin;
 	ofstream fout;
 
 	loadStudent(fin, "Students.txt", students, n);
-	for(int i=0;i<n;i++)
+	for (int i = 0; i < n; i++)
 	{
-		if(students[i].ID.compare(newStudent.ID)==0)
+		if (students[i].ID.compare(newStudent.ID) == 0)
 		{
 			return;
 		}
@@ -1976,39 +2053,39 @@ void writeFileStudentTXT(Student& newStudent)
 
 	writeStudent(fout, "Students.txt", students1, n + 1);
 }
-void writeStudentCaro(string filename,Student* newStudent )
+void writeStudentCaro(string filename, Student* newStudent)
 {
 	ifstream fin(filename);
-	if(!fin.is_open())
+	if (!fin.is_open())
 	{
-		cout<<"Cant open "<<filename<<endl;
+		cout << "Cant open " << filename << endl;
 		return;
 	}
 
-	string ignore="";
-	int nStudents=0;
-	while(!fin.eof())
+	string ignore = "";
+	int nStudents = 0;
+	while (!fin.eof())
 	{
-		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
 		nStudents++;
-		getline(fin,ignore,'\n');
+		getline(fin, ignore, '\n');
 	}
 	nStudents++;
-	Student* aStudents=new Student[nStudents];
+	Student* aStudents = new Student[nStudents];
 	aStudents[nStudents - 1] = *newStudent;
 	fin.close();
 	fin.open(filename);
 	int a;
-	for(int i=0;i<nStudents;i++)
+	for (int i = 0; i < nStudents; i++)
 	{
-		getline(fin, aStudents[i].ID,'\n');
-		getline(fin, aStudents[i].fullName,'\n');
+		getline(fin, aStudents[i].ID, '\n');
+		getline(fin, aStudents[i].fullName, '\n');
 		getline(fin, aStudents[i].DoB, '\n');
-		getline(fin, aStudents[i].gender,'\n');
+		getline(fin, aStudents[i].gender, '\n');
 		fin >> a;
 		aStudents[i].active = (bool)a;
 		fin.ignore();
@@ -2018,7 +2095,7 @@ void writeStudentCaro(string filename,Student* newStudent )
 	ofstream fout(filename);
 	for (int i = 0; i < nStudents; i++)
 	{
-		fout << aStudents[i].ID<<'\n';
+		fout << aStudents[i].ID << '\n';
 		fout << aStudents[i].fullName << '\n';
 		fout << aStudents[i].DoB << '\n';
 		fout << aStudents[i].gender << '\n';
@@ -2027,40 +2104,80 @@ void writeStudentCaro(string filename,Student* newStudent )
 	}
 	fout.close();
 }
+/* checkAppearedTXT(string filename, Student* newStudent)
+{
+	ifstream fin;
+	fin.open(filename);
+	int nStudents;
 
-bool checkAppeared(string filename,Student* newStudent )
+	fin >> nStudents;
+	fin.ignore();
+	nStudents++;
+	Student* aStudents = new Student[nStudents];
+	aStudents[nStudents - 1] = *newStudent;
+	fin.open(filename);
+	int a;
+	string ignore;
+	for (int i = 0; i < nStudents; i++)
+	{
+		getline(fin, aStudents[i].ID, '\n');
+		getline(fin, aStudents[i].fullName, '\n');
+		getline(fin, aStudents[i].DoB, '\n');
+		getline(fin, aStudents[i].gender, '\n');
+		//fin >> a;
+		getline(fin, ignore, '\n');
+		aStudents[i].active = ((ignore == "1") ? 1 : 0);
+		//fin.ignore();
+		//fin.ignore();
+		//getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+	}
+	fin.close();
+
+	for (int i = 0; i < nStudents; i++)
+	{
+		if (aStudents[i].ID.compare(newStudent->ID) == 0)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}*/
+
+
+bool checkAppeared(string filename, Student* newStudent)
 {
 	ifstream fin(filename);
-	if(!fin.is_open())
+	if (!fin.is_open())
 	{
-		cout<<"Cant open "<<filename<<endl;
+		cout << "Cant open " << filename << endl;
 		return 0;
 	}
 
-	string ignore="";
-	int nStudents=0;
-	while(!fin.eof())  //count
+	string ignore = "";
+	int nStudents = 0;
+	while (!fin.eof())  //count
 	{
-		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
+		getline(fin, ignore, '\n');
 		nStudents++;
-		getline(fin,ignore,'\n');
+		getline(fin, ignore, '\n');
 	}
 	nStudents++;
-	Student* aStudents=new Student[nStudents];
+	Student* aStudents = new Student[nStudents];
 	aStudents[nStudents - 1] = *newStudent;
 	fin.close();
 	fin.open(filename);
 	int a;
-	for(int i=0;i<nStudents;i++)
+	for (int i = 0; i < nStudents; i++)
 	{
-		getline(fin, aStudents[i].ID,'\n');
-		getline(fin, aStudents[i].fullName,'\n');
+		getline(fin, aStudents[i].ID, '\n');
+		getline(fin, aStudents[i].fullName, '\n');
 		getline(fin, aStudents[i].DoB, '\n');
-		getline(fin, aStudents[i].gender,'\n');
+		getline(fin, aStudents[i].gender, '\n');
 		fin >> a;
 		aStudents[i].active = (bool)a;
 		fin.ignore();
@@ -2070,7 +2187,7 @@ bool checkAppeared(string filename,Student* newStudent )
 
 	for (int i = 0; i < nStudents; i++)
 	{
-		if (aStudents[i].ID.compare(newStudent->fullName) == 0)
+		if (aStudents[i].ID.compare(newStudent->ID) == 0)
 		{
 			return 1;
 		}
@@ -2102,6 +2219,7 @@ void addStudentToCourse()
 		if (aCourses[i].ID.compare(courseID) == 0 || aCourses[i].classID.compare(classID) == 0)
 		{
 			course = aCourses[i];
+			convertToUpper(course.ID);
 			break;
 		}
 	}
@@ -2118,10 +2236,10 @@ void addStudentToCourse()
 	getline(cin, newStudent.fullName);
 	cout << " ID: "; getline(cin, newStudent.ID);
 	cout << " Gender: "; getline(cin, newStudent.gender);
-	cout << " Date of birth: "; getline(cin, newStudent.DoB);
+	cout << " Date of birth: "; getline(cin, newStudent.DoB); //bug
 	cout << " Class ID: "; getline(cin, newStudent.classID);
 	cout << " Active status(0:No, 1:Yes) : "; cin >> newStudent.active;
- 
+
 	string filename = "";
 	//Students.txt
 	if (checkAppeared("Students.txt", &newStudent) == 0)
@@ -2129,9 +2247,9 @@ void addStudentToCourse()
 		writeFileStudentTXT(newStudent);
 	}
 	//Class-Students.txt
-	if(newStudent.classID.compare(classID)!=0)
+	if (newStudent.classID.compare(classID) != 0)
 	{
-		cout<<"YOU DONT HAVE PERMISSION TO JOIN ANOTHER CLASS."<<endl;
+		cout << "YOU DONT HAVE PERMISSION TO JOIN ANOTHER CLASS." << endl;
 	}
 	else
 	{
@@ -2268,7 +2386,7 @@ void loadDataCourse(string filename, Student*& aStudents, int& n)
 	string ignore;
 	while (!in.eof()) {
 		getline(in, ignore, '\n');
-		if(ignore == "")
+		if (ignore == "")
 			n++;
 	}
 	n -= 1;
@@ -2327,10 +2445,10 @@ void viewAttendanceList()
 
 	string filename = "";
 	filename = classID + "-" + courseID + ".txt";
-	
+
 	string filenameTXT = classID + "-" + courseID + "-AttendanceList.txt";
 	ofstream fout(filenameTXT);
-	if(!fout.is_open())
+	if (!fout.is_open())
 	{
 		cout << "Cant open " << filenameTXT << endl;
 		return;
@@ -2724,10 +2842,10 @@ OPTION:
 		goto OPTION;
 	if (option == 4)
 		return;
-	
+
 	string classID = "", courseID = "", sourceTXT = "", destinationCSV = "";
 	cin.ignore(1);
-	
+
 	createListOfScoreBoard();
 
 	cout << "> Enter class ID: ";
@@ -2740,20 +2858,20 @@ OPTION:
 	sourceTXT = classID + '-' + courseID + "-Scoreboard.txt";
 
 	getDestinationTXT(sourceTXT, destinationCSV);
-	
-	switch(option) {
-		case 1: 
-			viewScoreBoard(sourceTXT);
-			cout << "===================================\n";
-			break;
-		case 2:
-			export_A_ScoreboardToCsv(sourceTXT, destinationCSV);
-			cout << "===================================\n";
-			break;
-		case 3: 
-			exportScoreBoardToCSV();
-			cout << "===================================\n";
-			break;
+
+	switch (option) {
+	case 1:
+		viewScoreBoard(sourceTXT);
+		cout << "===================================\n";
+		break;
+	case 2:
+		export_A_ScoreboardToCsv(sourceTXT, destinationCSV);
+		cout << "===================================\n";
+		break;
+	case 3:
+		exportScoreBoardToCSV();
+		cout << "===================================\n";
+		break;
 	}
 	scoreBoardMode();
 }
@@ -2761,22 +2879,22 @@ OPTION:
 //Search and view the scoreboard of a course.
 void viewScoreBoard(string sourceTXT) {
 	ifstream fin;
-	if(isFileOpen(fin, "ListScoreBoard.txt") == false)
+	if (isFileOpen(fin, "ListScoreBoard.txt") == false)
 		return;
 
 	string cmpStr = "";
 
 	while (!fin.eof()) {
 		getline(fin, cmpStr, '\n');
-		if(cmpStr == "")
+		if (cmpStr == "")
 			break;
-		
-		if(cmpStr == sourceTXT) {
+
+		if (cmpStr == sourceTXT) {
 			loadScoreBoard(sourceTXT);
 			cout << "-----------------------------------\n";
 			fin.close();
 			return;
-		} 
+		}
 	}
 	cout << "Can not found " << sourceTXT << ", the file has not been created yet.\n";
 
@@ -2785,7 +2903,7 @@ void viewScoreBoard(string sourceTXT) {
 
 void loadScoreBoard(string filename) {
 	ifstream fin;
-	if (isFileOpen(fin, filename) == false) 
+	if (isFileOpen(fin, filename) == false)
 		return;
 
 	string line, ignore;
@@ -2834,14 +2952,14 @@ void createListOfScoreBoard()
 		else {
 			string buffer, buffer1;
 			while (!in.eof()) {
-				getline(in,buffer);
+				getline(in, buffer);
 				if (buffer == "")
 					break;
 
 				buffer1 = "";
 				for (int i = 0; buffer[i] != '.'; i++)
 					buffer1 += buffer[i];
-				
+
 				buffer1 += "-Scoreboard.txt";
 				out << buffer1 << endl;
 			}
@@ -2856,18 +2974,18 @@ void getDestinationTXT(const string sourceTXT, string& destinationCSV) {
 
 	for (int i = 0; sourceTXT[i] != '.'; i++)
 		destinationCSV += sourceTXT[i];
-	
+
 	destinationCSV += ".csv";
 }
 
 void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV) {
 	ifstream fin;
-	if(isFileOpen(fin, sourceTXT) == false)
+	if (isFileOpen(fin, sourceTXT) == false)
 		return;
 
 	ofstream fout;
 	fout.open(destinationCSV, ios::out);
-	if(!fout.is_open()) {
+	if (!fout.is_open()) {
 		cout << "Can not open " << destinationCSV << endl;
 		return;
 	}
@@ -2879,8 +2997,8 @@ void export_A_ScoreboardToCsv(string sourceTXT, string destinationCSV) {
 	//read score from .txt
 	fin >> nScor;
 	scores = new ScoreBoard[nScor];
-	
-	for(int i = 0; i < nScor; i++) {
+
+	for (int i = 0; i < nScor; i++) {
 		fin.ignore(1);
 		getline(fin, ignore, '\n');
 		getline(fin, scores[i].studentID, '\n');
@@ -2943,17 +3061,17 @@ OPTION:
 	if (option < 1 || option > 3)
 		goto OPTION;
 
-	switch(option) {
-		case 1: 
-			viewAttendanceList();
-			cout << "===================================\n";
-			break;
-		case 2:
-			exportAttendanceListToCSV();
-			cout << "===================================\n";
-			break;
-		case 3:
-			return;
+	switch (option) {
+	case 1:
+		viewAttendanceList();
+		cout << "===================================\n";
+		break;
+	case 2:
+		exportAttendanceListToCSV();
+		cout << "===================================\n";
+		break;
+	case 3:
+		return;
 	}
 	attendanceListMode();
 }
@@ -3038,7 +3156,7 @@ void exportAttendanceListToCSV()
 		return;
 	}
 
-	Student * aStudents;
+	Student* aStudents;
 	int nStudents;
 
 	loadDataCourse(filenameTXT, aStudents, nStudents);
@@ -3046,7 +3164,7 @@ void exportAttendanceListToCSV()
 	for (int i = 0; i < nStudents; i++)
 	{
 		if (aStudents[i].active == 1) {
-			fout << aStudents[i].ID << "," << aStudents[i].fullName<<","<< aStudents[i].DoB << "," << aStudents[i].gender << "," << endl;
+			fout << aStudents[i].ID << "," << aStudents[i].fullName << "," << aStudents[i].DoB << "," << aStudents[i].gender << "," << endl;
 		}
 	}
 

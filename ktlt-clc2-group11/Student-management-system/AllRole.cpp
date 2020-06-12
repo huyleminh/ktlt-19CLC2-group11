@@ -25,15 +25,15 @@ void menu() {
 
 	switch (loginMode) {
 		case 1:
-			cout << "\t\t\t\tWELLCOME " << welcomeName << endl;
+			cout << "WELLCOME " << welcomeName << endl;
 			showStaffMenu(user);
 			break;
 		case 2:
-			cout << "\t\t\t\tWELLCOME " << welcomeName << endl;
+			cout << "WELLCOME " << welcomeName << endl;
 			showLecturerMenu(user);
 			break;
 		case 3:
-			cout << "\t\t\t\tWELLCOME " << welcomeName << endl;
+			cout << "WELLCOME " << welcomeName << endl;
 			showStudentMenu(user);
 			break;
 		default:
@@ -44,11 +44,11 @@ void menu() {
 }
 
 void login(User& userLogin, int& loginMode) {
-	cout << "\t\t\t\t\t\t\t##############################\n";
-	cout << "\t\t\t\t\t\t\t#                            #\n";
-	cout << "\t\t\t\t\t\t\t#         LOGIN MENU         #\n";
-	cout << "\t\t\t\t\t\t\t#                            #\n";
-	cout << "\t\t\t\t\t\t\t##############################\n";
+	cout << "##############################\n";
+	cout << "#                            #\n";
+	cout << "#         LOGIN MENU         #\n";
+	cout << "#                            #\n";
+	cout << "##############################\n";
 
 	int option = 0;
 OPTION: 
@@ -64,7 +64,7 @@ OPTION:
 	}
 
 	cin.ignore(1);
-	cout << " > Enter your User name : "; 
+	cout << " > Enter your Username : "; 
 	getline(cin, userLogin.username, '\n');
 
 	cout << " > Enter your password : ";

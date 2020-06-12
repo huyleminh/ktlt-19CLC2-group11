@@ -257,6 +257,7 @@ void loadListClass(int& n, string*& Class)
 		return;
 	}
 	data >> n;
+	data.ignore();
 	Class = new string[n];
 	for (int i = 0; i < n; i++)
 		getline(data, Class[i], '\n');
@@ -360,7 +361,7 @@ void viewSchedule(User u)
 
 	if (!f.is_open())
 	{
-		cout << "Cannot find " << classID << "-Schedule.\n";
+		cout << "Cannot find " << classID << "-Schedule.txt\n";
 		return;
 	}
 
@@ -489,7 +490,7 @@ void viewScore(User u)
 	int nCourses;
 
 	loadClassSchedule(classID, nCourses, c);
-
+	bool flag = false;
 	int index = 0;
 	cout << "==========Your_Courses==========\n";
 	for (int i = 0; i < nCourses; i++)
@@ -498,11 +499,19 @@ void viewScore(User u)
 		cout << "Course ID         : " << c[i].ID << endl;
 		cout << "Course Name       : " << c[i].name << endl;
 		cout << endl;
+		flag = true;
 	}
+	if (flag == false)
+		cout << "No Data.\n";
 	cout << "================================\n\n";
-	cout << "Enter course you want to view scores (by number): ";
+OPTION:
+	if (flag == true)
+		cout << "Enter course you want to view scores (by number): ";
+	else
+		return;
 	cin >> index;
-
+	if ((index < 1) || (index > nCourses - 1))
+		goto OPTION;
 	index--;
 
 	string fileScore = classID + "-" + c[index].ID + "-" + "Scoreboard.txt";

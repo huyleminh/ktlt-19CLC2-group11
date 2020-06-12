@@ -1,19 +1,19 @@
-10
+17
 
 19127157
 20011120
 Le Minh Huy
 
 19127181
-20010101
+20010707
 Bach Minh Khoi
 
 19127150
-20010225
+20010621
 Nguyen Hua Hung
 
 19127141
-20011012
+20010118
 Phan Minh Hieu
 
 19127329
@@ -39,3 +39,31 @@ Hoang Van Nguyen
 19127348
 20010403
 Bui Cong Danh
+
+19127354
+20010215
+Le Thanh Dat
+
+19127377
+20010512
+Nguyen Huynh Khanh Duy
+
+19127436
+20010417
+Tang Tuong Khang
+
+19127466
+20011010
+Dinh Hoa Lu
+
+19127409
+20011111
+Phan Huy Hoang
+
+19127428
+20011212
+Nguyen Minh Kha
+
+19127518
+20011217
+Le Hoang Thinh Phuoc

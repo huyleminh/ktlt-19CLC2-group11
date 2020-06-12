@@ -151,12 +151,6 @@
     <ClInclude Include="Staff.h" />
     <ClInclude Include="Student.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="19CLC1-PHY00005.txt" />
-    <Text Include="19CLC1-Students.txt" />
-    <Text Include="Classes.txt" />
-    <Text Include="Students.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
