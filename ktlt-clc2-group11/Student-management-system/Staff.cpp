@@ -1991,9 +1991,10 @@ bool checkAppeared(string filename,Student* newStudent )
 		nStudents++;
 		getline(fin,ignore,'\n');
 	}
-	nStudents++;
+	/*nStudents++;
 	Student* aStudents=new Student[nStudents];
-	aStudents[nStudents - 1] = *newStudent;
+	aStudents[nStudents - 1] = *newStudent;*/
+	Student* aStudents = new Student[nStudents];
 	fin.close();
 	fin.open(filename);
 	int a;
@@ -2014,9 +2015,11 @@ bool checkAppeared(string filename,Student* newStudent )
 	{
 		if (aStudents[i].ID.compare(newStudent->fullName) == 0)
 		{
+			delete[] aStudents;
 			return 1;
 		}
 	}
+	delete[] aStudents;
 	return 0;
 }
 
@@ -2066,10 +2069,7 @@ void addStudentToCourse()
  
 	string filename = "";
 	//Students.txt
-	if (checkAppeared("Students.txt", &newStudent) == 0)
-	{
-		writeFileStudentTXT(newStudent);
-	}
+	writeFileStudentTXT(newStudent);
 	//Class-Students.txt
 	if(newStudent.classID.compare(classID)!=0)
 	{
