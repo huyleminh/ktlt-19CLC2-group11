@@ -226,7 +226,7 @@ OPTION2:
 	}
 
 	bool flag = true;
-	system("cls");
+
 	cout << "\n==========Information==========\n";
 	cout << "ID:" << ID << endl;
 	while (!in.eof()) {
@@ -361,7 +361,7 @@ void viewSchedule(User u)
 
 	if (!f.is_open())
 	{
-		cout << "Cannot find " << classID << "-Schedule.txt\n";
+		cout << "Can not find " << classID << "-Schedule.txt\n";
 		return;
 	}
 

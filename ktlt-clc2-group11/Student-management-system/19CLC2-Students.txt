@@ -1,44 +1,36 @@
-6
-
 19127157
 Le Minh Huy
-5
-7
-5
-7
+2001-11-20
+Male
+1
 
 19127181
 Bach Minh Khoi
-6
-6.5
-5.5
-5
+2001-07-07
+Male
+1
 
 19127150
 Nguyen Hua Hung
-7
-8
-6
-7
+2001-06-21
+Male
+1
 
 19127141
 Phan Minh Hieu
-4
-5
-7
-6
+2001-01-18
+Male
+1
 
 19127329
 Le Hoang Anh
-7
-6
-5.5
-5
+2001-07-05
+Male
+1
 
 19127345
 Lam Quoc Cuong
-7
-8
-6
-7
+2001-09-10
+Male
+0
 

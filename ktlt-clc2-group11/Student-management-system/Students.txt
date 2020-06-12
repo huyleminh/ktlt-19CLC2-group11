@@ -1,0 +1,128 @@
+18
+
+19127157
+Le Minh Huy
+2001-11-20
+19CLC2
+Male
+1
+
+19127181
+Bach Minh Khoi
+2001-07-07
+19CLC2
+Male
+1
+
+19127150
+Nguyen Hua Hung
+2001-06-21
+19CLC2
+Male
+1
+
+19127141
+Phan Minh Hieu
+2001-01-18
+19CLC2
+Male
+1
+
+19127329
+Le Hoang Anh
+2001-07-05
+19CLC2
+Male
+1
+
+19127345
+Lam Quoc Cuong
+2001-09-10
+19CLC1
+Male
+1
+
+19127186
+Le Thanh Khoi
+2001-04-13
+19CLC1
+Male
+1
+
+19127012
+Vu Nguyen Thai Binh
+2001-06-18
+19CLC1
+Male
+1
+
+19127226
+Hoang Van Nguyen
+2001-05-12
+19CLC1
+Male
+1
+
+19127348
+Bui Cong Danh
+2001-04-03
+19CLC1
+Male
+1
+
+19127354
+Le Thanh Dat
+2001-02-15
+19CLC3
+Male
+1
+
+19127377
+Nguyen Huynh Khanh Duy
+2001-05-12
+19CLC3
+Male
+1
+
+19127436
+Tang Tuong Khang
+2001-04-17
+19CLC3
+Male
+1
+
+19127466
+Dinh Hoa Lu
+2001-10-10
+19CLC3
+Male
+1
+
+19127409
+Phan Huy Hoang
+2001-11-11
+19CLC4
+Male
+1
+
+19127428
+Nguyen Minh Kha
+2001-12-12
+19CLC4
+Male
+1
+
+19127518
+Le Hoang Thinh Phuoc
+2001-12-17
+19CLC4
+Male
+1
+
+19127100
+Nguyen Van A
+2001-01-01
+19CLC1
+Male
+1
+

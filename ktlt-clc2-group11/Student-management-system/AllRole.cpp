@@ -25,19 +25,19 @@ void menu() {
 
 	switch (loginMode) {
 		case 1:
-			cout << "WELLCOME " << welcomeName << endl;
+			cout << "\nWELLCOME " << welcomeName << endl << endl;
 			showStaffMenu(user);
 			break;
 		case 2:
-			cout << "WELLCOME " << welcomeName << endl;
+			cout << "\nWELLCOME " << welcomeName << endl << endl;
 			showLecturerMenu(user);
 			break;
 		case 3:
-			cout << "WELLCOME " << welcomeName << endl;
+			cout << "\nWELLCOME " << welcomeName << endl << endl;
 			showStudentMenu(user);
 			break;
 		default:
-			cout << "!!! Wrong user name or password !!!" << endl;
+			cout << "\n!!! Wrong user name or password !!!" << endl;
 			break;
 	}
 	menu();

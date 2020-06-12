@@ -29,6 +29,7 @@ OPTION:
 	switch (option)
 	{
 	case 1:
+		viewCourseSemester();
 		break;
 	case 2:
 		viewListStudentsOfCourse();
