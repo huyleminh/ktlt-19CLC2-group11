@@ -6,19 +6,19 @@ Male
 
 19127181
 Bach Minh Khoi
-2001-01-01
+2001-07-07
 Male
 1
 
 19127150
 Nguyen Hua Hung
-2001-02-25
+2001-06-21
 Male
 1
 
 19127141
 Phan Minh Hieu
-2001-10-12
+2001-01-18
 Male
 1
 
@@ -34,20 +34,3 @@ Lam Quoc Cuong
 Male
 1
 
-19127100
-Nguyen Van A
-2020-01-09
-male
-1
-
-19127101
-Nguyen Van B 
-Male
-2020-02-05
-1
-
-191271999
-SUPER TEST
-2020-11-30
-male
-1

@@ -6,19 +6,19 @@ Male
 
 19127181
 Bach Minh Khoi
-2001-01-01
+2001-07-07
 Male
 1
 
 19127150
 Nguyen Hua Hung
-2001-02-25
+2001-06-21
 Male
 1
 
 19127141
 Phan Minh Hieu
-2001-10-12
+2001-01-18
 Male
 1
 
@@ -32,29 +32,5 @@ Male
 Lam Quoc Cuong
 2001-09-10
 Male
-1
-
-1613
-vag
-646565
-13
-1
-
-123
-new
-2010
-male
-1
-
-19127181
-CUC CUNG
-2020-03-05
-male
-1
-
-191324546456
-another
-2020-2020
-male
 1
 

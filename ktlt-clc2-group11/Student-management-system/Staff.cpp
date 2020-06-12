@@ -1939,7 +1939,7 @@ void writeStudentCaro(string filename,Student* newStudent )
 		nStudents++;
 		getline(fin,ignore,'\n');
 	}
-	nStudents++;
+	/*nStudents++;*/
 	Student* aStudents=new Student[nStudents];
 	aStudents[nStudents - 1] = *newStudent;
 	fin.close();
@@ -1980,46 +1980,16 @@ bool checkAppeared(string filename,Student* newStudent )
 	}
 
 	string ignore="";
-	int nStudents=0;
 	while(!fin.eof())  //count
 	{
 		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
-		getline(fin,ignore,'\n');
-		nStudents++;
-		getline(fin,ignore,'\n');
-	}
-	/*nStudents++;
-	Student* aStudents=new Student[nStudents];
-	aStudents[nStudents - 1] = *newStudent;*/
-	Student* aStudents = new Student[nStudents];
-	fin.close();
-	fin.open(filename);
-	int a;
-	for(int i=0;i<nStudents;i++)
-	{
-		getline(fin, aStudents[i].ID,'\n');
-		getline(fin, aStudents[i].fullName,'\n');
-		getline(fin, aStudents[i].DoB, '\n');
-		getline(fin, aStudents[i].gender,'\n');
-		fin >> a;
-		aStudents[i].active = (bool)a;
-		fin.ignore();
-		fin.ignore();
-	}
-	fin.close();
-
-	for (int i = 0; i < nStudents; i++)
-	{
-		if (aStudents[i].ID.compare(newStudent->fullName) == 0)
-		{
-			delete[] aStudents;
+		if (ignore == newStudent->ID) {
+			fin.close();
 			return 1;
 		}
+			
 	}
-	delete[] aStudents;
+	fin.close();
 	return 0;
 }
 
@@ -2066,7 +2036,7 @@ void addStudentToCourse()
 	cout << " Date of birth: "; getline(cin, newStudent.DoB);
 	cout << " Class ID: "; getline(cin, newStudent.classID);
 	cout << " Active status(0:No, 1:Yes) : "; cin >> newStudent.active;
- 
+	convertToUpper(newStudent.classID);
 	string filename = "";
 	//Students.txt
 	writeFileStudentTXT(newStudent);
@@ -2074,6 +2044,7 @@ void addStudentToCourse()
 	if(newStudent.classID.compare(classID)!=0)
 	{
 		cout<<"YOU DONT HAVE PERMISSION TO JOIN ANOTHER CLASS."<<endl;
+		return;
 	}
 	else
 	{
