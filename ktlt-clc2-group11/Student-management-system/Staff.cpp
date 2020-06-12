@@ -2906,15 +2906,14 @@ void loadScoreBoard(string filename) {
 	if (isFileOpen(fin, filename) == false)
 		return;
 
-	string line, ignore;
+	string line;
 	getline(fin, line, '\n');
 	cout << "Number of student: " << line << ".\n";
-	getline(fin, ignore, '\n');
+	int n = stoi(line);
 
-	while (!fin.eof()) {
+	for (int i = 0; i < n; i++) {
 		getline(fin, line, '\n');
-		if (line == "")
-			break;
+		getline(fin, line, '\n');
 		cout << "\nStudent ID: " << line << endl;
 
 		getline(fin, line, '\n');
@@ -2931,8 +2930,8 @@ void loadScoreBoard(string filename) {
 
 		getline(fin, line, '\n');
 		cout << "Total: " << line << endl;
-		getline(fin, ignore, '\n');
 	}
+
 	fin.close();
 }
 
