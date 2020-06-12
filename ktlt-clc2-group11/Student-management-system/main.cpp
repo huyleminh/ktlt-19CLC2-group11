@@ -20,7 +20,9 @@
 
 
 int main() {
-	cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 0.5.1" << endl;
+	cout << "STUDENTS MANAGEMENT SYSTEM DEMO VERSION 1.0" << endl;
+	cout << "\nGROUP: GA CHIEN\n";
+	cout << "\nGROUP ID: 11\n";
 	menu();
 	
 

@@ -1,4 +1,4 @@
-18
+17
 
 19127157
 Le Minh Huy
@@ -38,7 +38,7 @@ Male
 19127345
 Lam Quoc Cuong
 2001-09-10
-19CLC1
+19CLC2
 Male
 1
 
@@ -116,12 +116,5 @@ Male
 Le Hoang Thinh Phuoc
 2001-12-17
 19CLC4
-Male
-1
-
-19127100
-Nguyen Van A
-2001-01-01
-19CLC1
 Male
 1

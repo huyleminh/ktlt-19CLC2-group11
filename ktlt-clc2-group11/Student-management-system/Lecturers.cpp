@@ -43,6 +43,7 @@ OPTION:
 		break;
 	case 5:
 		importScoreboardFromCsvToTXT();
+		cout << "===================================\n";
 		break;
 	case 6: 
 		editGrade();
@@ -158,8 +159,11 @@ void importScoreboardFromCsvToTXT() {
 
 	cout << "Input Class ID: ";
 	cin >> classID;
+	convertToUpper(classID);
+
 	cout << "Input Course ID: ";
 	cin >> courseID;
+	convertToUpper(courseID);
 
 	string filenameCSV = classID + "-" + courseID + "-Scoreboard.csv";
 	string filenameTXT = classID + "-" + courseID + "-Scoreboard.txt";
@@ -220,6 +224,8 @@ void importScoreboardFromCsvToTXT() {
 	}
 	fin.close();
 	fout.close();
+
+	cout << "Import [" << filenameCSV << "] to [" << filenameTXT << "] successfully.\n";
 }
 
 //5.1. export scoreboard to csv
