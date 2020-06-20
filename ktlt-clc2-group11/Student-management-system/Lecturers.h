@@ -29,7 +29,7 @@ void viewaScoreboard(User user);
 void changeLecPassword(User& user);
 
 //9. View lecturer profile infomation.
-//This function is located in Header.h
+//This function is located in Header.cpp
 
 //10. Logout
 

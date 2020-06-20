@@ -582,6 +582,6 @@ void changeStudentPassword(User& user) {
 }
 
 //6. View student profile infomation.
-//this function is located in Header.h
+//this function is located in Header.cpp
 
 //7. Logout.

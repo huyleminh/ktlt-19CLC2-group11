@@ -306,7 +306,7 @@ void writeStudent(ofstream& fout, string filename, const Student* students, cons
 	fout.close();
 }
 //3. Edit existing student.
-///remember delete dynamic array when call these function
+
 void getListClass(int& n, string*& Class)
 {
 	ifstream data;
@@ -2243,7 +2243,7 @@ void addStudentToCourse()
 	getline(cin, newStudent.fullName);
 	cout << " ID: "; getline(cin, newStudent.ID);
 	cout << " Gender: "; getline(cin, newStudent.gender);
-	cout << " Date of birth: "; getline(cin, newStudent.DoB); //bug
+	cout << " Date of birth: "; getline(cin, newStudent.DoB); 
 	cout << " Class ID: "; getline(cin, newStudent.classID);
 	cout << " Active status(0:No, 1:Yes) : "; cin >> newStudent.active;
 
@@ -3198,6 +3198,6 @@ void exportAttendanceListToCSV()
 }
 
 //**6. View profile information.
-//This function is located in Header.h
+//This function is located in Header.cpp
 
 //**7. Log out

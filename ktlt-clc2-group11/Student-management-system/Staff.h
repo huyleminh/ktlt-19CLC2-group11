@@ -116,7 +116,7 @@ void exportAttendanceListToCSV();
 void changeStaffPassword(User& user); 
 
 //**6. View profile information.
-//This function is located in Header.h
+//This function is located in Header.cpp
 
 //**7. Log out
 
