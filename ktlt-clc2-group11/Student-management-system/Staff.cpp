@@ -2081,13 +2081,13 @@ void writeStudentCaro(string filename, Student* newStudent)
 		nStudents++;
 		getline(fin, ignore, '\n');
 	}
-	nStudents++;
-	Student* aStudents = new Student[nStudents];
-	aStudents[nStudents - 1] = *newStudent;
+
+	Student* aStudents = new Student[nStudents+1];
+	aStudents[nStudents] = *newStudent;
 	fin.close();
 	fin.open(filename);
 	int a;
-	for (int i = 0; i < nStudents; i++)
+	for (int i = 0; i < nStudents+1; i++)
 	{
 		getline(fin, aStudents[i].ID, '\n');
 		getline(fin, aStudents[i].fullName, '\n');
@@ -2097,10 +2097,11 @@ void writeStudentCaro(string filename, Student* newStudent)
 		aStudents[i].active = (bool)a;
 		fin.ignore();
 		fin.ignore();
+		//getline(fin, ignore, '\n');
 	}
 	fin.close();
 	ofstream fout(filename);
-	for (int i = 0; i < nStudents; i++)
+	for (int i = 0; i < nStudents+1; i++)
 	{
 		fout << aStudents[i].ID << '\n';
 		fout << aStudents[i].fullName << '\n';
@@ -2111,46 +2112,6 @@ void writeStudentCaro(string filename, Student* newStudent)
 	}
 	fout.close();
 }
-/* checkAppearedTXT(string filename, Student* newStudent)
-{
-	ifstream fin;
-	fin.open(filename);
-	int nStudents;
-
-	fin >> nStudents;
-	fin.ignore();
-	nStudents++;
-	Student* aStudents = new Student[nStudents];
-	aStudents[nStudents - 1] = *newStudent;
-	fin.open(filename);
-	int a;
-	string ignore;
-	for (int i = 0; i < nStudents; i++)
-	{
-		getline(fin, aStudents[i].ID, '\n');
-		getline(fin, aStudents[i].fullName, '\n');
-		getline(fin, aStudents[i].DoB, '\n');
-		getline(fin, aStudents[i].gender, '\n');
-		//fin >> a;
-		getline(fin, ignore, '\n');
-		aStudents[i].active = ((ignore == "1") ? 1 : 0);
-		//fin.ignore();
-		//fin.ignore();
-		//getline(fin, ignore, '\n');
-		getline(fin, ignore, '\n');
-	}
-	fin.close();
-
-	for (int i = 0; i < nStudents; i++)
-	{
-		if (aStudents[i].ID.compare(newStudent->ID) == 0)
-		{
-			return 1;
-		}
-	}
-	return 0;
-}*/
-
 
 bool checkAppeared(string filename, Student* newStudent)
 {
@@ -2161,44 +2122,16 @@ bool checkAppeared(string filename, Student* newStudent)
 		return 0;
 	}
 
-	string ignore = "";
-	int nStudents = 0;
-	while (!fin.eof())  //count
+	string ignore="";
+	while(!fin.eof())  //count
 	{
-		getline(fin, ignore, '\n');
-		getline(fin, ignore, '\n');
-		getline(fin, ignore, '\n');
-		getline(fin, ignore, '\n');
-		getline(fin, ignore, '\n');
-		nStudents++;
-		getline(fin, ignore, '\n');
-	}
-	nStudents++;
-	Student* aStudents = new Student[nStudents];
-	aStudents[nStudents - 1] = *newStudent;
-	fin.close();
-	fin.open(filename);
-	int a;
-	for (int i = 0; i < nStudents; i++)
-	{
-		getline(fin, aStudents[i].ID, '\n');
-		getline(fin, aStudents[i].fullName, '\n');
-		getline(fin, aStudents[i].DoB, '\n');
-		getline(fin, aStudents[i].gender, '\n');
-		fin >> a;
-		aStudents[i].active = (bool)a;
-		fin.ignore();
-		fin.ignore();
-	}
-	fin.close();
-
-	for (int i = 0; i < nStudents; i++)
-	{
-		if (aStudents[i].ID.compare(newStudent->ID) == 0)
-		{
+		getline(fin,ignore,'\n');
+		if (ignore.compare(newStudent->ID)==0) {
+			fin.close();
 			return 1;
 		}
 	}
+	fin.close();
 	return 0;
 }
 
@@ -2223,7 +2156,7 @@ void addStudentToCourse()
 	course.ID = "";
 	for (int i = 0; i < nCourses; i++)
 	{
-		if (aCourses[i].ID.compare(courseID) == 0 || aCourses[i].classID.compare(classID) == 0)
+		if (aCourses[i].ID.compare(courseID) == 0 && aCourses[i].classID.compare(classID) == 0)
 		{
 			course = aCourses[i];
 			convertToUpper(course.ID);
@@ -2245,73 +2178,41 @@ void addStudentToCourse()
 	cout << " Gender: "; getline(cin, newStudent.gender);
 	cout << " Date of birth: "; getline(cin, newStudent.DoB); 
 	cout << " Class ID: "; getline(cin, newStudent.classID);
-	cout << " Active status(0:No, 1:Yes) : "; cin >> newStudent.active;
-
+	cout << " Active status(0:No, 1:Yes) : ";
+	string temp;
+	getline(cin, temp, '\n');
+	newStudent.active=((temp=="1")?1:0);
+	convertToUpper(newStudent.classID);
 	string filename = "";
-	//Students.txt
-	if (checkAppeared("Students.txt", &newStudent) == 0)
-	{
-		writeFileStudentTXT(newStudent);
-	}
-	//Class-Students.txt
+	
 	if (newStudent.classID.compare(classID) != 0)
 	{
 		cout << "YOU DONT HAVE PERMISSION TO JOIN ANOTHER CLASS." << endl;
-	}
-	else
-	{
-		filename = newStudent.classID + "-Students.txt";
-		if (checkAppeared(filename, &newStudent) == 0)
-		{
-			writeStudentCaro(filename, &newStudent);
-		}
+		return;
 	}
 
+	//Students.txt
+	writeFileStudentTXT(newStudent);
+	////Class-Students.txt 	
+	//filename = newStudent.classID + "-Students.txt";
+	//if (checkAppeared(filename, &newStudent) == 0)
+	//	{
+	//		writeStudentCaro(filename, &newStudent);
+	//	}
 
-	//Class-Course.txt
-	filename = classID + "-" + courseID + ".txt";
-	if (checkAppeared(filename, &newStudent) == 0)
-	{
-		writeStudentCaro(filename, &newStudent);
-	}
+
+	////Class-Course.txt
+	//filename = classID + "-" + courseID + ".txt";
+	//if (checkAppeared(filename, &newStudent) == 0)
+	//{
+	//	writeStudentCaro(filename, &newStudent);
+	//}
 
 	filename = classID + "-" + courseID + "-AttendanceList.txt";
 	if (checkAppeared(filename, &newStudent) == 0)
 	{
 		writeStudentCaro(filename, &newStudent);
 	}
-	/*{
-
-
-	Student* aStudents, * temp;
-	int nStudents;
-
-	loadDataCourse(filename, temp, nStudents);
-
-	aStudents = new Student[nStudents + 1];
-	for (int i = 0; i < nStudents; i++)
-	{
-		aStudents[i] = temp[i];
-	}
-	aStudents[nStudents - 1] = newStudent;
-
-	ofstream out(filename);
-	if (!out.is_open())
-	{
-		cout << "Cant open course file";
-		return;
-	}
-
-	for (int i = 0; i < nStudents; i++)
-	{
-		out << aStudents[i].ID << endl;
-		out << aStudents[i].fullName << endl;
-		out << aStudents[i].DoB << endl;
-		out << aStudents[i].gender << endl;
-		out << aStudents[i].active << endl;
-		out << endl;
-	}
-	}*/
 }
 
 //9. View list of students of a course.
@@ -3185,7 +3086,8 @@ void exportAttendanceListToCSV()
 
 	for (int i = 0; i < nStudents; i++)
 	{
-		if (aStudents[i].active == 1) {
+		if (aStudents[i].active == 1)
+		{
 			fout << aStudents[i].ID << "," << aStudents[i].fullName << "," << aStudents[i].DoB << "," << aStudents[i].gender << "," << endl;
 		}
 	}

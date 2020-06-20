@@ -9,7 +9,7 @@ nmhuy
 Friday
 13:00
 17:00
-I42
+I42,2,2019-2020
 
 PHY00005
 Vat ly dai cuong
@@ -20,7 +20,7 @@ nkquang
 Monday
 7:30
 11:30
-I33
+I33,2,2019-2020
 
 MTH00003
 Vi tich phan 1B

@@ -426,7 +426,7 @@ OPTION:
 	else
 		return;
 	cin >> index;
-	if ((index < 1) || (index > nCourses - 1))
+	if ((index < 1) || (index > nCourses))
 		goto OPTION;
 
 	index--;
